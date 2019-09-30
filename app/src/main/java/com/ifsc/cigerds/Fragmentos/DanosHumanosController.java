@@ -16,37 +16,40 @@ import com.ifsc.cigerds.R;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DanosEconomicosController extends Fragment implements DadosInterface {
+public class DanosHumanosController extends Fragment implements DadosInterface {
 
-    private HashMap<CheckBox, EditText> economicos = new HashMap<>();
+    private Map<CheckBox, EditText> lista;
 
-
-    public DanosEconomicosController(){}
+    public DanosHumanosController(){}
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        lista = new HashMap<>();
+        View view = inflater.inflate(R.layout.danos_humanos_fragment, container, false);
 
-        View view =inflater.inflate(R.layout.danos_economicos_fragment, container, false);
+        lista.put((CheckBox)view.findViewById(R.id.desalojados),  (EditText)view.findViewById(R.id.desalojadosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.desabrigados), (EditText)view.findViewById(R.id.desabrigadosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.desaparecidos),  (EditText)view.findViewById(R.id.desaparecidosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.feridos), (EditText)view.findViewById(R.id.feridosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.enfermos), (EditText)view.findViewById(R.id.enfermosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.mortos), (EditText)view.findViewById(R.id.mortosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.isolados), (EditText)view.findViewById(R.id.isoladosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.atingidosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.afetados), (EditText)view.findViewById(R.id.afetadosQuant));
 
-        economicos.put((CheckBox)view.findViewById(R.id.danosAgricultura), (EditText)view.findViewById(R.id.agriculturaQuant));
-        economicos.put((CheckBox)view.findViewById(R.id.danosPecuária), (EditText)view.findViewById(R.id.pecuariaQuant));
-        economicos.put((CheckBox)view.findViewById(R.id.danosComercio), (EditText)view.findViewById(R.id.comercioQuant));
-        economicos.put((CheckBox)view.findViewById(R.id.danosIndustria), (EditText)view.findViewById(R.id.industriaQuant));
-        economicos.put((CheckBox)view.findViewById(R.id.danosServicos), (EditText)view.findViewById(R.id.servicosQuant));
+        for(Map.Entry<CheckBox, EditText> entrada : lista.entrySet()){
 
-        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
-
-
+            CheckBox checkBox = entrada.getKey();
             final EditText editText = entrada.getValue();
 
             editText.setVisibility(View.INVISIBLE);
         }
 
 
-        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+        for(Map.Entry<CheckBox, EditText> entrada : lista.entrySet()){
 
             CheckBox checkBox = entrada.getKey();
             final EditText editText = entrada.getValue();
@@ -62,6 +65,7 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
                 }
             });
         }
+
 
 
         return view;

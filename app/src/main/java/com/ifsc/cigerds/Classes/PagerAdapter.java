@@ -8,7 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
 import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
+import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
+import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
+import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
 
 public class PagerAdapter extends FragmentPagerAdapter {
@@ -29,15 +33,15 @@ public class PagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
 
-                return new ocorrenciaCadastro();
+                return new DadosOcorrenciaController();
             case 1:
-                return new danosHumanos();
+                return new DanosHumanosController();
             case 2:
-                return new danosMateriais();
+                return new DanosMateriaisController();
             case 3 :
                 return  new DanosAmbientaisController();
             case 4:
-                return new danosEconomicos();
+                return new DanosEconomicosController();
             case 5:
                 return new IAHController();
 
