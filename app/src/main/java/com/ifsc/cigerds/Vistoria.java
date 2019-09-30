@@ -1,6 +1,7 @@
 package com.ifsc.cigerds;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.ifsc.cigerds.Classes.Localizador;
 import com.ifsc.cigerds.Classes.PagerAdapter;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
+
+import android.support.design.widget.TabLayout;
 
 import java.util.ArrayList;
 
@@ -27,12 +30,16 @@ public class Vistoria extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vistoria);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter pager = new PagerAdapter(getSupportFragmentManager(), getResources().getStringArray(R.array.titlesTabs));
 
+        viewPager.setAdapter(pager);
+
+        tabLayout.setupWithViewPager(viewPager);
         final FloatingActionButton fab = findViewById(R.id.fab);
 
 
