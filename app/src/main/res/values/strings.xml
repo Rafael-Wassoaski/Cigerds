@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Cigerds</string>
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
@@ -8,5 +8,20 @@
     <string name="welcome">"Bem vindo!"</string>
     <string name="invalid_username">Email inválido</string>
     <string name="invalid_password">A senha deve ser maior que 5 digitos</string>
-    <string name="login_failed">"Flaha no Login"</string>
+    <string name="login_failed">"Falha no Login"</string>
+    <string name="title_activity_vistoria">vistoria</string>
+
+    <string-array name="titlesTabs">
+        <item>IDENTIFICAÇÃO DO DESASTRE</item>
+        <item>DANOS HUMANOS</item>
+        <item>DANOS MATERIAIS</item>
+        <item>DANOS AMBIENTAIS</item>
+        <item>DANOS ECONÔMICOS</item>
+        <item>IAH FORNECIDOS</item>
+
+
+    </string-array>
+
+
+
 </resources>

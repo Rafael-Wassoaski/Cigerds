@@ -2,7 +2,8 @@ package com.ifsc.cigerds.Threads;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.ifsc.cigerds.Interfaces.AsyncInterface;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ public class ConexaoLogin extends AsyncTask<Boolean, Boolean, Boolean> {
 
     private String email;
     private String pass;
+    public AsyncInterface resultBoolean = null;
 
     public ConexaoLogin(String email, String pass) {
         this.email = email;
@@ -25,7 +27,7 @@ public class ConexaoLogin extends AsyncTask<Boolean, Boolean, Boolean> {
         try {
 
 
-            Socket conexao  = new Socket("192.168.0.1", 6666);
+            Socket conexao  = new Socket("192.168.0.107", 6666);
 
             PrintWriter envio = new PrintWriter(conexao.getOutputStream(), true);
             envio.println(email+":"+pass);
@@ -56,5 +58,12 @@ public class ConexaoLogin extends AsyncTask<Boolean, Boolean, Boolean> {
 
         return false;
     }
+
+    @Override
+    protected void onPostExecute(Boolean result) {
+        Log.d("Aguardo", result.toString());
+        resultBoolean.processFinish(result);
+    }
+
 
 }
