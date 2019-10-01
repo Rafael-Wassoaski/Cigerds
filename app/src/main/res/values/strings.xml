@@ -21,6 +21,10 @@
 
 
     </string-array>
+    <string name="title_activity_vistoria_tab">VistoriaTab</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_vistoria2">vistoria2</string>
 
 
 </resources>

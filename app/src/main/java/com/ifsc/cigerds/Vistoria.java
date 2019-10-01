@@ -1,10 +1,12 @@
 package com.ifsc.cigerds;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.view.ContextThemeWrapper;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
-import android.os.Bundle;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -14,9 +16,9 @@ import com.ifsc.cigerds.Classes.Localizador;
 import com.ifsc.cigerds.Classes.PagerAdapter;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 
-import android.support.design.widget.TabLayout;
-
 import java.util.ArrayList;
+
+
 
 public class Vistoria extends AppCompatActivity {
 
@@ -30,6 +32,9 @@ public class Vistoria extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vistoria);
+        final Context context = new ContextThemeWrapper(this, R.style.TabAppTheme);
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
