@@ -18,29 +18,31 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outros" />
+        app:layout_constraintTop_toBottomOf="@+id/iah_fornecidos_outros_observacoes" />
 
     <CheckBox
-        android:id="@+id/viasDesobistruidas"
+        android:id="@+id/iah_vias_publicas_totalmente_desobistruidas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="10dp"
         android:text="Vias Públicas Totalmente Desobistruídas"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <CheckBox
-        android:id="@+id/servicosEssenciais"
+        android:id="@+id/iah_reestabelecimento_servicos_essenciais"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="15dp"
         android:text="Restabelecimento de Serviços Essenciais"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viasDesobistruidas" />
+        app:layout_constraintTop_toBottomOf="@+id/iah_vias_publicas_totalmente_desobistruidas" />
 
     <CheckBox
         android:id="@+id/cestas"
@@ -131,7 +133,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lona" />
 
     <EditText
-        android:id="@+id/cestasQuant"
+        android:id="@+id/iah_cestas_de_alimentos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
@@ -144,7 +146,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/lonaQuant2"
+        android:id="@+id/iah_lona_plastica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -154,10 +156,23 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lonaQuant2" />
+        app:layout_constraintTop_toBottomOf="@+id/iah_telhas" />
 
     <EditText
-        android:id="@+id/telhasQuant"
+        android:id="@+id/iah_outros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:ems="10"
+        android:hint="Quantidade"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iah_lona_plastica" />
+
+    <EditText
+        android:id="@+id/iah_telhas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -167,23 +182,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/telhasQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/iah_kit_limpeza" />
 
     <EditText
-        android:id="@+id/telhasQuant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/limpezaQuant" />
-
-    <EditText
-        android:id="@+id/limpezaQuant"
+        android:id="@+id/iah_kit_limpeza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
@@ -193,10 +195,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/higieneQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/iah_kit_higiene_pessoal" />
 
     <EditText
-        android:id="@+id/higieneQuant"
+        android:id="@+id/iah_kit_higiene_pessoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
@@ -206,10 +208,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colchoesQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/iah_colchoes" />
 
     <EditText
-        android:id="@+id/colchoesQuant"
+        android:id="@+id/iah_colchoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -219,10 +221,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aguaQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/iah_agua_potavel" />
 
     <EditText
-        android:id="@+id/aguaQuant"
+        android:id="@+id/iah_agua_potavel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -232,7 +234,24 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cestasQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/iah_cestas_de_alimentos" />
+
+    <EditText
+        android:id="@+id/iah_fornecidos_outros_observacoes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Descreva Outros"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outros" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

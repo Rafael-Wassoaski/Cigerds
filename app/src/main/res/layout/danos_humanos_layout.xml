@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/feridosQuant"
+        android:id="@+id/danos_humanos_feridos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -16,10 +16,10 @@
         android:inputType="number"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/desaparecidosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_desaparecidos" />
 
     <EditText
-        android:id="@+id/enfermosQuant"
+        android:id="@+id/danos_humanos_enfermos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -29,10 +29,10 @@
         android:inputType="number"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feridosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_feridos" />
 
     <EditText
-        android:id="@+id/mortosQuant"
+        android:id="@+id/danos_humanos_mortos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -42,10 +42,10 @@
         android:inputType="number"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enfermosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_enfermos" />
 
     <EditText
-        android:id="@+id/isoladosQuant"
+        android:id="@+id/danos_humanos_isolados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -55,10 +55,10 @@
         android:inputType="number"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mortosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_mortos" />
 
     <EditText
-        android:id="@+id/atingidosQuant"
+        android:id="@+id/danos_humanos_atingidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -68,10 +68,10 @@
         android:inputType="number"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/isoladosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_isolados" />
 
     <EditText
-        android:id="@+id/observacoes"
+        android:id="@+id/danos_humanos_observacoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -79,11 +79,9 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="60dp"
         android:ems="10"
         android:hint="Observações"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
@@ -189,7 +187,7 @@
         app:layout_constraintTop_toBottomOf="@+id/atingidos" />
 
     <EditText
-        android:id="@+id/desalojadosQuant"
+        android:id="@+id/danos_humanos_desalojados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -201,7 +199,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/desabrigadosQuant"
+        android:id="@+id/danos_humanos_desabrigados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -210,10 +208,10 @@
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/desalojadosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_desalojados" />
 
     <EditText
-        android:id="@+id/desaparecidosQuant"
+        android:id="@+id/danos_humanos_desaparecidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -222,7 +220,7 @@
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/desabrigadosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_desabrigados" />
 
     <EditText
         android:id="@+id/afetadosQuant"
@@ -234,7 +232,7 @@
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/atingidosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_atingidos" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

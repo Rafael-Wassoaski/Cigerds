@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/observacoes"
+        android:id="@+id/danos_humanos_observacoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -14,14 +14,12 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="50dp"
         android:ems="10"
         android:hint="Observações"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/servicosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/interrupcoes_servicos_essenciais" />
 
     <CheckBox
         android:id="@+id/atingidos"
@@ -123,7 +121,7 @@
         app:layout_constraintTop_toBottomOf="@+id/obrasPublicas" />
 
     <EditText
-        android:id="@+id/UHatingidosQuanto"
+        android:id="@+id/unidades_habitacionais_atingidas"
         android:layout_width="132dp"
         android:layout_height="47dp"
         android:layout_marginTop="52dp"
@@ -136,7 +134,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/UHdanificadosQuant"
+        android:id="@+id/unidades_habitacionais_danificads"
         android:layout_width="130dp"
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
@@ -146,10 +144,10 @@
         android:hint="Quantidade"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UHatingidosQuanto" />
+        app:layout_constraintTop_toBottomOf="@+id/unidades_habitacionais_atingidas" />
 
     <EditText
-        android:id="@+id/UHinterditadasQuant"
+        android:id="@+id/unidades_habitacionais_interditadas"
         android:layout_width="129dp"
         android:layout_height="54dp"
         android:layout_marginTop="40dp"
@@ -159,10 +157,10 @@
         android:hint="Quantidade"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UHdanificadosQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/unidades_habitacionais_danificads" />
 
     <EditText
-        android:id="@+id/UHdestruidasQuant"
+        android:id="@+id/unidades_habitacionais_destruidas"
         android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_marginTop="48dp"
@@ -172,10 +170,10 @@
         android:hint="Quantidade"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UHinterditadasQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/unidades_habitacionais_interditadas" />
 
     <EditText
-        android:id="@+id/saudeQuant"
+        android:id="@+id/instalacoes_publicas_saude_atingidas"
         android:layout_width="126dp"
         android:layout_height="42dp"
         android:layout_marginTop="56dp"
@@ -185,10 +183,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UHdestruidasQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/unidades_habitacionais_destruidas" />
 
     <EditText
-        android:id="@+id/ensinoQuant"
+        android:id="@+id/instalacoes_publicas_ensino_atingidas"
         android:layout_width="125dp"
         android:layout_height="39dp"
         android:layout_marginTop="68dp"
@@ -198,10 +196,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/saudeQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/instalacoes_publicas_saude_atingidas" />
 
     <EditText
-        android:id="@+id/comunitariasQuant"
+        android:id="@+id/instalacoes_comunitarias_atingidas"
         android:layout_width="121dp"
         android:layout_height="46dp"
         android:layout_marginTop="52dp"
@@ -211,10 +209,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ensinoQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/instalacoes_publicas_ensino_atingidas" />
 
     <EditText
-        android:id="@+id/obrasQuant"
+        android:id="@+id/obras_atingidas"
         android:layout_width="118dp"
         android:layout_height="46dp"
         android:layout_marginTop="54dp"
@@ -224,10 +222,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comunitariasQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/instalacoes_comunitarias_atingidas" />
 
     <EditText
-        android:id="@+id/servicosQuant"
+        android:id="@+id/interrupcoes_servicos_essenciais"
         android:layout_width="118dp"
         android:layout_height="45dp"
         android:layout_marginTop="38dp"
@@ -237,5 +235,5 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/obrasQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/obras_atingidas" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
-        android:id="@+id/observacoes"
+        android:id="@+id/danos_humanos_observacoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/danosComercio" />
 
     <EditText
-        android:id="@+id/servicosQuant"
+        android:id="@+id/interrupcoes_servicos_essenciais"
         android:layout_width="132dp"
         android:layout_height="39dp"
         android:layout_marginTop="45dp"
@@ -89,10 +89,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comercioQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_comercio" />
 
     <EditText
-        android:id="@+id/comercioQuant"
+        android:id="@+id/danos_comercio"
         android:layout_width="132dp"
         android:layout_height="39dp"
         android:layout_marginTop="30dp"
@@ -102,10 +102,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/industriaQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_industria" />
 
     <EditText
-        android:id="@+id/industriaQuant"
+        android:id="@+id/danos_industria"
         android:layout_width="132dp"
         android:layout_height="39dp"
         android:layout_marginTop="33dp"
@@ -115,10 +115,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pecuariaQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_pecuaria" />
 
     <EditText
-        android:id="@+id/pecuariaQuant"
+        android:id="@+id/danos_pecuaria"
         android:layout_width="132dp"
         android:layout_height="39dp"
         android:layout_marginTop="25dp"
@@ -128,10 +128,10 @@
         android:hint="Quantidade"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agriculturaQuant" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_agricultura" />
 
     <EditText
-        android:id="@+id/agriculturaQuant"
+        android:id="@+id/danos_agricultura"
         android:layout_width="132dp"
         android:layout_height="39dp"
         android:layout_marginTop="68dp"

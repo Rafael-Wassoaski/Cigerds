@@ -23,7 +23,7 @@
 
 
     <EditText
-        android:id="@+id/observacoes"
+        android:id="@+id/danos_humanos_observacoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/AguaQuantidade"
+        android:id="@+id/contaminacao_agua"
         android:layout_width="163dp"
         android:layout_height="41dp"
         android:layout_marginStart="20dp"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/quantidadeSolo"
+        android:id="@+id/contaminacao_solo"
         android:layout_width="163dp"
         android:layout_height="41dp"
         android:layout_marginStart="20dp"
@@ -93,10 +93,10 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ContaminacaoSolo"
-        app:layout_constraintTop_toBottomOf="@+id/AguaQuantidade" />
+        app:layout_constraintTop_toBottomOf="@+id/contaminacao_agua" />
 
     <EditText
-        android:id="@+id/quantidadeAr"
+        android:id="@+id/contaminacao_ar"
         android:layout_width="163dp"
         android:layout_height="41dp"
         android:layout_marginStart="20dp"
@@ -110,7 +110,7 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/contaminacaoAr"
-        app:layout_constraintTop_toBottomOf="@+id/quantidadeSolo" />
+        app:layout_constraintTop_toBottomOf="@+id/contaminacao_solo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

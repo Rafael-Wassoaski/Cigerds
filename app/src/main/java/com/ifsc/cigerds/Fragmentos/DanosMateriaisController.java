@@ -13,12 +13,16 @@ import androidx.fragment.app.Fragment;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class DanosMateriaisController extends Fragment implements DadosInterface {
 
     private HashMap<CheckBox, EditText> materiais = new HashMap<>();
+    private EditText danos_materiais_observacoes;
 
     public DanosMateriaisController(){}
 
@@ -29,15 +33,17 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
 
         View view = inflater.inflate(R.layout.danos_materiais_fragment, container, false);
 
-        materiais.put((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.UHatingidosQuanto));
-        materiais.put((CheckBox)view.findViewById(R.id.danificadas), (EditText)view.findViewById(R.id.UHdanificadosQuant));
-        materiais.put((CheckBox)view.findViewById(R.id.interditadas), (EditText)view.findViewById(R.id.UHinterditadasQuant));
-        materiais.put((CheckBox)view.findViewById(R.id.destruidas), (EditText)view.findViewById(R.id.UHdestruidasQuant));
-        materiais.put((CheckBox)view.findViewById(R.id.instalacaoSaude), (EditText)view.findViewById(R.id.saudeQuant));
-        materiais.put((CheckBox)view.findViewById(R.id.instalacoesComunitarias), (EditText)view.findViewById(R.id.comunitariasQuant));
-        materiais.put((CheckBox)view.findViewById(R.id.instalacoesEnsino), (EditText)view.findViewById(R.id.ensinoQuant));
-        materiais.put((CheckBox)view.findViewById(R.id.obrasPublicas), (EditText)view.findViewById(R.id.obrasQuant));
-        materiais.put((CheckBox)view.findViewById(R.id.interrupcaoServicos), (EditText)view.findViewById(R.id.servicosQuant));
+        danos_materiais_observacoes = (EditText)view.findViewById(R.id.danos_humanos_observacoes);
+
+        materiais.put((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.unidades_habitacionais_atingidas));
+        materiais.put((CheckBox)view.findViewById(R.id.danificadas), (EditText)view.findViewById(R.id.unidades_habitacionais_danificads));
+        materiais.put((CheckBox)view.findViewById(R.id.interditadas), (EditText)view.findViewById(R.id.unidades_habitacionais_interditadas));
+        materiais.put((CheckBox)view.findViewById(R.id.destruidas), (EditText)view.findViewById(R.id.unidades_habitacionais_destruidas));
+        materiais.put((CheckBox)view.findViewById(R.id.instalacaoSaude), (EditText)view.findViewById(R.id.instalacoes_publicas_saude_atingidas));
+        materiais.put((CheckBox)view.findViewById(R.id.instalacoesComunitarias), (EditText)view.findViewById(R.id.instalacoes_comunitarias_atingidas));
+        materiais.put((CheckBox)view.findViewById(R.id.instalacoesEnsino), (EditText)view.findViewById(R.id.instalacoes_publicas_ensino_atingidas));
+        materiais.put((CheckBox)view.findViewById(R.id.obrasPublicas), (EditText)view.findViewById(R.id.obras_atingidas));
+        materiais.put((CheckBox)view.findViewById(R.id.interrupcaoServicos), (EditText)view.findViewById(R.id.interrupcoes_servicos_essenciais));
 
 
         for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
@@ -73,12 +79,43 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
 
 
     @Override
-    public String getDados() {
-        return null;
+    public void getDados(JSONObject json) throws JSONException {
+
+        if(!danos_materiais_observacoes.getText().toString().isEmpty()){
+            json.put("danos_humanos_observacoes", danos_materiais_observacoes.getText().toString());
+        }else{
+            json.put("danos_humanos_observacoes", "Sem obeservações");
+        }
+
+        for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
+
+            CheckBox checkBox = entrada.getKey();
+            final EditText editText = entrada.getValue();
+
+            if(checkBox.isChecked()){
+                json.put(editText.getTag().toString(), editText.getText());
+
+            }else{
+                json.put(editText.getTag().toString(), 0);
+            }
+        }
     }
 
     @Override
     public Boolean verficaDados() {
-        return null;
+
+
+
+        for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
+
+            CheckBox checkBox = entrada.getKey();
+            final EditText editText = entrada.getValue();
+
+            if(checkBox.isChecked() && editText.getText().toString().isEmpty()){
+                editText.requestFocus();
+                return  false;
+            }
+        }
+        return true;
     }
 }

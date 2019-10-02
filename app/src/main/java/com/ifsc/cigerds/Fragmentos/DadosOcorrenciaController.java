@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -14,16 +15,20 @@ import androidx.fragment.app.Fragment;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 public class DadosOcorrenciaController extends Fragment implements DadosInterface {
 
     private ArrayAdapter<CharSequence> municipiosArray;
     private Spinner municipioSpinner;
-    private TextView data;
-    private TextView hora;
+    private TextView dataTextview;
+    private EditText endereco;
     private ArrayAdapter<CharSequence> coderecArray;
     private EditText cobrad;
     private EditText descricao;
@@ -39,10 +44,10 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         View view = inflater.inflate(R.layout.dados_ocorrencia_layout, container, false);
 
 
-        cobrad = (EditText)view.findViewById(R.id.COBRAD);
+        cobrad = (EditText)view.findViewById(R.id.cobrad);
+        dataTextview = (TextView)view.findViewById(R.id.data);
         descricao = (EditText)view.findViewById(R.id.descDesastre);
-        data = (TextView)view.findViewById(R.id.data);
-        hora = (TextView)view.findViewById(R.id.hora);
+        endereco = (EditText)view.findViewById(R.id.endereco);
         municipioSpinner = (Spinner)view.findViewById(R.id.municipio);
         municipiosArray = ArrayAdapter.createFromResource(getContext(), R.array.municipioCadastrados, android.R.layout.simple_spinner_item);
         municipiosArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -51,25 +56,51 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
 
         Calendar calender = Calendar.getInstance();
-        Date data1 = new Date();
+        Date data = new Date();
 
-        calender.setTime(data1);
+        calender.setTime(data);
         Date dataAtual = calender.getTime();
         SimpleDateFormat horaAtual = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-        data.setText((String)dataFormat.format(dataAtual));
-        hora.setText((String)horaAtual.format(dataAtual));
+        dataTextview.setText((String)dataFormat.format(dataAtual) +" : " + (String)horaAtual.format(dataAtual));
+
         return view;
     }
 
     @Override
-    public String getDados() {
-        return null;
+    public void getDados(JSONObject json) throws JSONException {
+
+        json.put("cobrad", cobrad.getText().toString());
+        json.put("municipio", municipioSpinner.getSelectedItem().toString());
+        json.put("data", dataTextview.getText().toString());
+        json.put("endereco", endereco.getText().toString());
+
+
+        if(descricao.getText().toString().isEmpty()){
+            json.put("descricao", descricao.getText().toString());
+        }
+
+
     }
 
     @Override
     public Boolean verficaDados() {
-        return null;
+
+
+        if(cobrad.getText().toString().isEmpty()){
+            cobrad.requestFocus();
+            return false;
+        }
+
+        if(endereco.getText().toString().isEmpty()){
+            endereco.requestFocus();
+            return false;
+        }
+
+
+
+
+        return true;
     }
 }

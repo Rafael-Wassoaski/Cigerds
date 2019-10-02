@@ -13,12 +13,16 @@ import androidx.fragment.app.Fragment;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class DanosEconomicosController extends Fragment implements DadosInterface {
 
     private HashMap<CheckBox, EditText> economicos = new HashMap<>();
+    private EditText danos_economicos_observacoes;
 
 
     public DanosEconomicosController(){}
@@ -31,12 +35,12 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
 
         View view =inflater.inflate(R.layout.danos_economicos_fragment, container, false);
 
-        economicos.put((CheckBox)view.findViewById(R.id.danosAgricultura), (EditText)view.findViewById(R.id.agriculturaQuant));
-        economicos.put((CheckBox)view.findViewById(R.id.danosPecuária), (EditText)view.findViewById(R.id.pecuariaQuant));
-        economicos.put((CheckBox)view.findViewById(R.id.danosComercio), (EditText)view.findViewById(R.id.comercioQuant));
-        economicos.put((CheckBox)view.findViewById(R.id.danosIndustria), (EditText)view.findViewById(R.id.industriaQuant));
-        economicos.put((CheckBox)view.findViewById(R.id.danosServicos), (EditText)view.findViewById(R.id.servicosQuant));
-
+        economicos.put((CheckBox)view.findViewById(R.id.danosAgricultura), (EditText)view.findViewById(R.id.danos_agricultura));
+        economicos.put((CheckBox)view.findViewById(R.id.danosPecuária), (EditText)view.findViewById(R.id.danos_pecuaria));
+        economicos.put((CheckBox)view.findViewById(R.id.danosComercio), (EditText)view.findViewById(R.id.danos_comercio));
+        economicos.put((CheckBox)view.findViewById(R.id.danosIndustria), (EditText)view.findViewById(R.id.danos_industria));
+        economicos.put((CheckBox)view.findViewById(R.id.danosServicos), (EditText)view.findViewById(R.id.interrupcoes_servicos_essenciais));
+        danos_economicos_observacoes = (EditText)view.findViewById(R.id.danos_humanos_observacoes);
         for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
 
 
@@ -69,12 +73,44 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
 
 
     @Override
-    public String getDados() {
-        return null;
+    public void getDados(JSONObject json) throws JSONException {
+
+
+        if(!danos_economicos_observacoes.getText().toString().isEmpty()){
+            json.put("danos_ambientais_observacoes", danos_economicos_observacoes.getText().toString());
+        }else{
+            json.put("danos_ambientais_observacoes", "Sem obeservações");
+        }
+
+        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+
+            CheckBox checkBox = entrada.getKey();
+            final EditText editText = entrada.getValue();
+
+            if(checkBox.isChecked()){
+                json.put(editText.getTag().toString(), editText.getText().toString());
+
+            }else{
+                json.put(editText.getTag().toString(), 0);
+            }
+        }
+
     }
+
 
     @Override
     public Boolean verficaDados() {
-        return null;
+        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+
+            CheckBox checkBox = entrada.getKey();
+            final EditText editText = entrada.getValue();
+
+            if(checkBox.isChecked() && editText.getText().toString().isEmpty()){
+                editText.requestFocus();
+                return  false;
+            }
+        }
+
+        return true;
     }
 }

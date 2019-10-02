@@ -1,8 +1,11 @@
 package com.ifsc.cigerds.Interfaces;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public interface DadosInterface {
 
-    public String getDados();
+    public void getDados(JSONObject json) throws JSONException;
 
     public Boolean verficaDados();
 }
