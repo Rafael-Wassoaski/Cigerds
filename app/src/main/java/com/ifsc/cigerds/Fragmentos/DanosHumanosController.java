@@ -16,13 +16,15 @@ import com.ifsc.cigerds.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DanosHumanosController extends Fragment implements DadosInterface {
 
     private Map<CheckBox, EditText> lista;
-
+    private List<String> nameTags;
     private EditText danos_humanos_observacoes;
 
     public DanosHumanosController(){}
@@ -33,7 +35,17 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         lista = new HashMap<>();
+        nameTags = new ArrayList<>();
         View view = inflater.inflate(R.layout.danos_humanos_fragment, container, false);
+        nameTags.add("danos_humanos_desalojados");
+        nameTags.add("danos_humanos_desabrigados");
+        nameTags.add("danos_humanos_desaparecidos");
+        nameTags.add("danos_humanos_feridos");
+        nameTags.add("danos_humanos_enfermos");
+        nameTags.add("danos_humanos_mortos");
+        nameTags.add("danos_humanos_isolados");
+        nameTags.add("danos_humanos_atingidos");
+        nameTags.add("danos_humanos_afetados ");
 
         danos_humanos_observacoes = (EditText)view.findViewById(R.id.danos_humanos_observacoes);
         lista.put((CheckBox)view.findViewById(R.id.desalojados),  (EditText)view.findViewById(R.id.danos_humanos_desalojados));
@@ -44,7 +56,7 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
         lista.put((CheckBox)view.findViewById(R.id.mortos), (EditText)view.findViewById(R.id.danos_humanos_mortos));
         lista.put((CheckBox)view.findViewById(R.id.isolados), (EditText)view.findViewById(R.id.danos_humanos_isolados));
         lista.put((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.danos_humanos_atingidos));
-        lista.put((CheckBox)view.findViewById(R.id.afetados), (EditText)view.findViewById(R.id.afetadosQuant));
+        lista.put((CheckBox)view.findViewById(R.id.afetados), (EditText)view.findViewById(R.id.danos_humanos_afetados));
 
         for(Map.Entry<CheckBox, EditText> entrada : lista.entrySet()){
 
@@ -81,24 +93,34 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-        if(!danos_humanos_observacoes.getText().toString().isEmpty()){
-            json.put("danos_humanos_observacoes", danos_humanos_observacoes.getText().toString());
-        }else{
-            json.put("danos_humanos_observacoes", "Sem obeservações");
-        }
+        Integer count = 0;
+        if(verficaDados()) {
 
-        for(Map.Entry<CheckBox, EditText> entrada : lista.entrySet()){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
 
-            if(checkBox.isChecked()){
-                json.put(editText.getTag().toString(), editText.getText());
-
-            }else{
-                json.put(editText.getTag().toString(), 0);
+            if (!danos_humanos_observacoes.getText().toString().isEmpty()) {
+                json.put("danos_humanos_observacoes", danos_humanos_observacoes.getText().toString());
+            } else {
+                json.put("danos_humanos_observacoes", "Sem obeservações");
             }
+
+            for(Map.Entry<CheckBox, EditText> entrada : lista.entrySet()){
+
+                CheckBox checkBox = entrada.getKey();
+                final EditText editText = entrada.getValue();
+
+                if(checkBox.isChecked()){
+                    json.put(nameTags.get(count), editText.getText().toString());
+
+                }else{
+                    json.put(nameTags.get(count), 0);
+                }
+                count++;
+            }
+
+
         }
+
     }
 
     @Override

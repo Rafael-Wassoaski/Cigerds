@@ -1,6 +1,7 @@
 package com.ifsc.cigerds.Fragmentos;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
         AguaQuant = (EditText)view.findViewById(R.id.contaminacao_agua);
         ArQuant = (EditText)view.findViewById(R.id.contaminacao_ar);
         SoloQuant = (EditText)view.findViewById(R.id.contaminacao_solo);
-        danos_ambientais_observacoes = (EditText)view.findViewById(R.id.danos_humanos_observacoes);
+        danos_ambientais_observacoes = (EditText)view.findViewById(R.id.danos_ambientais_observacoes);
 
         contamincaoAr.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -90,7 +91,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
 
 
-
+        Log.d("Json", "b");
 
 
         if(verficaDados()) {
@@ -114,7 +115,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
             if(contamincaoSolo.isChecked()) {
 
-                json.put("contaminacao_solo", SoloQuant.getText());
+                json.put("contaminacao_solo", SoloQuant.getText().toString());
             }else{
                 json.put("contaminacao_solo", 0);
             }
@@ -125,7 +126,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
             if(contamincaoAr.isChecked()) {
 
-                json.put("contaminacao_ar", ArQuant.getText());
+                json.put("contaminacao_ar", ArQuant.getText().toString());
             }else{
                 json.put("contaminacao_ar", 0);
 

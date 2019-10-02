@@ -1,11 +1,11 @@
 package com.ifsc.cigerds.Fragmentos;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,7 +21,6 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 public class DadosOcorrenciaController extends Fragment implements DadosInterface {
 
@@ -70,6 +69,8 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
     @Override
     public void getDados(JSONObject json) throws JSONException {
+
+        Log.d("Json", "a");
 
         json.put("cobrad", cobrad.getText().toString());
         json.put("municipio", municipioSpinner.getSelectedItem().toString());

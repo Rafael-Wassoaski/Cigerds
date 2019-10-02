@@ -17,12 +17,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DanosMateriaisController extends Fragment implements DadosInterface {
 
     private HashMap<CheckBox, EditText> materiais = new HashMap<>();
     private EditText danos_materiais_observacoes;
+    private List<String> nameTag;
 
     public DanosMateriaisController(){}
 
@@ -33,7 +35,19 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
 
         View view = inflater.inflate(R.layout.danos_materiais_fragment, container, false);
 
-        danos_materiais_observacoes = (EditText)view.findViewById(R.id.danos_humanos_observacoes);
+        nameTag.add("unidades_habitacionais_atingidas");
+        nameTag.add("unidades_habitacionais_danificads");
+        nameTag.add("unidades_habitacionais_interditadas");
+        nameTag.add("unidades_habitacionais_destruidas");
+
+        nameTag.add("instalacoes_publicas_saude_atingidas");
+        nameTag.add("instalacoes_comunitarias_atingidas");
+        nameTag.add("instalacoes_publicas_ensino_atingidas");
+        nameTag.add("obras_atingidas");
+        nameTag.add("interrupcoes_servicos_essenciais");
+
+
+        danos_materiais_observacoes = (EditText)view.findViewById(R.id.danos_materiais_observacoes );
 
         materiais.put((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.unidades_habitacionais_atingidas));
         materiais.put((CheckBox)view.findViewById(R.id.danificadas), (EditText)view.findViewById(R.id.unidades_habitacionais_danificads));
@@ -81,6 +95,7 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
+        Integer count = 0;
         if(!danos_materiais_observacoes.getText().toString().isEmpty()){
             json.put("danos_humanos_observacoes", danos_materiais_observacoes.getText().toString());
         }else{
@@ -93,11 +108,12 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
             final EditText editText = entrada.getValue();
 
             if(checkBox.isChecked()){
-                json.put(editText.getTag().toString(), editText.getText());
+                json.put(nameTag.get(count), editText.getText());
 
             }else{
-                json.put(editText.getTag().toString(), 0);
+                json.put(nameTag.get(count), 0);
             }
+            count++;
         }
     }
 

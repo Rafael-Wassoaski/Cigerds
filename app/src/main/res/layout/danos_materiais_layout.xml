@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/danos_humanos_observacoes"
+        android:id="@+id/danos_materiais_observacoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
@@ -19,7 +19,7 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/interrupcoes_servicos_essenciais" />
+        app:layout_constraintTop_toBottomOf="@+id/danos_prestacao_de_servicos " />
 
     <CheckBox
         android:id="@+id/atingidos"
@@ -225,7 +225,7 @@
         app:layout_constraintTop_toBottomOf="@+id/instalacoes_comunitarias_atingidas" />
 
     <EditText
-        android:id="@+id/interrupcoes_servicos_essenciais"
+        android:id="@+id/danos_prestacao_de_servicos "
         android:layout_width="118dp"
         android:layout_height="45dp"
         android:layout_marginTop="38dp"

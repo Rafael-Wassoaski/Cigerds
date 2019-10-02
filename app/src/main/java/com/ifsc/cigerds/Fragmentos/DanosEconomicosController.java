@@ -17,13 +17,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DanosEconomicosController extends Fragment implements DadosInterface {
 
     private HashMap<CheckBox, EditText> economicos = new HashMap<>();
     private EditText danos_economicos_observacoes;
-
+    private List<String> nameTag;
 
     public DanosEconomicosController(){}
 
@@ -34,13 +35,18 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
         // Inflate the layout for this fragment
 
         View view =inflater.inflate(R.layout.danos_economicos_fragment, container, false);
+        nameTag.add("danos_agricultura");
+        nameTag.add("danos_pecuaria");
+        nameTag.add("danos_comercio");
+        nameTag.add("danos_industria");
+        nameTag.add("danos_prestacao_de_servicos ");
 
         economicos.put((CheckBox)view.findViewById(R.id.danosAgricultura), (EditText)view.findViewById(R.id.danos_agricultura));
         economicos.put((CheckBox)view.findViewById(R.id.danosPecuária), (EditText)view.findViewById(R.id.danos_pecuaria));
         economicos.put((CheckBox)view.findViewById(R.id.danosComercio), (EditText)view.findViewById(R.id.danos_comercio));
         economicos.put((CheckBox)view.findViewById(R.id.danosIndustria), (EditText)view.findViewById(R.id.danos_industria));
-        economicos.put((CheckBox)view.findViewById(R.id.danosServicos), (EditText)view.findViewById(R.id.interrupcoes_servicos_essenciais));
-        danos_economicos_observacoes = (EditText)view.findViewById(R.id.danos_humanos_observacoes);
+        economicos.put((CheckBox)view.findViewById(R.id.danosServicos), (EditText)view.findViewById(R.id.danos_prestacao_de_servicos ));
+        danos_economicos_observacoes = (EditText)view.findViewById(R.id.danos_ambientais_observacoes);
         for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
 
 
@@ -74,12 +80,12 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
 
     @Override
     public void getDados(JSONObject json) throws JSONException {
-
+        Integer count = 0;
 
         if(!danos_economicos_observacoes.getText().toString().isEmpty()){
-            json.put("danos_ambientais_observacoes", danos_economicos_observacoes.getText().toString());
+            json.put("danos_economicos_observacoes", danos_economicos_observacoes.getText().toString());
         }else{
-            json.put("danos_ambientais_observacoes", "Sem obeservações");
+            json.put("danos_economicos_observacoes", "Sem obeservações");
         }
 
         for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
@@ -88,11 +94,12 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
             final EditText editText = entrada.getValue();
 
             if(checkBox.isChecked()){
-                json.put(editText.getTag().toString(), editText.getText().toString());
+                json.put(nameTag.get(count), editText.getText().toString());
 
             }else{
-                json.put(editText.getTag().toString(), 0);
+                json.put(nameTag.get(count), 0);
             }
+            count++;
         }
 
     }
