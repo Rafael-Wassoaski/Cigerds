@@ -1,7 +1,6 @@
 package com.ifsc.cigerds.Fragmentos;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -70,17 +70,14 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-        Log.d("Json", "a");
-
-        json.put("cobrad", cobrad.getText().toString());
-        json.put("municipio", municipioSpinner.getSelectedItem().toString());
-        json.put("data", dataTextview.getText().toString());
-        json.put("endereco", endereco.getText().toString());
 
 
-        if(descricao.getText().toString().isEmpty()){
-            json.put("descricao", descricao.getText().toString());
-        }
+           json.put("cobrad", cobrad.getText().toString());
+           json.put("municipio", municipioSpinner.getSelectedItem().toString());
+           json.put("data", dataTextview.getText().toString());
+           json.put("endereco", endereco.getText().toString());
+           json.put("descricao", descricao.getText().toString());
+
 
 
     }
@@ -90,17 +87,22 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
 
         if(cobrad.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Você não informou o COBRAD", Toast.LENGTH_LONG).show();
             cobrad.requestFocus();
             return false;
         }
 
         if(endereco.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Você não informou o endereço da vistoria", Toast.LENGTH_LONG).show();
             endereco.requestFocus();
             return false;
         }
 
-
-
+        if(descricao.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Você não informou a descrição da vistoria", Toast.LENGTH_LONG).show();
+            descricao.requestFocus();
+            return false;
+        }
 
         return true;
     }

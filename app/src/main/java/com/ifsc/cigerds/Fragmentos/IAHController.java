@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,7 +17,9 @@ import com.ifsc.cigerds.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class IAHController extends Fragment implements DadosInterface {
@@ -26,7 +29,7 @@ public class IAHController extends Fragment implements DadosInterface {
     private CheckBox servicosEssenciais;
 
     private HashMap<CheckBox, EditText> iah = new HashMap<>();
-
+    private List<String> nameTag;
 
     public IAHController() {
         // Required empty public constructor
@@ -39,6 +42,15 @@ public class IAHController extends Fragment implements DadosInterface {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.iah_fragment, container, false);
+        nameTag = new ArrayList<>();
+        nameTag.add("iah_cestas_de_alimentos");
+        nameTag.add("iah_agua_potavel");
+        nameTag.add("iah_colchoes");
+        nameTag.add("iah_kit_higiene_pessoal");
+        nameTag.add("iah_kit_limpeza");
+        nameTag.add("iah_telhas");
+        nameTag.add("iah_lona_plastica");
+        nameTag.add("iah_fornecidos_outros_observacoes");
 
         iah.put((CheckBox)view.findViewById(R.id.cestas), (EditText)view.findViewById(R.id.iah_cestas_de_alimentos));
         iah.put((CheckBox)view.findViewById(R.id.aguaPotavel), (EditText)view.findViewById(R.id.iah_agua_potavel));
@@ -105,7 +117,7 @@ public class IAHController extends Fragment implements DadosInterface {
         json.put("iah_vias_publicas_totalmente_desobistruidas", viasDesobistruidas.isChecked());
         json.put("iah_reestabelecimento_servicos_essenciais", servicosEssenciais.isChecked());
 
-
+        Integer count = 0;
         for(Map.Entry<CheckBox, EditText> entrada : iah.entrySet()){
 
             CheckBox checkBox = entrada.getKey();
@@ -114,7 +126,7 @@ public class IAHController extends Fragment implements DadosInterface {
 
 
             if(checkBox.isChecked()){
-                json.put(editText.getTag().toString(), editText.getText());
+                json.put(nameTag.get(count), editText.getText().toString());
                 if(checkBox.getTag().toString().equals("Outros")&& !outrosDados.getText().toString().isEmpty()){
                     json.put("iah_fornecidos_outros_observacoes", outrosDados.getText().toString());
                 }else{
@@ -122,8 +134,10 @@ public class IAHController extends Fragment implements DadosInterface {
                 }
 
             }else{
-                json.put(editText.getTag().toString(), 0);
+                json.put(nameTag.get(count), 0);
             }
+
+            count++;
         }
     }
 
@@ -141,11 +155,14 @@ public class IAHController extends Fragment implements DadosInterface {
             final EditText editText = entrada.getValue();
 
             if(checkBox.getTag().toString().equals("Outros") && checkBox.isChecked() && outrosDados.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Você não informou a descrição dos Outros Itens ", Toast.LENGTH_LONG).show();
+
                 outrosDados.requestFocus();
                 return false;
             }
 
             if(checkBox.isChecked() && editText.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Você não informou uma quantide para a opção marcada ", Toast.LENGTH_LONG).show();
                 editText.requestFocus();
                 return  false;
             }

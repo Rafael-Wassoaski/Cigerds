@@ -15,9 +15,13 @@ import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
 import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
+import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.main.SectionsPagerAdapter;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class vistoria2 extends AppCompatActivity {
 
@@ -38,29 +42,42 @@ public class vistoria2 extends AppCompatActivity {
         final JSONObject jsonEnviar =  new JSONObject();;
 
 
+        final List<DadosInterface> fragmentList = new ArrayList<>();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 try {
 
-                    DadosOcorrenciaController dadosOcorrenciaController = (DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0);
-                    DanosHumanosController danosHumanosController = (DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1);
-                    DanosMateriaisController danosMateriaisController = (DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2);
-                    DanosAmbientaisController danosAmbientaisController = (DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3);
-                    DanosEconomicosController danosEconomicosController = (DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4);
-                    IAHController iahController = (IAHController) sectionsPagerAdapter.getRegisteredFragment(5);
+                    fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
+                    fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
+                    fragmentList.add((DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2));
+                    fragmentList.add((DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3));
+                    fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
+                    fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
 
-                    dadosOcorrenciaController.getDados(jsonEnviar);
-                    danosHumanosController.getDados(jsonEnviar);
-                    danosMateriaisController.getDados(jsonEnviar);
-                    danosAmbientaisController.getDados(jsonEnviar);
-                    danosEconomicosController.getDados(jsonEnviar);
-                    iahController.getDados(jsonEnviar);
-                    jsonEnviar.put("autor", 1);
+
+
+                    for(DadosInterface fragmento : fragmentList){
+                        Log.d("Exep", "1");
+                        if(!fragmento.verficaDados()){
+
+                            return;
+                        }
+
+                    }
+
+                    for(DadosInterface fragmento : fragmentList){
+                        Log.d("Json","entrou");
+                      fragmento.getDados(jsonEnviar);
+
+                    }
+                    jsonEnviar.put("autor", "1");
 
                 } catch (Exception e) {
                     Log.d("Exep", e.getLocalizedMessage() + " / " + e.getMessage() + " / " + e.getClass() + " / " + e.getCause());
+
                 }
 
 

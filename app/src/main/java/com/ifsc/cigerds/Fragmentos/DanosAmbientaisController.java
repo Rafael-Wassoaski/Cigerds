@@ -1,7 +1,6 @@
 package com.ifsc.cigerds.Fragmentos;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,10 +90,9 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
 
 
-        Log.d("Json", "b");
 
 
-        if(verficaDados()) {
+
 
 
             if(!danos_ambientais_observacoes.getText().toString().isEmpty()){
@@ -132,7 +130,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
             }
 
-        }
+
 
 
     }
@@ -151,7 +149,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
         if(contamincaoAr.isChecked()){
             if(ArQuant.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Você não informou a quantide de pessoas atingidas", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Você não informou a quantide de pessoas atingidas", Toast.LENGTH_LONG).show();
 
                 ArQuant.requestFocus();
                 return false;
@@ -161,7 +159,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
         if(contamincaoAgua.isChecked()){
             if(AguaQuant.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Você não informou a quantide de pessoas atingidas", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Você não informou a quantide de pessoas atingidas", Toast.LENGTH_LONG).show();
                 AguaQuant.requestFocus();
                 return false;
             }

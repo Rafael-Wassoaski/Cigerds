@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,6 +17,7 @@ import com.ifsc.cigerds.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,7 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.danos_materiais_fragment, container, false);
+        nameTag = new ArrayList<>();
 
         nameTag.add("unidades_habitacionais_atingidas");
         nameTag.add("unidades_habitacionais_danificads");
@@ -128,6 +131,7 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
             final EditText editText = entrada.getValue();
 
             if(checkBox.isChecked() && editText.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Você não informou uma quantide para a opção marcada ", Toast.LENGTH_LONG).show();
                 editText.requestFocus();
                 return  false;
             }

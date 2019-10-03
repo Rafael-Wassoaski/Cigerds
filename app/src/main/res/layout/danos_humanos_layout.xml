@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/danos_humanos_isolados" />
 
     <EditText
-        android:id="@+id/danos_ambientais_observacoes"
+        android:id="@+id/danos_humanos_observacoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -85,7 +85,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_afetados " />
+        app:layout_constraintTop_toBottomOf="@+id/danos_humanos_afetados" />
 
     <CheckBox
         android:id="@+id/desalojados"
@@ -223,7 +223,7 @@
         app:layout_constraintTop_toBottomOf="@+id/danos_humanos_desabrigados" />
 
     <EditText
-        android:id="@+id/danos_humanos_afetados "
+        android:id="@+id/danos_humanos_afetados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

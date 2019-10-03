@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -47,7 +48,7 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
         nameTags.add("danos_humanos_atingidos");
         nameTags.add("danos_humanos_afetados ");
 
-        danos_humanos_observacoes = (EditText)view.findViewById(R.id.danos_humanos_observacoes);
+        danos_humanos_observacoes = view.findViewById(R.id.danos_humanos_observacoes);
         lista.put((CheckBox)view.findViewById(R.id.desalojados),  (EditText)view.findViewById(R.id.danos_humanos_desalojados));
         lista.put((CheckBox)view.findViewById(R.id.desabrigados), (EditText)view.findViewById(R.id.danos_humanos_desabrigados));
         lista.put((CheckBox)view.findViewById(R.id.desaparecidos),  (EditText)view.findViewById(R.id.danos_humanos_desaparecidos));
@@ -94,7 +95,7 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
     public void getDados(JSONObject json) throws JSONException {
 
         Integer count = 0;
-        if(verficaDados()) {
+
 
 
 
@@ -121,7 +122,7 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
 
         }
 
-    }
+
 
     @Override
     public Boolean verficaDados() {
@@ -134,6 +135,7 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
             final EditText editText = entrada.getValue();
 
             if(checkBox.isChecked() && editText.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Você não informou uma quantide para a opção marcada ", Toast.LENGTH_LONG).show();
                 editText.requestFocus();
                 return  false;
             }
