@@ -39,7 +39,7 @@ public class vistoria2 extends AppCompatActivity {
         for(int count = 0; count < 6; count++) {
             sectionsPagerAdapter.instantiateItem(viewPager, count);
         }
-        final JSONObject jsonEnviar =  new JSONObject();;
+        final JSONObject jsonEnviar =  new JSONObject();
 
 
         final List<DadosInterface> fragmentList = new ArrayList<>();
@@ -58,15 +58,13 @@ public class vistoria2 extends AppCompatActivity {
                     fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
 
 
-
                     for(DadosInterface fragmento : fragmentList){
-                        Log.d("Exep", "1");
                         if(!fragmento.verficaDados()){
-
                             return;
                         }
 
                     }
+
 
                     for(DadosInterface fragmento : fragmentList){
                         Log.d("Json","entrou");

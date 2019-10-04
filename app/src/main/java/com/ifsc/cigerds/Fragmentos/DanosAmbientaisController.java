@@ -113,7 +113,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
             if(contamincaoSolo.isChecked()) {
 
-                json.put("contaminacao_solo", SoloQuant.getText().toString());
+                json.put("contaminacao_solo", SoloQuant.getText());
             }else{
                 json.put("contaminacao_solo", 0);
             }
@@ -124,7 +124,7 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
             if(contamincaoAr.isChecked()) {
 
-                json.put("contaminacao_ar", ArQuant.getText().toString());
+                json.put("contaminacao_ar", ArQuant.getText());
             }else{
                 json.put("contaminacao_ar", 0);
 

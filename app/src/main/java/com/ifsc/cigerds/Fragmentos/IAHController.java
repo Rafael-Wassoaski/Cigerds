@@ -128,7 +128,7 @@ public class IAHController extends Fragment implements DadosInterface {
             if(checkBox.isChecked()){
                 json.put(nameTag.get(count), editText.getText().toString());
                 if(checkBox.getTag().toString().equals("Outros")&& !outrosDados.getText().toString().isEmpty()){
-                    json.put("iah_fornecidos_outros_observacoes", outrosDados.getText().toString());
+                    json.put("iah_fornecidos_outros_observacoes", outrosDados.getText());
                 }else{
                     json.put("iah_fornecidos_outros_observacoes", "Sem Observações");
                 }
@@ -154,7 +154,7 @@ public class IAHController extends Fragment implements DadosInterface {
             CheckBox checkBox = entrada.getKey();
             final EditText editText = entrada.getValue();
 
-            if(checkBox.getTag().toString().equals("Outros") && checkBox.isChecked() && outrosDados.getText().toString().isEmpty()){
+            if(checkBox.getText().toString().equals("Outros") && checkBox.isChecked() && outrosDados.getText().toString().isEmpty()){
                 Toast.makeText(getContext(), "Você não informou a descrição dos Outros Itens ", Toast.LENGTH_LONG).show();
 
                 outrosDados.requestFocus();

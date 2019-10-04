@@ -97,7 +97,7 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
             final EditText editText = entrada.getValue();
 
             if(checkBox.isChecked()){
-                json.put(nameTag.get(count), editText.getText().toString());
+                json.put(nameTag.get(count), editText.getText());
 
             }else{
                 json.put(nameTag.get(count), 0);
