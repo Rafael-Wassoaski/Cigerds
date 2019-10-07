@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.ifsc.cigerds.DB.Banco;
 import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
 import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
 import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
@@ -40,6 +41,8 @@ public class vistoria2 extends AppCompatActivity {
             sectionsPagerAdapter.instantiateItem(viewPager, count);
         }
         final JSONObject jsonEnviar =  new JSONObject();
+
+        Banco banco  = new Banco(this, "vistorias.db", null, 1);
 
 
         final List<DadosInterface> fragmentList = new ArrayList<>();
