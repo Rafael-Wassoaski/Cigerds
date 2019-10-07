@@ -1,52 +1,90 @@
 package com.ifsc.cigerds;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
+import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.ifsc.cigerds.Classes.Localizador;
-import com.ifsc.cigerds.Classes.PagerAdapter;
+import com.ifsc.cigerds.DB.Banco;
+import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
+import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
+import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
+import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
+import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
+import com.ifsc.cigerds.Fragmentos.IAHController;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
+import com.ifsc.cigerds.main.SectionsPagerAdapter;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-
+import java.util.List;
 
 public class Vistoria extends AppCompatActivity {
-
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private ArrayList<DadosInterface> fragmentos = new ArrayList<DadosInterface>();
-    private FusedLocationProviderClient fusedLocationClient;
-    private Localizador localizador = new Localizador(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vistoria);
-        final Context context = new ContextThemeWrapper(this, R.style.TabAppTheme);
+        setContentView(R.layout.activity_vistoria2);
+        final SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), getResources().getStringArray(R.array.titlesTabs));
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        for(int count = 0; count < 6; count++) {
+            sectionsPagerAdapter.instantiateItem(viewPager, count);
+        }
+        final JSONObject jsonEnviar =  new JSONObject();
+
+        Banco banco  = new Banco(this, "vistorias.db", null, 1);
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        final List<DadosInterface> fragmentList = new ArrayList<>();
 
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter pager = new PagerAdapter(getSupportFragmentManager(), getResources().getStringArray(R.array.titlesTabs));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        viewPager.setAdapter(pager);
+                try {
 
-        tabLayout.setupWithViewPager(viewPager);
-        final FloatingActionButton fab = findViewById(R.id.fab);
+                    fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
+                    fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
+                    fragmentList.add((DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2));
+                    fragmentList.add((DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3));
+                    fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
+                    fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
 
 
+                    for(DadosInterface fragmento : fragmentList){
+                        if(!fragmento.verficaDados()){
+                            return;
+                        }
+
+                    }
+
+
+                    for(DadosInterface fragmento : fragmentList){
+                        Log.d("Json","entrou");
+                      fragmento.getDados(jsonEnviar);
+
+                    }
+                    jsonEnviar.put("autor", "1");
+
+                } catch (Exception e) {
+                    Log.d("Exep", e.getLocalizedMessage() + " / " + e.getMessage() + " / " + e.getClass() + " / " + e.getCause());
+
+                }
+
+
+                Log.d("Json",jsonEnviar.toString());
+
+            }
+        });
     }
 }
