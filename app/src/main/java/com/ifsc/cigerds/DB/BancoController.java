@@ -2,6 +2,7 @@ package com.ifsc.cigerds.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -18,6 +19,24 @@ public class BancoController {
     public  BancoController(Context context){
         banco = new Banco(context);
     }
+
+
+    public Cursor buscarDados(){
+        Cursor cursor;
+        String[] campos ={"_id", "autor"};
+        dataBase = banco.getReadableDatabase();
+        cursor = dataBase.query("vistoria", campos,null, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+
+        return cursor;
+
+
+    }
+
+
 
     public Boolean insereDados(JSONObject json){
 

@@ -10,12 +10,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.ifsc.cigerds.DB.BancoController;
-import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
-import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
-import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
-import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
-import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
-import com.ifsc.cigerds.Fragmentos.IAHController;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.main.SectionsPagerAdapter;
 
@@ -53,40 +47,43 @@ public class Vistoria extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                try {
-
-                    fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
-                    fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
-                    fragmentList.add((DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2));
-                    fragmentList.add((DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3));
-                    fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
-                    fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
+                Log.d("Resultado", bancoController.buscarDados().toString());
 
 
-                    for(DadosInterface fragmento : fragmentList){
-                        if(!fragmento.verficaDados()){
-                            return;
-                        }
-
-                    }
-
-
-                    for(DadosInterface fragmento : fragmentList){
-                        Log.d("Json","entrou");
-                      fragmento.getDados(jsonEnviar);
-
-                    }
-                    jsonEnviar.put("autor", "1");
-                    bancoController.insereDados(jsonEnviar);
-
-                } catch (Exception e) {
-                    Log.d("Exep", e.getLocalizedMessage() + " / " + e.getMessage() + " / " + e.getClass() + " / " + e.getCause());
-
-                }
-
-
-                Log.d("Json",jsonEnviar.toString());
-
+//                try {
+//
+//                    fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
+//                    fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
+//                    fragmentList.add((DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2));
+//                    fragmentList.add((DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3));
+//                    fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
+//                    fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
+//
+//
+//                    for(DadosInterface fragmento : fragmentList){
+//                        if(!fragmento.verficaDados()){
+//                            return;
+//                        }
+//
+//                    }
+//
+//
+//                    for(DadosInterface fragmento : fragmentList){
+//                        Log.d("Json","entrou");
+//                      fragmento.getDados(jsonEnviar);
+//
+//                    }
+//                    jsonEnviar.put("autor", "1");
+//                    bancoController.insereDados(jsonEnviar);
+//
+//                } catch (Exception e) {
+//                    Log.d("Exep", e.getLocalizedMessage() + " / " + e.getMessage() + " / " + e.getClass() + " / " + e.getCause());
+//
+//                }
+//
+//
+//                Log.d("Json",jsonEnviar.toString());
+//
             }
         });
     }
