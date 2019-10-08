@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.ifsc.cigerds.DB.Banco;
+import com.ifsc.cigerds.DB.BancoController;
 import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
 import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
 import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
@@ -36,13 +36,15 @@ public class Vistoria extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
+        final BancoController bancoController = new BancoController(getBaseContext());
 
         for(int count = 0; count < 6; count++) {
             sectionsPagerAdapter.instantiateItem(viewPager, count);
         }
         final JSONObject jsonEnviar =  new JSONObject();
 
-        Banco banco  = new Banco(this, "vistorias.db", null, 1);
+
+
 
 
         final List<DadosInterface> fragmentList = new ArrayList<>();
@@ -75,6 +77,7 @@ public class Vistoria extends AppCompatActivity {
 
                     }
                     jsonEnviar.put("autor", "1");
+                    bancoController.insereDados(jsonEnviar);
 
                 } catch (Exception e) {
                     Log.d("Exep", e.getLocalizedMessage() + " / " + e.getMessage() + " / " + e.getClass() + " / " + e.getCause());
