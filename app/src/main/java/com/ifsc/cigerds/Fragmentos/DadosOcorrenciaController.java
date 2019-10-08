@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.ifsc.cigerds.Classes.Localizador;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -70,13 +72,15 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-
+        Localizador localizador= new Localizador(getActivity());
 
            json.put("cobrad", cobrad.getText().toString());
            json.put("municipio", municipioSpinner.getSelectedItem().toString());
            json.put("data", dataTextview.getText().toString());
            json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
+           json.put("latitude", localizador.getLocationLat());
+           json.put("longitude", localizador.getLocationLong());
 
 
 

@@ -2,6 +2,7 @@ package com.ifsc.cigerds.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -19,6 +20,23 @@ public class BancoController {
         banco = new Banco(context);
     }
 
+
+    public Cursor testeSQL(){
+        Cursor cursor;
+
+        String[] campos ={"_id", "autor"};
+        dataBase = banco.getReadableDatabase();
+        cursor = dataBase.query("vistoria", campos, null, null, null, null, null, null);
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        dataBase.close();
+        return cursor;
+
+
+
+    }
+
     public Boolean insereDados(JSONObject json){
 
 
@@ -27,6 +45,7 @@ public class BancoController {
 
         long resultado;
         ContentValues linhasTable;
+
 
         dataBase = banco.getWritableDatabase();
 
@@ -38,12 +57,14 @@ public class BancoController {
             try {
                 Log.d("JSONDB", chave + " : " + json.get(chave).toString());
                 linhasTable.put(chave, json.get(chave).toString());
+
             } catch (JSONException e) {
                 Log.d("JSONDB", e.getClass() + " / " + e.getMessage());
                 e.printStackTrace();
             }
 
         }
+        dataBase.close();
         return false;
     }
 }

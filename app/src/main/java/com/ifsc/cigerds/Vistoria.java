@@ -79,6 +79,9 @@ public class Vistoria extends AppCompatActivity {
                     jsonEnviar.put("autor", "1");
                     bancoController.insereDados(jsonEnviar);
 
+//                    Log.d("Resposta", bancoController.testeSQL().toString());
+
+
                 } catch (Exception e) {
                     Log.d("Exep", e.getLocalizedMessage() + " / " + e.getMessage() + " / " + e.getClass() + " / " + e.getCause());
 
