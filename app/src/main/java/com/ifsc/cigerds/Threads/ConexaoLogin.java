@@ -1,30 +1,52 @@
 package com.ifsc.cigerds.Threads;
 
+import android.icu.util.Output;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
 import java.net.Socket;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ConexaoLogin extends AsyncTask<Boolean, Boolean, Boolean> {
 
-    private String email;
-    private String pass;
-    public AsyncInterface resultBoolean = null;
 
-    public ConexaoLogin(String email, String pass) {
-        this.email = email;
-        this.pass = pass;
+    public AsyncInterface resultBoolean = null;
+    private Map<String, String> postDataParams;
+    public ConexaoLogin(String name, String pass) {
+              postDataParams = new HashMap<>();
+              postDataParams.put("name", name);
+              postDataParams.put("password", pass);
+
     }
 
 
     @Override
     protected Boolean doInBackground(Boolean... booleans) {
         try {
+
+            URL url = new URL("http://testestccii.pythonanywhere.com/ws/loginmobile/");
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+            writer.write();
+
 
 
             Socket conexao  = new Socket("192.168.0.107", 6666);

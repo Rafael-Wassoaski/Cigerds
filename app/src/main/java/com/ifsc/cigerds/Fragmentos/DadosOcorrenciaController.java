@@ -74,13 +74,15 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
         Localizador localizador= new Localizador(getActivity());
 
+
            json.put("cobrad", cobrad.getText().toString());
            json.put("municipio", municipioSpinner.getSelectedItem().toString());
            json.put("data", dataTextview.getText().toString());
            json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
-           json.put("latitude", localizador.getLocationLat());
-           json.put("longitude", localizador.getLocationLong());
+           String [] latiudeLongitude = localizador.getLocation().split(":");
+           json.put("latitude", latiudeLongitude[0]);
+           json.put("longitude", latiudeLongitude[1]);
 
 
 
