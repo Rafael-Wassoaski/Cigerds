@@ -1,6 +1,8 @@
 package com.ifsc.cigerds.Interfaces;
 
+import org.json.JSONObject;
+
 public interface AsyncInterface {
 
-    void processFinish(Boolean result);
+    void processFinish(JSONObject result);
 }

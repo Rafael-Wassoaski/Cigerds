@@ -1,28 +1,48 @@
 package com.ifsc.cigerds.Threads;
 
-import android.icu.util.Output;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.Socket;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
-public class ConexaoLogin extends AsyncTask<Boolean, Boolean, Boolean> {
+import javax.net.ssl.HttpsURLConnection;
+
+public class ConexaoLogin extends AsyncTask<Boolean, JSONObject, JSONObject> {
+
+    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for(Map.Entry<String, String> entry : params.entrySet()){
+            if (first)
+                first = false;
+            else
+                result.append("&");
+
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+        }
+
+        return result.toString();
+    }
 
 
     public AsyncInterface resultBoolean = null;
-    private Map<String, String> postDataParams;
+    private HashMap<String, String> postDataParams;
     public ConexaoLogin(String name, String pass) {
               postDataParams = new HashMap<>();
               postDataParams.put("name", name);
@@ -32,7 +52,10 @@ public class ConexaoLogin extends AsyncTask<Boolean, Boolean, Boolean> {
 
 
     @Override
-    protected Boolean doInBackground(Boolean... booleans) {
+    protected JSONObject doInBackground(Boolean... booleans) {
+
+
+        JSONObject resposta = null;
         try {
 
             URL url = new URL("http://testestccii.pythonanywhere.com/ws/loginmobile/");
@@ -45,44 +68,46 @@ public class ConexaoLogin extends AsyncTask<Boolean, Boolean, Boolean> {
 
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
-            writer.write();
+            writer.write(getPostDataString(postDataParams));
+            writer.flush();
+            writer.close();
+            os.close();
+
+            int responseCode=conn.getResponseCode();
+            String responseString = "";
 
 
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                String line = null;
+                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line=br.readLine()) != null) {
+                    responseString+=line;
 
-            Socket conexao  = new Socket("192.168.0.107", 6666);
+                }
+            }
+            else {
+                responseString="";
 
-            PrintWriter envio = new PrintWriter(conexao.getOutputStream(), true);
-            envio.println(email+":"+pass);
-
-            Scanner scanner = new Scanner(conexao.getInputStream());
-
-            String resposta = scanner.nextLine();
-
-
-
-            conexao.close();
-
-            if(resposta.equals("2000")){
-                return true;
-            }else{
-                return false;
             }
 
-
-
-
-        } catch (IOException e) {
-            Log.d("Aguardo", e.getClass() + " "+e.getMessage());
-            //Toast.makeText(, "Erro ao estabeler conexao", Toast.LENGTH_SHORT );
-            e.printStackTrace();
+            resposta = new JSONObject(responseString);
+        } catch (Exception e) {
+            Log.d("Resposta", e.getMessage());
         }
 
 
-        return false;
+
+
+
+
+
+
+
+        return resposta;
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(JSONObject result) {
         Log.d("Aguardo", result.toString());
         resultBoolean.processFinish(result);
     }
