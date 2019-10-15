@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
         String password= prefs.getString("password", null);
 
         if(autoLogin()){
+            setResult(RESULT_OK);
             finishActivity();
         }
 
@@ -90,8 +91,9 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
                 editor.putString("login", emailEditText.getText().toString());
                 editor.putString("password", passEditText.getText().toString());
                 editor.putString("userId", result.get("id").toString());
-                editor.putInt("idControle", Integer.parseInt(result.get("idControle").toString()));
                 editor.commit();
+                setResult(RESULT_OK);
+                finish();
 
 
 

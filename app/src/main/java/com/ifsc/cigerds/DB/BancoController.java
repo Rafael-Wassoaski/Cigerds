@@ -33,8 +33,7 @@ public class BancoController {
 
 
         while (cursor.moveToNext()) {
-            Log.d("Resposta", " a");
-            String string = cursor.getString(1);
+            String string = cursor.getString(2);
             Log.d("Resposta", string + " a");
         }
 

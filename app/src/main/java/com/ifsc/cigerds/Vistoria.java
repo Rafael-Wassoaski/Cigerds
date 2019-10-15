@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.DB.BancoController;
 import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
 import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
@@ -82,19 +83,15 @@ public class Vistoria extends AppCompatActivity {
 
                     }
 
-                    jsonEnviar.put("autor", 1);
-
-                    int idControle =  prefs.getInt("idControle", 0)+1;
-                    SharedPreferences.Editor editor = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE).edit();
-                   // jsonEnviar.put("idControle", idControle);
-                   // editor.putInt("idControle",idControle);
+                    jsonEnviar.put("autor", Integer.parseInt(prefs.getString("id", "0")));
 
 
-                   bancoController.insereDados(jsonEnviar);
+                    if(Network.VerificaConexao()) {
 
-                 //  bancoController.testeSQL();
-
-                    Log.d("BancoCheck", ""+bancoController.checkDataBase());
+                    }else {
+                        bancoController.insereDados(jsonEnviar);
+                        bancoController.testeSQL();
+                    }
 
 
                 } catch (Exception e) {
