@@ -1,5 +1,6 @@
 package com.ifsc.cigerds;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,9 @@ import java.util.List;
 
 public class Vistoria extends AppCompatActivity {
 
+    private final String NOME_PREFERENCE = "262114a72D&@5aa!!@FA";
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,7 @@ public class Vistoria extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
         final BancoController bancoController = new BancoController(getBaseContext());
+        prefs = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE);
 
         for(int count = 0; count < 6; count++) {
             sectionsPagerAdapter.instantiateItem(viewPager, count);
@@ -72,17 +77,28 @@ public class Vistoria extends AppCompatActivity {
 
 
                     for(DadosInterface fragmento : fragmentList){
-                        Log.d("Json","entrou");
+
                       fragmento.getDados(jsonEnviar);
 
                     }
-                    jsonEnviar.put("autor", "1");
-                    bancoController.insereDados(jsonEnviar);
 
-//                    Log.d("Resposta", bancoController.testeSQL().toString());
+                    jsonEnviar.put("autor", 1);
+
+                    int idControle =  prefs.getInt("idControle", 0)+1;
+                    SharedPreferences.Editor editor = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE).edit();
+                   // jsonEnviar.put("idControle", idControle);
+                   // editor.putInt("idControle",idControle);
+
+
+                   bancoController.insereDados(jsonEnviar);
+
+                 //  bancoController.testeSQL();
+
+                    Log.d("BancoCheck", ""+bancoController.checkDataBase());
 
 
                 } catch (Exception e) {
+
                     Log.d("Exep", e.getLocalizedMessage() + " / " + e.getMessage() + " / " + e.getClass() + " / " + e.getCause());
 
                 }

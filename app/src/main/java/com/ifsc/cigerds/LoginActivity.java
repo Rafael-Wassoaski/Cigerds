@@ -89,7 +89,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
                 SharedPreferences.Editor editor = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE).edit();
                 editor.putString("login", emailEditText.getText().toString());
                 editor.putString("password", passEditText.getText().toString());
-                editor.putInt("userId", Integer.parseInt(result.get("id").toString()));
+                editor.putString("userId", result.get("id").toString());
+                editor.putInt("idControle", Integer.parseInt(result.get("idControle").toString()));
                 editor.commit();
 
 
