@@ -19,6 +19,7 @@ import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
+import com.ifsc.cigerds.Threads.ConexaoEnvio;
 import com.ifsc.cigerds.main.SectionsPagerAdapter;
 
 import org.json.JSONObject;
@@ -58,7 +59,7 @@ public class Vistoria extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.d("IDUSER", prefs.getString("userId", "0").toString());
                 try {
 
                     fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
@@ -83,12 +84,16 @@ public class Vistoria extends AppCompatActivity {
 
                     }
 
-                    jsonEnviar.put("autor", Integer.parseInt(prefs.getString("id", "0")));
 
 
-                    if(Network.VerificaConexao()) {
+
+                    if(Network.VerificaConexao(getBaseContext())) {
+                        jsonEnviar.put("autor", Integer.parseInt(prefs.getString("userId", "1")));
+                        ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar);
+                        envio.execute();
 
                     }else {
+
                         bancoController.insereDados(jsonEnviar);
                         bancoController.testeSQL();
                     }

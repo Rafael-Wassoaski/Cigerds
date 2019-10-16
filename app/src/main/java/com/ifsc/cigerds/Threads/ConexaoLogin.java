@@ -4,11 +4,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
+import com.ifsc.cigerds.MainActivity;
 
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -58,7 +60,7 @@ public class ConexaoLogin extends AsyncTask<Boolean, JSONObject, JSONObject> {
         JSONObject resposta = null;
         try {
 
-            URL url = new URL("http://testestccii.pythonanywhere.com/ws/loginmobile/");
+            URL url = new URL(MainActivity.PROVEDOR+"loginmobile/");
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setReadTimeout(15000);
             conn.setConnectTimeout(15000);
@@ -66,7 +68,7 @@ public class ConexaoLogin extends AsyncTask<Boolean, JSONObject, JSONObject> {
             conn.setDoInput(true);
             conn.setDoOutput(true);
 
-            OutputStream os = conn.getOutputStream();
+            DataOutputStream os = new DataOutputStream(conn.getOutputStream());
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
             writer.write(getPostDataString(postDataParams));
             writer.flush();

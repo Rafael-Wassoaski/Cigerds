@@ -6,13 +6,8 @@ import android.net.NetworkInfo;
 
 public class Network {
 
-    private static Context context;
 
-    public Network(Context context){
-        this.context = context;
-    }
-
-    public static boolean VerificaConexao(){
+    public static boolean VerificaConexao(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
