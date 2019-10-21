@@ -1,6 +1,7 @@
 package com.ifsc.cigerds.Threads;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 
 public class ConexaoLogin extends AsyncTask<Boolean, JSONObject, JSONObject> {
 
@@ -61,7 +63,13 @@ public class ConexaoLogin extends AsyncTask<Boolean, JSONObject, JSONObject> {
         try {
 
             URL url = new URL(MainActivity.PROVEDOR+"loginmobile/");
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null,null, new java.security.SecureRandom());
+            conn.setSSLSocketFactory(sslContext.getSocketFactory());
+
+
             conn.setReadTimeout(15000);
             conn.setConnectTimeout(15000);
             conn.setRequestMethod("POST");

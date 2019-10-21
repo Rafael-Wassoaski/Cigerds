@@ -84,12 +84,9 @@ public class Vistoria extends AppCompatActivity {
 
                     }
 
-
-
-
                     if(Network.VerificaConexao(getBaseContext())) {
                         jsonEnviar.put("autor", Integer.parseInt(prefs.getString("userId", "1")));
-                        ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar);
+                        ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
                         envio.execute();
 
                     }else {

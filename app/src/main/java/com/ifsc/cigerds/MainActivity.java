@@ -7,7 +7,7 @@ import android.os.Bundle;
 public class MainActivity extends Activity {
 
     private Intent intent;
-    final public static String PROVEDOR = "http://testestccii.pythonanywhere.com/ws/";
+    final public static String PROVEDOR = "https://testestccii.pythonanywhere.com/ws/";
 
 
     @Override

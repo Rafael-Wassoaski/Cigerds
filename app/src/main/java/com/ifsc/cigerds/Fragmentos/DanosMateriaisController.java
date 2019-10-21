@@ -100,9 +100,9 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
 
         Integer count = 0;
         if(!danos_materiais_observacoes.getText().toString().isEmpty()){
-            json.put("danos_humanos_observacoes", danos_materiais_observacoes.getText().toString());
+            json.put("danos_materiais_observacoes", danos_materiais_observacoes.getText().toString());
         }else{
-            json.put("danos_humanos_observacoes", "Sem obeservações");
+            json.put("danos_materiais_observacoes", "Sem obeservações");
         }
 
         for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
