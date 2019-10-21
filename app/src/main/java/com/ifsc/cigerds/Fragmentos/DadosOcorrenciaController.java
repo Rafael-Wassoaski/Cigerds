@@ -62,9 +62,9 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         calender.setTime(data);
         Date dataAtual = calender.getTime();
         SimpleDateFormat horaAtual = new SimpleDateFormat("HH:mm:ss");
-        SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        dataTextview.setText((String)dataFormat.format(dataAtual) +" : " + (String)horaAtual.format(dataAtual));
+        dataTextview.setText((String)dataFormat.format(dataAtual) +" " + (String)horaAtual.format(dataAtual));
 
         return view;
     }
