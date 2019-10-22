@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -21,21 +22,44 @@ public class BancoController {
     }
 
 
-    public Cursor buscarDados(){
-        Cursor cursor;
-        String[] campos ={"_id", "autor"};
-        dataBase = banco.getReadableDatabase();
-        cursor = dataBase.query("vistoria", campos,null, null, null, null, null, null);
 
-        if(cursor!=null){
-            cursor.moveToFirst();
+    public void testeSQL(){
+        Cursor cursor = null;
+    try {
+
+
+        String query = "SELECT * FROM vistoria";
+        dataBase = banco.getReadableDatabase();
+        cursor = dataBase.rawQuery(query, null);
+
+
+        while (cursor.moveToNext()) {
+            String string = cursor.getString(2);
+            Log.d("Resposta", string + " a");
         }
 
-        return cursor;
+        dataBase.close();
+
+    }catch (Exception e){
+        Log.d("Exep", e.getMessage().toString());
+    }
+
 
 
     }
 
+
+    public boolean checkDataBase() {
+        SQLiteDatabase checkDB = null;
+        try {
+            checkDB = SQLiteDatabase.openDatabase(Banco.BancoEntry.NOME_BANCO, null,
+                    SQLiteDatabase.OPEN_READONLY);
+            checkDB.close();
+        } catch (SQLiteException e) {
+            // database doesn't exist yet.
+        }
+        return checkDB != null;
+    }
 
 
     public Boolean insereDados(JSONObject json){
@@ -47,6 +71,7 @@ public class BancoController {
         long resultado;
         ContentValues linhasTable;
 
+
         dataBase = banco.getWritableDatabase();
 
         linhasTable = new ContentValues();
@@ -56,13 +81,20 @@ public class BancoController {
 
             try {
                 Log.d("JSONDB", chave + " : " + json.get(chave).toString());
-                linhasTable.put(chave, json.get(chave).toString());
+
+                if(chave.equals("idControle")){
+                    linhasTable.put("idControle", Integer .parseInt(json.get(chave).toString()));
+                }else {
+                    linhasTable.put(chave, json.get(chave).toString());
+                }
             } catch (JSONException e) {
                 Log.d("JSONDB", e.getClass() + " / " + e.getMessage());
                 e.printStackTrace();
             }
 
         }
+        long newRowId = dataBase.insert("vistoria", null, linhasTable);
+        dataBase.close();
         return false;
     }
 }

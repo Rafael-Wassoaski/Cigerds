@@ -14,7 +14,7 @@ import androidx.core.app.ActivityCompat;
 public class Localizador implements LocationListener {
 
     private Activity contexto;
-    private String locationLat, locationLong;
+    private String locationLat , locationLong ;
     private LocationManager manager;
 
     public Localizador(Activity contexto){

@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.ifsc.cigerds.Classes.Localizador;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,9 +62,9 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         calender.setTime(data);
         Date dataAtual = calender.getTime();
         SimpleDateFormat horaAtual = new SimpleDateFormat("HH:mm:ss");
-        SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        dataTextview.setText((String)dataFormat.format(dataAtual) +" : " + (String)horaAtual.format(dataAtual));
+        dataTextview.setText((String)dataFormat.format(dataAtual) +" " + (String)horaAtual.format(dataAtual));
 
         return view;
     }
@@ -70,6 +72,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
+        Localizador localizador= new Localizador(getActivity());
 
 
            json.put("cobrad", cobrad.getText().toString());
@@ -77,6 +80,9 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
            json.put("data", dataTextview.getText().toString());
            json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
+           String [] latiudeLongitude = localizador.getLocation().split(":");
+           json.put("latitude", latiudeLongitude[0]);
+           json.put("longitude", latiudeLongitude[1]);
 
 
 

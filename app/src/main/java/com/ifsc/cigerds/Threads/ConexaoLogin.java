@@ -1,66 +1,123 @@
 package com.ifsc.cigerds.Threads;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
+import com.ifsc.cigerds.MainActivity;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.Scanner;
+import org.json.JSONObject;
 
-public class ConexaoLogin extends AsyncTask<Boolean, Boolean, Boolean> {
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
-    private String email;
-    private String pass;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+
+public class ConexaoLogin extends AsyncTask<Boolean, JSONObject, JSONObject> {
+
+    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for(Map.Entry<String, String> entry : params.entrySet()){
+            if (first)
+                first = false;
+            else
+                result.append("&");
+
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+        }
+
+        return result.toString();
+    }
+
+
     public AsyncInterface resultBoolean = null;
+    private HashMap<String, String> postDataParams;
+    public ConexaoLogin(String name, String pass) {
+              postDataParams = new HashMap<>();
+              postDataParams.put("name", name);
+              postDataParams.put("password", pass);
 
-    public ConexaoLogin(String email, String pass) {
-        this.email = email;
-        this.pass = pass;
     }
 
 
     @Override
-    protected Boolean doInBackground(Boolean... booleans) {
+    protected JSONObject doInBackground(Boolean... booleans) {
+
+
+        JSONObject resposta = null;
         try {
 
+            URL url = new URL(MainActivity.PROVEDOR+"loginmobile/");
+            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
 
-            Socket conexao  = new Socket("192.168.0.107", 6666);
-
-            PrintWriter envio = new PrintWriter(conexao.getOutputStream(), true);
-            envio.println(email+":"+pass);
-
-            Scanner scanner = new Scanner(conexao.getInputStream());
-
-            String resposta = scanner.nextLine();
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null,null, new java.security.SecureRandom());
+            conn.setSSLSocketFactory(sslContext.getSocketFactory());
 
 
+            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
 
-            conexao.close();
+            DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+            writer.write(getPostDataString(postDataParams));
+            writer.flush();
+            writer.close();
+            os.close();
 
-            if(resposta.equals("2000")){
-                return true;
-            }else{
-                return false;
+            int responseCode=conn.getResponseCode();
+            String responseString = "";
+
+
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                String line = null;
+                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line=br.readLine()) != null) {
+                    responseString+=line;
+
+                }
+            }
+            else {
+                responseString="";
+
             }
 
-
-
-
-        } catch (IOException e) {
-            Log.d("Aguardo", e.getClass() + " "+e.getMessage());
-            //Toast.makeText(, "Erro ao estabeler conexao", Toast.LENGTH_SHORT );
-            e.printStackTrace();
+            resposta = new JSONObject(responseString);
+        } catch (Exception e) {
+            Log.d("Resposta", e.getMessage());
         }
 
 
-        return false;
+
+
+
+
+
+
+
+        return resposta;
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(JSONObject result) {
         Log.d("Aguardo", result.toString());
         resultBoolean.processFinish(result);
     }
