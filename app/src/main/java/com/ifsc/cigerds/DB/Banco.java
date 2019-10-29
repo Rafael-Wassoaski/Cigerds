@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -106,5 +105,10 @@ public class Banco extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
         onCreate(sqLiteDatabase);
+    }
+
+    public void deletar(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM vistoria");
     }
 }

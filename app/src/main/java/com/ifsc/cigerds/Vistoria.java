@@ -83,16 +83,13 @@ public class Vistoria extends AppCompatActivity {
                       fragmento.getDados(jsonEnviar);
 
                     }
-
+                    jsonEnviar.put("autor", Integer.parseInt(prefs.getString("userId", "1")));
                     if(Network.VerificaConexao(getBaseContext())) {
-                        jsonEnviar.put("autor", Integer.parseInt(prefs.getString("userId", "1")));
                         ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
                         envio.execute();
-
                     }else {
-
                         bancoController.insereDados(jsonEnviar);
-                        bancoController.testeSQL();
+
                     }
 
 

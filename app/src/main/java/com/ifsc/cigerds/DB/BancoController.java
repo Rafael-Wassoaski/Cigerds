@@ -22,6 +22,30 @@ public class BancoController {
     }
 
 
+    public JSONObject createJSON(){
+        JSONObject principal = new JSONObject();
+        JSONObject parte;
+
+
+        dataBase = banco.getReadableDatabase();
+        Cursor cursor = dataBase.rawQuery("SELECT * FROM vistoria", null);
+        try {
+        for(int vistoria = 0; vistoria < cursor.getCount(); vistoria++){
+            cursor.moveToNext();
+            parte = new JSONObject();
+            for(int collumName = 1; collumName < cursor.getColumnCount(); collumName++){
+                    parte.put(cursor.getColumnName(collumName), cursor.getString(collumName));
+            }
+            principal.put("Vistoria"+vistoria, parte);
+        }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return principal;
+    }
+
+
     public void testeSQL(){
         Cursor cursor = null;
     try {
@@ -33,7 +57,7 @@ public class BancoController {
 
 
         while (cursor.moveToNext()) {
-            String string = cursor.getString(2);
+            String string = cursor.getString(1);
             Log.d("Resposta", string + " a");
         }
 
