@@ -46,6 +46,7 @@ public class BancoController {
     }
 
 
+
     public void testeSQL(){
         Cursor cursor = null;
     try {
@@ -71,6 +72,7 @@ public class BancoController {
 
     }
 
+
     public boolean checkDataBase() {
         SQLiteDatabase checkDB = null;
         try {
@@ -82,6 +84,7 @@ public class BancoController {
         }
         return checkDB != null;
     }
+
 
     public Boolean insereDados(JSONObject json){
 

@@ -12,12 +12,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.DB.BancoController;
-import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
-import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
-import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
-import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
-import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
-import com.ifsc.cigerds.Fragmentos.IAHController;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.Threads.ConexaoEnvio;
 import com.ifsc.cigerds.main.SectionsPagerAdapter;
@@ -59,6 +53,7 @@ public class Vistoria extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Log.d("IDUSER", prefs.getString("userId", "0").toString());
                 try {
 
@@ -101,6 +96,11 @@ public class Vistoria extends AppCompatActivity {
 
 
                 Log.d("Json",jsonEnviar.toString());
+
+
+
+                Log.d("Resultado", bancoController.buscarDados().toString());
+
 
             }
         });
