@@ -1,5 +1,6 @@
 package com.ifsc.cigerds;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,10 +13,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.DB.BancoController;
+import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
+import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
+import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
+import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
+import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
+import com.ifsc.cigerds.Fragmentos.IAHController;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.Threads.ConexaoEnvio;
 import com.ifsc.cigerds.main.SectionsPagerAdapter;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -25,6 +33,8 @@ public class Vistoria extends AppCompatActivity {
 
     private final String NOME_PREFERENCE = "262114a72D&@5aa!!@FA";
     private SharedPreferences prefs;
+    static private String latitude, longitude;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +64,8 @@ public class Vistoria extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+
                 Log.d("IDUSER", prefs.getString("userId", "0").toString());
                 try {
 
@@ -78,7 +90,14 @@ public class Vistoria extends AppCompatActivity {
                       fragmento.getDados(jsonEnviar);
 
                     }
+
+                    while(latitude+":"+longitude == "null:null");
+                    Log.d("Atividade", latitude+":"+longitude);
+                    jsonEnviar.put("latitude", latitude);
+                    jsonEnviar.put("longitude", longitude);
+
                     jsonEnviar.put("autor", Integer.parseInt(prefs.getString("userId", "1")));
+                    //envio
                     if(Network.VerificaConexao(getBaseContext())) {
                         ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
                         envio.execute();
@@ -97,12 +116,17 @@ public class Vistoria extends AppCompatActivity {
 
                 Log.d("Json",jsonEnviar.toString());
 
-
-
-                Log.d("Resultado", bancoController.buscarDados().toString());
-
-
             }
         });
     }
+
+
+
+
+    public static void get(String latitudePro, String longitudePro){
+        latitude = latitudePro;
+        longitude = longitudePro;
+
+    }
+
 }

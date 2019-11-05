@@ -1,6 +1,7 @@
 package com.ifsc.cigerds.Fragmentos;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.ifsc.cigerds.Classes.Localizador;
+import com.ifsc.cigerds.Classes.LocalizadorFused;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
@@ -72,7 +74,6 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-        Localizador localizador= new Localizador(getActivity());
 
 
            json.put("cobrad", cobrad.getText().toString());
@@ -80,9 +81,8 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
            json.put("data", dataTextview.getText().toString());
            json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
-           String [] latiudeLongitude = localizador.getLocation().split(":");
-           json.put("latitude", latiudeLongitude[0]);
-           json.put("longitude", latiudeLongitude[1]);
+           LocalizadorFused fused = new LocalizadorFused(getActivity());
+           fused.getLocation();
 
 
 
