@@ -107,6 +107,11 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
 
     }
 
+    @Override
+    public String getResumo() {
+        return null;
+    }
+
 
     @Override
     public Boolean verficaDados() {

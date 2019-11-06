@@ -129,6 +129,11 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
     }
 
     @Override
+    public String getResumo() {
+        return null;
+    }
+
+    @Override
     public Boolean verficaDados(){
 
         if(contamincaoSolo.isChecked()){

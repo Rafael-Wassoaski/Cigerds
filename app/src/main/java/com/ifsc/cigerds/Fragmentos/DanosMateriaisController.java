@@ -121,6 +121,11 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
     }
 
     @Override
+    public String getResumo() {
+        return null;
+    }
+
+    @Override
     public Boolean verficaDados() {
 
 

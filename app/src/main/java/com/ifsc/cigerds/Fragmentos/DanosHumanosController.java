@@ -122,6 +122,10 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
 
         }
 
+    @Override
+    public String getResumo() {
+        return null;
+    }
 
 
     @Override

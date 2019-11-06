@@ -89,6 +89,11 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     }
 
     @Override
+    public String getResumo() {
+        return "123";
+    }
+
+    @Override
     public Boolean verficaDados() {
 
 

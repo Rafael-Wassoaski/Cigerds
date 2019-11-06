@@ -50,6 +50,7 @@ public class IAHController extends Fragment implements DadosInterface {
         nameTag.add("iah_kit_limpeza");
         nameTag.add("iah_telhas");
         nameTag.add("iah_lona_plastica");
+        nameTag.add("iah_outros");
         nameTag.add("iah_fornecidos_outros_observacoes");
 
         iah.put((CheckBox)view.findViewById(R.id.cestas), (EditText)view.findViewById(R.id.iah_cestas_de_alimentos));
@@ -60,6 +61,7 @@ public class IAHController extends Fragment implements DadosInterface {
         iah.put((CheckBox)view.findViewById(R.id.telhas), (EditText)view.findViewById(R.id.iah_telhas));
         iah.put((CheckBox)view.findViewById(R.id.lona), (EditText)view.findViewById(R.id.iah_lona_plastica));
         iah.put((CheckBox)view.findViewById(R.id.outros), (EditText)view.findViewById(R.id.iah_fornecidos_outros_observacoes));
+        iah.put((CheckBox)view.findViewById(R.id.outros), (EditText)view.findViewById(R.id.iah_outros));
         viasDesobistruidas = (CheckBox)view.findViewById(R.id.iah_vias_publicas_totalmente_desobistruidas);
         servicosEssenciais = (CheckBox)view.findViewById(R.id.iah_reestabelecimento_servicos_essenciais);
 
@@ -139,6 +141,11 @@ public class IAHController extends Fragment implements DadosInterface {
 
             count++;
         }
+    }
+
+    @Override
+    public String getResumo() {
+        return null;
     }
 
     @Override

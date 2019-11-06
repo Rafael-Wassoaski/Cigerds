@@ -30,16 +30,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
         this.mTabTiles = mTabTiles;
     }
 
-
-    public Fragment getResumo(String resumoVistoria, String user, String pass, Context context, JSONObject jsonEnviar){
-
-        ResumoController resumoController = new ResumoController();
-        resumoController.setResumo( resumoVistoria, user, pass, context, jsonEnviar);
-
-        return resumoController;
-
-    }
-
     @NonNull
     @Override
     public Fragment getItem(int position) {

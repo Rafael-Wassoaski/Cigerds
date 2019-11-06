@@ -3,6 +3,9 @@ package com.ifsc.cigerds;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.ifsc.cigerds.services.EnviarPosCadastro;
 
 public class MainActivity extends Activity {
 
@@ -17,6 +20,7 @@ public class MainActivity extends Activity {
         intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, 1);
 
+
     }
 
 
@@ -30,7 +34,6 @@ public class MainActivity extends Activity {
             startActivity(intent);
         }
     }
-
 
 
 

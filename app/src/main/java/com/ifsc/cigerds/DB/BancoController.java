@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,9 +23,9 @@ public class BancoController {
     }
 
 
-    public void createJSON(){
+    public JSONObject createJSON(){
         JSONObject principal = new JSONObject();
-        JSONObject parte;
+        JSONArray array = new JSONArray();
 
 
         dataBase = banco.getReadableDatabase();
@@ -32,19 +33,33 @@ public class BancoController {
         try {
         for(int vistoria = 0; vistoria < cursor.getCount(); vistoria++){
             cursor.moveToNext();
-            parte = new JSONObject();
+            JSONObject parte = new JSONObject();
             for(int collumName = 1; collumName < cursor.getColumnCount(); collumName++){
                     parte.put(cursor.getColumnName(collumName), cursor.getString(collumName));
             }
-
+            array.put(vistoria, parte);
         }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        try {
+            principal.put("Vistoria", array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        return principal;
     }
 
+    public Cursor checkData(){
+        Cursor cursor = null;
+
+        dataBase = banco.getReadableDatabase();
+        cursor = dataBase.rawQuery("SELECT * FROM vistoria", null);
+
+        return cursor;
+    }
 
 
     public void testeSQL(){

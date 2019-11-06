@@ -7,5 +7,7 @@ public interface DadosInterface {
 
     public void getDados(JSONObject json) throws JSONException;
 
+    public String getResumo();
+
     public Boolean verficaDados();
 }
