@@ -22,7 +22,7 @@ public class BancoController {
     }
 
 
-    public JSONObject createJSON(){
+    public void createJSON(){
         JSONObject principal = new JSONObject();
         JSONObject parte;
 
@@ -36,13 +36,13 @@ public class BancoController {
             for(int collumName = 1; collumName < cursor.getColumnCount(); collumName++){
                     parte.put(cursor.getColumnName(collumName), cursor.getString(collumName));
             }
-            principal.put("Vistoria"+vistoria, parte);
+
         }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return principal;
+
     }
 
 

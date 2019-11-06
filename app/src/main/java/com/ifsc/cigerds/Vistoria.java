@@ -27,6 +27,7 @@ import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
 import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
+import com.ifsc.cigerds.Fragmentos.ResumoController;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.Threads.ConexaoEnvio;
 import com.ifsc.cigerds.main.SectionsPagerAdapter;
@@ -97,12 +98,11 @@ public class Vistoria extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vistoria2);
         final SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), getResources().getStringArray(R.array.titlesTabs));
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        final ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
-        final BancoController bancoController = new BancoController(getBaseContext());
         prefs = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE);
 
         for(int count = 0; count < 6; count++) {
@@ -149,14 +149,9 @@ public class Vistoria extends AppCompatActivity {
 
                     jsonEnviar.put("autor", Integer.parseInt(prefs.getString("userId", "1")));
                     //envio
-                    if(Network.VerificaConexao(getBaseContext())) {
-                        ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
-                        envio.execute();
-                    }else {
-                        bancoController.insereDados(jsonEnviar);
 
-                    }
-
+                    ResumoController resumoController = (ResumoController)sectionsPagerAdapter.instantiateItem(viewPager, 6);
+                    resumoController.setResumo("Teste", prefs.getString("login", "0").toString(), prefs.getString("password", "0").toString(), getBaseContext(), jsonEnviar);
 
                 } catch (Exception e) {
 

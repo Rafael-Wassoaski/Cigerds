@@ -1,5 +1,6 @@
 package com.ifsc.cigerds.Classes;
 
+import android.content.Context;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -16,6 +17,8 @@ import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
 import com.ifsc.cigerds.Fragmentos.ResumoController;
 
+import org.json.JSONObject;
+
 public class PagerAdapter extends FragmentPagerAdapter {
 
     private String[] mTabTiles;
@@ -27,6 +30,15 @@ public class PagerAdapter extends FragmentPagerAdapter {
         this.mTabTiles = mTabTiles;
     }
 
+
+    public Fragment getResumo(String resumoVistoria, String user, String pass, Context context, JSONObject jsonEnviar){
+
+        ResumoController resumoController = new ResumoController();
+        resumoController.setResumo( resumoVistoria, user, pass, context, jsonEnviar);
+
+        return resumoController;
+
+    }
 
     @NonNull
     @Override
