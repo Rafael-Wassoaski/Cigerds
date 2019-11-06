@@ -88,13 +88,6 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-
-
-
-
-
-
-
             if(!danos_ambientais_observacoes.getText().toString().isEmpty()){
                 json.put("danos_ambientais_observacoes", danos_ambientais_observacoes.getText().toString());
             }else{

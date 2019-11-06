@@ -14,6 +14,7 @@ import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
 import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
+import com.ifsc.cigerds.Fragmentos.ResumoController;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
@@ -43,7 +44,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return new DanosEconomicosController();
             case 5:
                 return new IAHController();
-
+            case 6:
+                return new ResumoController();
             default:
                 return  null;
 

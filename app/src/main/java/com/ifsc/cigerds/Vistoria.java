@@ -1,12 +1,20 @@
 package com.ifsc.cigerds;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,7 +41,55 @@ public class Vistoria extends AppCompatActivity {
 
     private final String NOME_PREFERENCE = "262114a72D&@5aa!!@FA";
     private SharedPreferences prefs;
-    static private String latitude, longitude;
+    private String latitude, longitude;
+    private LocationManager locationManager;
+
+    public void find_Location(Context con, JSONObject json) {
+        String location_context = Context.LOCATION_SERVICE;
+        locationManager = (LocationManager) con.getSystemService(location_context);
+        List<String> providers = locationManager.getProviders(true);
+
+        if (ContextCompat.checkSelfPermission(con, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(con,Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                    101);
+        }else {
+
+
+            for (String provider : providers) {
+                locationManager.requestLocationUpdates(provider, 1000, 0,
+                        new LocationListener() {
+
+                            public void onLocationChanged(Location location) {
+                            }
+
+                            public void onProviderDisabled(String provider) {
+                            }
+
+                            public void onProviderEnabled(String provider) {
+                            }
+
+                            public void onStatusChanged(String provider, int status,
+                                                        Bundle extras) {
+                            }
+                        });
+                Location location = locationManager.getLastKnownLocation(provider);
+                if (location != null) {
+
+                    try {
+                        json.put("latitude", String.valueOf(location.getLatitude()));
+                        json.put("longitude", String.valueOf(location.getLongitude()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+        }
+    }
 
 
     @Override
@@ -65,7 +121,7 @@ public class Vistoria extends AppCompatActivity {
             public void onClick(View view) {
 
 
-
+                find_Location(getBaseContext(), jsonEnviar);
                 Log.d("IDUSER", prefs.getString("userId", "0").toString());
                 try {
 
@@ -90,11 +146,6 @@ public class Vistoria extends AppCompatActivity {
                       fragmento.getDados(jsonEnviar);
 
                     }
-
-                    while(latitude+":"+longitude == "null:null");
-                    Log.d("Atividade", latitude+":"+longitude);
-                    jsonEnviar.put("latitude", latitude);
-                    jsonEnviar.put("longitude", longitude);
 
                     jsonEnviar.put("autor", Integer.parseInt(prefs.getString("userId", "1")));
                     //envio
@@ -121,12 +172,5 @@ public class Vistoria extends AppCompatActivity {
     }
 
 
-
-
-    public static void get(String latitudePro, String longitudePro){
-        latitude = latitudePro;
-        longitude = longitudePro;
-
-    }
 
 }

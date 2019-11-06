@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
 import com.ifsc.cigerds.Threads.ConexaoLogin;
 
@@ -53,30 +54,32 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
         String login= prefs.getString("login", null);
         String password= prefs.getString("password", null);
 
+        if(!Network.VerificaConexao(getBaseContext())){
         if(autoLogin()){
             setResult(RESULT_OK);
             finishActivity();
-        }
+        }}else {
 
 
-        emailEditText = (EditText)findViewById(R.id.email);
-        passEditText = (EditText)findViewById(R.id.password);
-        loginButton = (Button)findViewById(R.id.login);
+            emailEditText = (EditText) findViewById(R.id.email);
+            passEditText = (EditText) findViewById(R.id.password);
+            loginButton = (Button) findViewById(R.id.login);
 
-        if(login!=null){
-            emailEditText.setText(login);
-            passEditText.setText(password);
-        }
-
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConexaoLogin  conexao = new ConexaoLogin(emailEditText.getText().toString(), passEditText.getText().toString());
-                conexao.resultBoolean = LoginActivity.this;
-                conexao.execute();
+            if (login != null) {
+                emailEditText.setText(login);
+                passEditText.setText(password);
             }
-        });
+
+
+            loginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ConexaoLogin conexao = new ConexaoLogin(emailEditText.getText().toString(), passEditText.getText().toString());
+                    conexao.resultBoolean = LoginActivity.this;
+                    conexao.execute();
+                }
+            });
+        }
 
     }
 

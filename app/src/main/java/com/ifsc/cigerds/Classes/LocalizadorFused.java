@@ -59,7 +59,7 @@ public class LocalizadorFused implements LocationListener {
             public void onSuccess(Location location) {
                 if (location != null) {
 
-                    Vistoria.get(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+
 
 
                 }
