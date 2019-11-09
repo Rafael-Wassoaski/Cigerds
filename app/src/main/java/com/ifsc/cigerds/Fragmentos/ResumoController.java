@@ -40,8 +40,8 @@ public class ResumoController extends Fragment implements DadosInterface {
     private String user;
     private String pass;
     private Context context;
-    private List<DadosInterface> fragmentList;
-    private SectionsPagerAdapter sectionsPagerAdapter;
+    private List<DadosInterface> fragmentList = null;
+    private SectionsPagerAdapter sectionsPagerAdapter = null;
 
 
     public ResumoController() {
@@ -52,15 +52,18 @@ public class ResumoController extends Fragment implements DadosInterface {
     @Override
     public void onResume() {
         super.onResume();
-        fragmentList = Vistoria.getFragments(sectionsPagerAdapter);
-        setResumo(getResumo());
+
+            fragmentList = Vistoria.getFragments();
+            setResumo(getResumo());
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        fragmentList = Vistoria.getFragments(sectionsPagerAdapter);
-        setResumo(getResumo());
+
+            fragmentList = Vistoria.getFragments();
+            setResumo(getResumo());
 
     }
 
@@ -118,14 +121,7 @@ public class ResumoController extends Fragment implements DadosInterface {
     public String getResumo() {
         String resumo = "";
 
-        fragmentList = new ArrayList<DadosInterface>();
-        fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
-        fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
-        fragmentList.add((DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2));
-        fragmentList.add((DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3));
-        fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
-        fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
-        //fragmentList.add((ResumoController) sectionsPagerAdapter.getRegisteredFragment(6));
+        fragmentList = Vistoria.getFragments();
 
         for(DadosInterface frgamento : fragmentList){
             resumo += frgamento.getResumo();

@@ -3,6 +3,7 @@
 
 
     <string-array name="municipioCadastrados">
+        <item>Cidades</item>
         <item>Abdon Batista</item>
         <item>Abelardo Luz</item>
         <item>Agrolândia</item>

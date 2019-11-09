@@ -50,7 +50,7 @@ public class Vistoria extends AppCompatActivity {
     private SharedPreferences prefs;
     private String latitude, longitude;
     private LocationManager locationManager;
-    private SectionsPagerAdapter sectionsPagerAdapter;
+    static private SectionsPagerAdapter sectionsPagerAdapter;
 
     public void find_Location(Context con, JSONObject json) {
 
@@ -101,7 +101,7 @@ public class Vistoria extends AppCompatActivity {
         }
     }
 
-    public static List getFragments(SectionsPagerAdapter sectionsPagerAdapter){
+    public static List getFragments(){
         List<DadosInterface> fragmentList = new ArrayList<>();
         fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
         fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
@@ -109,7 +109,7 @@ public class Vistoria extends AppCompatActivity {
         fragmentList.add((DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3));
         fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
         fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
-        fragmentList.add((ResumoController) sectionsPagerAdapter.getRegisteredFragment(6));
+        //fragmentList.add((ResumoController) sectionsPagerAdapter.getRegisteredFragment(6));
 
         return fragmentList;
 
@@ -122,7 +122,7 @@ public class Vistoria extends AppCompatActivity {
     public void sendData(JSONObject jsonEnviar, SectionsPagerAdapter sectionsPagerAdapter,  BancoController bancoController){
 
 
-        List<DadosInterface> fragmentList = getFragments(sectionsPagerAdapter);
+        List<DadosInterface> fragmentList = getFragments();
         //getBaseContext().startService(new Intent(getApplicationContext(), EnviarPosCadastro.class));
         Log.d("IDUSER", prefs.getString("userId", "0").toString());
 
@@ -175,13 +175,16 @@ public class Vistoria extends AppCompatActivity {
         toolbar.setTitle("SISGERDS\n (logado como: "+  prefs.getString("login", "0").toString()+")");
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorToolBar));
         setSupportActionBar(toolbar);
+
+
         for(int count = 0; count <= 6; count++) {
             sectionsPagerAdapter.instantiateItem(viewPager, count);
         }
 
         final JSONObject jsonEnviar =  new JSONObject();
 
-
+        ResumoController resumoController = (ResumoController) sectionsPagerAdapter.getRegisteredFragment(6);
+        resumoController.setParametros(sectionsPagerAdapter, prefs.getString("login", "0").toString(), prefs.getString("password", "0").toString(), getBaseContext());
 
         try {
             find_Location(this, jsonEnviar);
@@ -190,9 +193,8 @@ public class Vistoria extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ResumoController resumoController = (ResumoController) sectionsPagerAdapter.getRegisteredFragment(6);
-        resumoController.setParametros(sectionsPagerAdapter, prefs.getString("login", "0").toString(), prefs.getString("password", "0").toString(), getBaseContext());
-        viewPager.setOffscreenPageLimit(5);
+
+
         Log.d("ATIVIDADE", jsonEnviar.toString());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,6 +206,8 @@ public class Vistoria extends AppCompatActivity {
             }
         });
        // getActionBar().setTitle("SISGERDS (logado como" + prefs.getString("login", "0").toString()+")");
+        viewPager.setOffscreenPageLimit(6);
+
     }
 
 

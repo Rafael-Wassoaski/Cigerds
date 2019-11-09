@@ -15,8 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.ifsc.cigerds.Classes.CheckBoxAdapter;
 import com.ifsc.cigerds.Classes.Localizador;
 import com.ifsc.cigerds.Classes.LocalizadorFused;
+import com.ifsc.cigerds.Classes.SpinnerCheckBox;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
@@ -24,13 +26,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DadosOcorrenciaController extends Fragment implements DadosInterface {
 
-    private ArrayAdapter<CharSequence> municipiosArray;
+    private CheckBoxAdapter municipiosAdapter;
     private Spinner municipioSpinner;
     private TextView dataTextview;
     private EditText dataDesastre;
@@ -47,6 +51,17 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        final String[] cidades = getResources().getStringArray(R.array.municipioCadastrados);
+        ArrayList<SpinnerCheckBox> cidadesCheckBox = new ArrayList<>();
+
+        for(int cont = 0; cont < cidades.length; cont++){
+            SpinnerCheckBox spinnerCheckBox = new SpinnerCheckBox();
+            spinnerCheckBox.setCheck(false);
+            spinnerCheckBox.setCidade(cidades[cont]);
+            cidadesCheckBox.add(spinnerCheckBox);
+        }
+
         View view = inflater.inflate(R.layout.dados_ocorrencia_layout, container, false);
         cobrad = (EditText)view.findViewById(R.id.cobrad);
         dataTextview = (TextView)view.findViewById(R.id.data);
@@ -54,9 +69,9 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         descricao = (EditText)view.findViewById(R.id.descDesastre);
         endereco = (EditText)view.findViewById(R.id.endereco);
         municipioSpinner = (Spinner)view.findViewById(R.id.municipio);
-        municipiosArray = ArrayAdapter.createFromResource(getContext(), R.array.municipioCadastrados, android.R.layout.simple_spinner_item);
-        municipiosArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        municipioSpinner.setAdapter(municipiosArray);
+        municipiosAdapter = new CheckBoxAdapter(getContext(), 0, cidadesCheckBox);
+       // municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        municipioSpinner.setAdapter(municipiosAdapter);
 
 
 
@@ -78,8 +93,18 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
 
 
+           CheckBoxAdapter adapter = (CheckBoxAdapter)municipioSpinner.getAdapter();
+            String municipios = "";
+           for(SpinnerCheckBox spinnerCheckBox : adapter.getList()){
+
+               if(spinnerCheckBox.isCheck()){
+                   municipios+=spinnerCheckBox.getCidade()+"\n ";
+               }
+
+           }
+
            json.put("cobrad", cobrad.getText().toString());
-           json.put("municipio", municipioSpinner.getSelectedItem().toString());
+           json.put("municipio", municipios);
            json.put("data", dataTextview.getText().toString());
            json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
@@ -93,10 +118,20 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
     @Override
     public String getResumo() {
+
+        CheckBoxAdapter adapter = (CheckBoxAdapter)municipioSpinner.getAdapter();
+        String municipios = "";
+        for(SpinnerCheckBox spinnerCheckBox : adapter.getList()){
+
+            if(spinnerCheckBox.isCheck()){
+                municipios+=spinnerCheckBox.getCidade()+"\n";
+            }
+
+        }
         String resumo = "";
         resumo+="DADOS DA OCORRENCIA"+"\n\n";
         resumo+="Cobrad: "+cobrad.getText().toString()+"\n";
-        resumo+="Municipio: "+ municipioSpinner.getSelectedItem().toString()+"\n";
+        resumo+="Municipios: "+ municipios + "\n";
         resumo+="Data: "+ dataDesastre.getText().toString()+"\n";
         resumo+="Endereco: "+ endereco.getText().toString()+"\n";
         resumo+="Descricao: "+ descricao.getText().toString()+"\n";
