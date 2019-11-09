@@ -28,6 +28,7 @@ public class IAHController extends Fragment implements DadosInterface {
     private CheckBox viasDesobistruidas;
     private CheckBox servicosEssenciais;
 
+
     private HashMap<CheckBox, EditText> iah = new HashMap<>();
     private List<String> nameTag;
 
@@ -50,6 +51,7 @@ public class IAHController extends Fragment implements DadosInterface {
         nameTag.add("iah_kit_limpeza");
         nameTag.add("iah_telhas");
         nameTag.add("iah_lona_plastica");
+        nameTag.add("iah_outros");
         nameTag.add("iah_fornecidos_outros_observacoes");
 
         iah.put((CheckBox)view.findViewById(R.id.cestas), (EditText)view.findViewById(R.id.iah_cestas_de_alimentos));
@@ -60,6 +62,7 @@ public class IAHController extends Fragment implements DadosInterface {
         iah.put((CheckBox)view.findViewById(R.id.telhas), (EditText)view.findViewById(R.id.iah_telhas));
         iah.put((CheckBox)view.findViewById(R.id.lona), (EditText)view.findViewById(R.id.iah_lona_plastica));
         iah.put((CheckBox)view.findViewById(R.id.outros), (EditText)view.findViewById(R.id.iah_fornecidos_outros_observacoes));
+        iah.put((CheckBox)view.findViewById(R.id.outros), (EditText)view.findViewById(R.id.iah_outros));
         viasDesobistruidas = (CheckBox)view.findViewById(R.id.iah_vias_publicas_totalmente_desobistruidas);
         servicosEssenciais = (CheckBox)view.findViewById(R.id.iah_reestabelecimento_servicos_essenciais);
 
@@ -118,6 +121,7 @@ public class IAHController extends Fragment implements DadosInterface {
         json.put("iah_reestabelecimento_servicos_essenciais", servicosEssenciais.isChecked());
 
         Integer count = 0;
+        json.put("iah_fornecidos_outros_observacoes", "Sem Observações");
         for(Map.Entry<CheckBox, EditText> entrada : iah.entrySet()){
 
             CheckBox checkBox = entrada.getKey();
@@ -127,10 +131,8 @@ public class IAHController extends Fragment implements DadosInterface {
 
             if(checkBox.isChecked()){
                 json.put(nameTag.get(count), editText.getText().toString());
-                if(checkBox.getTag().toString().equals("Outros")&& !outrosDados.getText().toString().isEmpty()){
+                if(checkBox.getText().toString().equals("Outros")&& !outrosDados.getText().toString().isEmpty()){
                     json.put("iah_fornecidos_outros_observacoes", outrosDados.getText());
-                }else{
-                    json.put("iah_fornecidos_outros_observacoes", "Sem Observações");
                 }
 
             }else{
@@ -139,6 +141,40 @@ public class IAHController extends Fragment implements DadosInterface {
 
             count++;
         }
+    }
+
+    @Override
+    public String getResumo() {
+
+        String resumo = "IAH\n\n";
+
+
+        if(viasDesobistruidas.isChecked()){
+            resumo+="Vias publicas totalmente desobistridas: Sim\n";
+        }else{
+            resumo+="Vias publicas totalmente desobistridas: Não\n";
+        }
+
+        if(servicosEssenciais.isChecked()){
+            resumo+="Reestabelecimento de serviços essenciais: Sim\n";
+        }else{
+            resumo+="Reestabelecimento de serviços essenciais: Não\n";
+        }
+
+        for(Map.Entry<CheckBox, EditText> entrada : iah.entrySet()){
+
+            CheckBox checkBox = entrada.getKey();
+            final EditText editText = entrada.getValue();
+
+            if(checkBox.isChecked()){
+                resumo+= checkBox.getText().toString()+ ": "+ editText.getText()+"\n";
+
+            }else{
+                resumo+= checkBox.getText().toString()+ ": 0\n";
+            }
+
+        }
+        return resumo;
     }
 
     @Override

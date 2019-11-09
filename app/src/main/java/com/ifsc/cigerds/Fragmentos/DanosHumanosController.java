@@ -97,8 +97,6 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
         Integer count = 0;
 
 
-
-
             if (!danos_humanos_observacoes.getText().toString().isEmpty()) {
                 json.put("danos_humanos_observacoes", danos_humanos_observacoes.getText().toString());
             } else {
@@ -122,6 +120,33 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
 
         }
 
+    @Override
+    public String getResumo() {
+        String resumo="DANOS HUMANOS\n\n";
+
+        if(!danos_humanos_observacoes.getText().toString().isEmpty()){
+            resumo+="Observações: "+danos_humanos_observacoes.getText().toString()+"\n";
+        }else{
+            resumo+="Observações: Sem obeservações\n";
+        }
+
+
+        for(Map.Entry<CheckBox, EditText> entrada : lista.entrySet()){
+
+            CheckBox checkBox = entrada.getKey();
+            final EditText editText = entrada.getValue();
+
+            if(checkBox.isChecked()){
+                resumo+= checkBox.getText().toString()+ ": "+ editText.getText()+"\n";
+
+            }else{
+                resumo+= checkBox.getText().toString()+ ": 0\n";
+            }
+
+        }
+        resumo+="\n\n";
+        return resumo;
+    }
 
 
     @Override

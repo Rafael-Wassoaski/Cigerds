@@ -1,6 +1,7 @@
 package com.ifsc.cigerds.Fragmentos;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.ifsc.cigerds.Classes.Localizador;
+import com.ifsc.cigerds.Classes.LocalizadorFused;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
@@ -29,6 +33,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     private ArrayAdapter<CharSequence> municipiosArray;
     private Spinner municipioSpinner;
     private TextView dataTextview;
+    private EditText dataDesastre;
     private EditText endereco;
     private ArrayAdapter<CharSequence> coderecArray;
     private EditText cobrad;
@@ -43,10 +48,9 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.dados_ocorrencia_layout, container, false);
-
-
         cobrad = (EditText)view.findViewById(R.id.cobrad);
         dataTextview = (TextView)view.findViewById(R.id.data);
+        dataDesastre = (EditText)view.findViewById(R.id.dataDesastre);
         descricao = (EditText)view.findViewById(R.id.descDesastre);
         endereco = (EditText)view.findViewById(R.id.endereco);
         municipioSpinner = (Spinner)view.findViewById(R.id.municipio);
@@ -72,7 +76,6 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-        Localizador localizador= new Localizador(getActivity());
 
 
            json.put("cobrad", cobrad.getText().toString());
@@ -80,18 +83,36 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
            json.put("data", dataTextview.getText().toString());
            json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
-           String [] latiudeLongitude = localizador.getLocation().split(":");
-           json.put("latitude", latiudeLongitude[0]);
-           json.put("longitude", latiudeLongitude[1]);
+           json.put("dataDesastre", dataDesastre.getText().toString());
+           LocalizadorFused fused = new LocalizadorFused(getActivity());
+           fused.getLocation();
 
 
 
     }
 
     @Override
+    public String getResumo() {
+        String resumo = "";
+        resumo+="DADOS DA OCORRENCIA"+"\n\n";
+        resumo+="Cobrad: "+cobrad.getText().toString()+"\n";
+        resumo+="Municipio: "+ municipioSpinner.getSelectedItem().toString()+"\n";
+        resumo+="Data: "+ dataDesastre.getText().toString()+"\n";
+        resumo+="Endereco: "+ endereco.getText().toString()+"\n";
+        resumo+="Descricao: "+ descricao.getText().toString()+"\n";
+        resumo+="\n\n";
+        return resumo;
+    }
+
+    @Override
     public Boolean verficaDados() {
 
 
+        if(dataDesastre.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Você não informou a Data do desastre", Toast.LENGTH_LONG).show();
+            dataDesastre.requestFocus();
+            return false;
+        }
         if(cobrad.getText().toString().isEmpty()){
             Toast.makeText(getContext(), "Você não informou o COBRAD", Toast.LENGTH_LONG).show();
             cobrad.requestFocus();
@@ -112,4 +133,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
         return true;
     }
+
+
+
 }

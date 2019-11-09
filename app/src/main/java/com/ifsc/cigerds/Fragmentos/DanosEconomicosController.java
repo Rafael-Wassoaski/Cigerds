@@ -107,6 +107,34 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
 
     }
 
+    @Override
+    public String getResumo() {
+
+        String resumo = "DANOS ECONOMICOS\n\n";
+
+        if(!danos_economicos_observacoes.getText().toString().isEmpty()){
+           resumo+="Observações: "+danos_economicos_observacoes.getText().toString()+"\n";
+        }else{
+            resumo+="Observações: Sem obeservações\n";
+        }
+
+        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+
+            CheckBox checkBox = entrada.getKey();
+            final EditText editText = entrada.getValue();
+
+            if(checkBox.isChecked()){
+                resumo+= checkBox.getText().toString()+ ": "+ editText.getText()+"\n";
+
+            }else{
+                resumo+= checkBox.getText().toString()+ ": 0\n";
+            }
+
+        }
+        resumo+="\n\n";
+        return resumo;
+    }
+
 
     @Override
     public Boolean verficaDados() {

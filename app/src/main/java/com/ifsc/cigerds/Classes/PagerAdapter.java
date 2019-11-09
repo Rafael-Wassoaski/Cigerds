@@ -1,5 +1,6 @@
 package com.ifsc.cigerds.Classes;
 
+import android.content.Context;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -14,6 +15,9 @@ import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
 import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
+import com.ifsc.cigerds.Fragmentos.ResumoController;
+
+import org.json.JSONObject;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
@@ -25,6 +29,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
         super(fm);
         this.mTabTiles = mTabTiles;
     }
+
 
 
     @NonNull
@@ -43,7 +48,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return new DanosEconomicosController();
             case 5:
                 return new IAHController();
-
+            case 6:
+                return new ResumoController();
             default:
                 return  null;
 

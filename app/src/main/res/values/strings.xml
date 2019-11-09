@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Cigerds</string>
+    <string name="app_name">Sisgerds</string>
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
@@ -18,6 +18,7 @@
         <item>DANOS AMBIENTAIS</item>
         <item>DANOS ECONÔMICOS</item>
         <item>IAH FORNECIDOS</item>
+        <item>RESUMO</item>
 
 
     </string-array>

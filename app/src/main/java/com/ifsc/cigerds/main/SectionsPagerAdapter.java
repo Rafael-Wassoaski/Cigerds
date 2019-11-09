@@ -15,6 +15,7 @@ import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
 import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
+import com.ifsc.cigerds.Fragmentos.ResumoController;
 
 
 /**
@@ -36,6 +37,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     }
 
+
     @Override
     public Fragment getItem(int position) {
         switch (position){
@@ -51,6 +53,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return new DanosEconomicosController();
             case 5:
                 return new IAHController();
+            case 6:
+                return new ResumoController();
 
             default:
                 return  null;
@@ -67,7 +71,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 6;
+        return 7;
     }
 
     @Override

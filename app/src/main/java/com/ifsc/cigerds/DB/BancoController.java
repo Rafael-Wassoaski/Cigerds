@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import com.ifsc.cigerds.Threads.ConexaoEnvio;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +25,45 @@ public class BancoController {
     }
 
 
+    public void createJSON(String user, String pass){
+        JSONObject principal;
+
+
+
+        dataBase = banco.getReadableDatabase();
+        Cursor cursor = dataBase.rawQuery("SELECT * FROM vistoria", null);
+        try {
+        for(int vistoria = 0; vistoria < cursor.getCount(); vistoria++){
+            cursor.moveToNext();
+            principal = new JSONObject();
+            for(int collumName = 0; collumName < cursor.getColumnCount(); collumName++){
+                principal.put(cursor.getColumnName(collumName), cursor.getString(collumName));
+            }
+            ConexaoEnvio envio = new ConexaoEnvio(principal, user, pass);
+            envio.execute();
+
+        }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        delete();
+
+
+    }
+
+    public void delete(){
+        dataBase.execSQL("DELETE FROM vistoria");
+    }
+    public Cursor checkData(){
+        Cursor cursor = null;
+
+        dataBase = banco.getReadableDatabase();
+        cursor = dataBase.rawQuery("SELECT * FROM vistoria", null);
+
+        return cursor;
+    }
+
 
     public void testeSQL(){
         Cursor cursor = null;
@@ -34,7 +76,7 @@ public class BancoController {
 
 
         while (cursor.moveToNext()) {
-            String string = cursor.getString(2);
+            String string = cursor.getString(1);
             Log.d("Resposta", string + " a");
         }
 
@@ -97,4 +139,6 @@ public class BancoController {
         dataBase.close();
         return false;
     }
+
+
 }

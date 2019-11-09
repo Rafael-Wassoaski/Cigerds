@@ -88,19 +88,11 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-
-
-
-
-
-
-
             if(!danos_ambientais_observacoes.getText().toString().isEmpty()){
                 json.put("danos_ambientais_observacoes", danos_ambientais_observacoes.getText().toString());
             }else{
                 json.put("danos_ambientais_observacoes", "Sem obeservações");
             }
-
 
             if(contamincaoAgua.isChecked()) {
                 json.put("contaminacao_agua", AguaQuant.getText());
@@ -108,19 +100,12 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
                 json.put("contaminacao_agua", 0);
             }
 
-
-
-
             if(contamincaoSolo.isChecked()) {
 
                 json.put("contaminacao_solo", SoloQuant.getText());
             }else{
                 json.put("contaminacao_solo", 0);
             }
-
-
-
-
 
             if(contamincaoAr.isChecked()) {
 
@@ -133,6 +118,43 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
 
 
+    }
+
+    @Override
+    public String getResumo() {
+        String resumo = "";
+
+        resumo+= "DANOS AMBIENTAIS\n\n";
+
+        if(!danos_ambientais_observacoes.getText().toString().isEmpty()){
+            resumo+="Observações: "+ danos_ambientais_observacoes.getText().toString()+"\n";
+        }else{
+            resumo+="Observações: Sem obeservações\n";
+        }
+
+        if(contamincaoAgua.isChecked()) {
+            resumo+="Contaminação da Água: "+AguaQuant.getText()+"\n";
+        }else{
+            resumo+="Contaminação da Água: 0\n";
+        }
+
+        if(contamincaoSolo.isChecked()) {
+
+            resumo+="Contaminação do Solo: "+ SoloQuant.getText()+"\n";
+        }else{
+            resumo+="Contaminação do Solo: 0\n";
+        }
+
+        if(contamincaoAr.isChecked()) {
+
+            resumo+="Contaminação do Ar: "+ ArQuant.getText()+"\n";
+        }else{
+            resumo+="Contaminação do Ar: 0\n";
+
+        }
+
+        resumo+="\n\n";
+        return resumo;
     }
 
     @Override
