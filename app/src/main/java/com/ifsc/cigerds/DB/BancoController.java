@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import com.ifsc.cigerds.Threads.ConexaoEnvio;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,9 +25,9 @@ public class BancoController {
     }
 
 
-    public JSONObject createJSON(){
-        JSONObject principal = new JSONObject();
-        JSONArray array = new JSONArray();
+    public void createJSON(String user, String pass){
+        JSONObject principal;
+
 
 
         dataBase = banco.getReadableDatabase();
@@ -33,25 +35,26 @@ public class BancoController {
         try {
         for(int vistoria = 0; vistoria < cursor.getCount(); vistoria++){
             cursor.moveToNext();
-            JSONObject parte = new JSONObject();
-            for(int collumName = 1; collumName < cursor.getColumnCount(); collumName++){
-                    parte.put(cursor.getColumnName(collumName), cursor.getString(collumName));
+            principal = new JSONObject();
+            for(int collumName = 0; collumName < cursor.getColumnCount(); collumName++){
+                principal.put(cursor.getColumnName(collumName), cursor.getString(collumName));
             }
-            array.put(vistoria, parte);
+            ConexaoEnvio envio = new ConexaoEnvio(principal, user, pass);
+            envio.execute();
+
         }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        try {
-            principal.put("Vistoria", array);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        delete();
 
-        return principal;
+
     }
 
+    public void delete(){
+        dataBase.execSQL("DELETE FROM vistoria");
+    }
     public Cursor checkData(){
         Cursor cursor = null;
 

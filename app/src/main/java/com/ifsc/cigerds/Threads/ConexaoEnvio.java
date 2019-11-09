@@ -49,6 +49,7 @@ public class ConexaoEnvio extends AsyncTask<Void, Void, Void> {
 
             Log.d("Exep", "entrou");
             URL url = new URL(MainActivity.PROVEDOR+"cadastrovistoria/");
+            Log.d("ENVIOO", json.toString());
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null,null, new java.security.SecureRandom());

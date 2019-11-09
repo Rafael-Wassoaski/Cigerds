@@ -1,7 +1,9 @@
 package com.ifsc.cigerds;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -9,16 +11,21 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.ifsc.cigerds.Classes.Network;
+import com.ifsc.cigerds.DB.BancoController;
 import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
 import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
 import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
@@ -27,7 +34,9 @@ import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
 import com.ifsc.cigerds.Fragmentos.ResumoController;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
+import com.ifsc.cigerds.Threads.ConexaoEnvio;
 import com.ifsc.cigerds.main.SectionsPagerAdapter;
+import com.ifsc.cigerds.services.EnvioService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,8 +50,10 @@ public class Vistoria extends AppCompatActivity {
     private SharedPreferences prefs;
     private String latitude, longitude;
     private LocationManager locationManager;
+    private SectionsPagerAdapter sectionsPagerAdapter;
 
     public void find_Location(Context con, JSONObject json) {
+
         String location_context = Context.LOCATION_SERVICE;
         locationManager = (LocationManager) con.getSystemService(location_context);
         List<String> providers = locationManager.getProviders(true);
@@ -90,25 +101,8 @@ public class Vistoria extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vistoria2);
-        final SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), getResources().getStringArray(R.array.titlesTabs));
-        final ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        prefs = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE);
-
-        for(int count = 0; count <= 6; count++) {
-            sectionsPagerAdapter.instantiateItem(viewPager, count);
-        }
-        final JSONObject jsonEnviar =  new JSONObject();
-        final List<DadosInterface> fragmentList = new ArrayList<>();
-
+    public static List getFragments(SectionsPagerAdapter sectionsPagerAdapter){
+        List<DadosInterface> fragmentList = new ArrayList<>();
         fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
         fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
         fragmentList.add((DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2));
@@ -116,99 +110,107 @@ public class Vistoria extends AppCompatActivity {
         fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
         fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
         fragmentList.add((ResumoController) sectionsPagerAdapter.getRegisteredFragment(6));
-        ResumoController resumoController = (ResumoController) fragmentList.get(6);
-        resumoController.setParametros(fragmentList, prefs.getString("login", "0").toString(), prefs.getString("password", "0").toString(), getBaseContext(), jsonEnviar);
 
-        CriaResumo criaResumo = new CriaResumo(fragmentList);
-        Thread threadResumo = new Thread(criaResumo);
-        threadResumo.start();
+        return fragmentList;
 
+    }
+
+
+
+
+
+    public void sendData(JSONObject jsonEnviar, SectionsPagerAdapter sectionsPagerAdapter,  BancoController bancoController){
+
+
+        List<DadosInterface> fragmentList = getFragments(sectionsPagerAdapter);
+        //getBaseContext().startService(new Intent(getApplicationContext(), EnviarPosCadastro.class));
+        Log.d("IDUSER", prefs.getString("userId", "0").toString());
+
+        find_Location(getBaseContext(), jsonEnviar);
+
+        for(DadosInterface fragmento : fragmentList){
+            if(!fragmento.verficaDados()){
+                return;
+            }
+
+        }
+
+
+        for(DadosInterface fragmento : fragmentList){
+
+            try {
+                fragmento.getDados(jsonEnviar);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        if(Network.VerificaConexao(getBaseContext())) {
+            ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
+            envio.execute();
+
+        }else {
+            bancoController.insereDados(jsonEnviar);
+            startService(new Intent(this, EnvioService.class).putExtra("name", "EnvioService"));
+        }
+
+        Log.d("Json",jsonEnviar.toString());
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_vistoria);
+        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), getResources().getStringArray(R.array.titlesTabs));
+        final ViewPager viewPager = findViewById(R.id.view_pager);
+        final BancoController bancoController = new BancoController(getBaseContext());
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        prefs = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("SISGERDS\n (logado como: "+  prefs.getString("login", "0").toString()+")");
+        toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorToolBar));
+        setSupportActionBar(toolbar);
+        for(int count = 0; count <= 6; count++) {
+            sectionsPagerAdapter.instantiateItem(viewPager, count);
+        }
+
+        final JSONObject jsonEnviar =  new JSONObject();
+
+
+
+        try {
+            find_Location(this, jsonEnviar);
+            jsonEnviar.put("autor",  prefs.getString("userId", "0").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ResumoController resumoController = (ResumoController) sectionsPagerAdapter.getRegisteredFragment(6);
+        resumoController.setParametros(sectionsPagerAdapter, prefs.getString("login", "0").toString(), prefs.getString("password", "0").toString(), getBaseContext());
+        viewPager.setOffscreenPageLimit(5);
+        Log.d("ATIVIDADE", jsonEnviar.toString());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //getBaseContext().startService(new Intent(getApplicationContext(), EnviarPosCadastro.class));
-                find_Location(getBaseContext(), jsonEnviar);
-                Log.d("IDUSER", prefs.getString("userId", "0").toString());
-                try {
+                sendData(jsonEnviar, sectionsPagerAdapter, bancoController);
 
-
-
-                    for(DadosInterface fragmento : fragmentList){
-                        if(!fragmento.verficaDados()){
-                            return;
-                        }
-
-                    }
-
-
-                    for(DadosInterface fragmento : fragmentList){
-
-                      fragmento.getDados(jsonEnviar);
-
-                    }
-
-                    jsonEnviar.put("autor", Integer.parseInt(prefs.getString("userId", "1")));
-
-
-
-
-                } catch (Exception e) {
-
-                    Log.d("Exep", e.getLocalizedMessage() + " / " + e.getMessage() + " / " + e.getClass() + " / " + e.getCause());
-
-                }
-
-
-                Log.d("Json",jsonEnviar.toString());
 
             }
         });
+       // getActionBar().setTitle("SISGERDS (logado como" + prefs.getString("login", "0").toString()+")");
     }
 
 
-
-
-    public class CriaResumo implements Runnable{
-
-        private Boolean encerrar = false;
-        private List<DadosInterface> fragmentList;
-
-        public CriaResumo(List<DadosInterface> fragmentList){
-            this.fragmentList = fragmentList;
-        }
-
-        @Override
-        public void run() {
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ResumoController resumoController = (ResumoController) fragmentList.get(6);
-                    while(!encerrar){
-                        String resumoString = "";
-
-
-                        for (int cont = 0; cont < fragmentList.size() - 1; cont++) {
-                            resumoString += fragmentList.get(cont).getResumo();
-                        }
-
-
-                        resumoController.setResumo(resumoString);
-
-                        try {
-                            Thread.sleep(3000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-
-
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
-
-
-
 }

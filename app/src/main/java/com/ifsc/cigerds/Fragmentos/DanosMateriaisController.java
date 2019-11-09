@@ -1,6 +1,7 @@
 package com.ifsc.cigerds.Fragmentos;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +99,7 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-        Integer count = 0;
+        Integer count1 = 0;
         if(!danos_materiais_observacoes.getText().toString().isEmpty()){
             json.put("danos_materiais_observacoes", danos_materiais_observacoes.getText().toString());
         }else{
@@ -106,23 +107,49 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
         }
 
         for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
-
+            Log.d("Counter",count1+"");
             CheckBox checkBox = entrada.getKey();
             final EditText editText = entrada.getValue();
 
             if(checkBox.isChecked()){
-                json.put(nameTag.get(count), editText.getText());
+                json.put(nameTag.get(count1), editText.getText());
 
             }else{
-                json.put(nameTag.get(count), 0);
+                json.put(nameTag.get(count1), 0);
             }
-            count++;
+            count1++;
         }
     }
 
     @Override
     public String getResumo() {
-        return null;
+
+        String resumo = "DANOS MATERIAIS\n\n";
+
+
+        if(!danos_materiais_observacoes.getText().toString().isEmpty()){
+            resumo+="Observações: "+danos_materiais_observacoes.getText().toString()+"\n";
+        }else{
+            resumo+="Observações: Sem obeservações\n";
+        }
+
+
+        for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
+
+            CheckBox checkBox = entrada.getKey();
+            final EditText editText = entrada.getValue();
+
+            if(checkBox.isChecked()){
+                resumo+= checkBox.getText().toString()+ ": "+ editText.getText()+"\n";
+
+            }else{
+                resumo+= checkBox.getText().toString()+ ": 0\n";
+            }
+
+        }
+        resumo+="\n\n";
+        return resumo;
+
     }
 
     @Override

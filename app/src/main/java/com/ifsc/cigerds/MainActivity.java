@@ -3,9 +3,11 @@ package com.ifsc.cigerds;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.ifsc.cigerds.services.EnviarPosCadastro;
+
+import androidx.appcompat.widget.Toolbar;
+
+import com.ifsc.cigerds.services.EnvioService;
 
 public class MainActivity extends Activity {
 
@@ -16,12 +18,15 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, 1);
 
 
     }
+
 
 
     @Override

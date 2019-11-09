@@ -2,6 +2,7 @@ package com.ifsc.cigerds.Fragmentos;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.DB.BancoController;
@@ -19,39 +21,54 @@ import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 import com.ifsc.cigerds.Threads.ConexaoEnvio;
 import com.ifsc.cigerds.Vistoria;
+import com.ifsc.cigerds.main.SectionsPagerAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class ResumoController extends Fragment implements DadosInterface {
 
-    private EditText resumo;
-    private Button envio;
+    private TextView resumo;
+    private Button atualiazar;
     private String user;
     private String pass;
     private Context context;
-    private JSONObject jsonEnviar;
     private List<DadosInterface> fragmentList;
-    private Boolean encerrar = false;
-    private String autor;
+    private SectionsPagerAdapter sectionsPagerAdapter;
+
 
     public ResumoController() {
         // Required empty public constructor
     }
 
-    public void setParametros(List<DadosInterface> fragmentList, String user, String pass, Context context, JSONObject jsonEnviar) {
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fragmentList = Vistoria.getFragments(sectionsPagerAdapter);
+        setResumo(getResumo());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        fragmentList = Vistoria.getFragments(sectionsPagerAdapter);
+        setResumo(getResumo());
+
+    }
+
+    public void setParametros(SectionsPagerAdapter sectionsPagerAdapter, String user, String pass, Context context) {
         this.context = context;
-        this.jsonEnviar = jsonEnviar;
         this.user = user;
         this.pass = pass;
-        this.fragmentList = fragmentList;
-        this.jsonEnviar = jsonEnviar;
+        this.sectionsPagerAdapter = sectionsPagerAdapter;
     }
 
     public void setResumo(String resumoString){
@@ -60,24 +77,25 @@ public class ResumoController extends Fragment implements DadosInterface {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.resumo_fragment, container, false);
+        resumo = (TextView) view.findViewById(R.id.resumo);
+        atualiazar = (Button) view.findViewById(R.id.atualizar);
 
-        resumo = (EditText) view.findViewById(R.id.resumo);
-        envio = (Button) view.findViewById(R.id.envio);
+        atualiazar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResumo(getResumo());
+            }
+        });
+        final BancoController bancoController = new BancoController(context);
 
-//        final BancoController bancoController = new BancoController(context);
-//
-//        if(Network.VerificaConexao(context)) {
-//            ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, user, pass);
-//            envio.execute();
-//        }else {
-//            bancoController.insereDados(jsonEnviar);
-//
-//        }
+
+
 
 
         Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -98,12 +116,27 @@ public class ResumoController extends Fragment implements DadosInterface {
 
     @Override
     public String getResumo() {
-        return null;
+        String resumo = "";
+
+        fragmentList = new ArrayList<DadosInterface>();
+        fragmentList.add((DadosOcorrenciaController) sectionsPagerAdapter.getRegisteredFragment(0));
+        fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
+        fragmentList.add((DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2));
+        fragmentList.add((DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3));
+        fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
+        fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
+        //fragmentList.add((ResumoController) sectionsPagerAdapter.getRegisteredFragment(6));
+
+        for(DadosInterface frgamento : fragmentList){
+            resumo += frgamento.getResumo();
+        }
+
+        return resumo;
     }
 
     @Override
     public Boolean verficaDados() {
-        return null;
+        return true;
     }
 
 

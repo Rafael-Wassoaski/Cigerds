@@ -1,6 +1,7 @@
 package com.ifsc.cigerds;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
@@ -49,6 +52,11 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Login");
+        toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorToolBar));
+        setSupportActionBar(toolbar);
+
 
         prefs =  getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE);
         String login= prefs.getString("login", null);
@@ -74,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(getBaseContext(), "Por favor aguarde!", Toast.LENGTH_LONG).show();
                     ConexaoLogin conexao = new ConexaoLogin(emailEditText.getText().toString(), passEditText.getText().toString());
                     conexao.resultBoolean = LoginActivity.this;
                     conexao.execute();

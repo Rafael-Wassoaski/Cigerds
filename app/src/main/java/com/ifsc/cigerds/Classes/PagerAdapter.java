@@ -30,6 +30,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
         this.mTabTiles = mTabTiles;
     }
 
+
+
     @NonNull
     @Override
     public Fragment getItem(int position) {
