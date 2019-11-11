@@ -11,6 +11,75 @@
     <string name="login_failed">"Falha no Login"</string>
     <string name="title_activity_vistoria">vistoria</string>
 
+    <string-array name="cobrade">
+
+        <item>Tremor de terra ;11110</item>
+        <item>Tsunami ;11120</item>
+        <item>Emanação vulcânica ;11200</item>
+        <item>Quedas, Tombamentos e rolamentos – Blocos ;11311</item>
+        <item>Quedas, Tombamentos e rolamentos – Lascas ;11312</item>
+        <item>Quedas, Tombamentos e rolamentos – Matacões ;11313</item>
+        <item>Quedas, Tombamentos e rolamentos – Lajes ;11314</item>
+        <item>Deslizamentos ;11321</item>
+        <item>Corridas de Massa – Solo/Lama ;11331</item>
+        <item>Corridas de Massa – Rocha/Detrito ;11332</item>
+        <item>Subsidências e colapsos ;11340</item>
+        <item>Erosão Costeira/Marinha ;11410</item>
+        <item>Erosão de Margem Fluvial ;11420</item>
+        <item>Erosão Continental – Laminar ;11431</item>
+        <item>Erosão Continental – Ravinas ;11432</item>
+        <item>Erosão Continental – Boçorocas ;11433</item>
+        <item>Inundações ;12100</item>
+        <item>Enxurradas ;12200</item>
+        <item>Alagamentos ;12300</item>
+        <item>Ciclones – Ventos Costeiros (Mobilidade de Dunas) ;13111</item>
+        <item>Ciclones – Marés de Tempestade (Ressacas) ;13112</item>
+        <item>Frentes Frias/Zonas de Convergência ;13120</item>
+        <item>Tempestade Local/Convectiva – Tornados ;13211</item>
+        <item>Tempestade Local/Convectiva – Tempestade de Raios ;13212</item>
+        <item>Tempestade Local/Convectiva – Granizo ;13213</item>
+        <item>Tempestade Local/Convectiva – Chuvas Intensas ;13214</item>
+        <item>Tempestade Local/Convectiva – Vendaval ;13215</item>
+        <item>Onda de Calor ;13310</item>
+        <item>Onda de Frio – Friagem ;13321</item>
+        <item>Onda de Frio – Geadas ;13322</item>
+        <item>Estiagem ;14110</item>
+        <item>Seca ;14120</item>
+        <item>Incêndio Florestal – Incêndios em Parques, Áreas de Proteção Ambiental e Áreas de Preservação Permanente Nacionais, Estaduais ou Municipais ;14131</item>
+        <item>Incêndio Florestal – Incêndios em áreas não protegidas, com reflexos na qualidade do ar ;14132</item>
+        <item>Baixa Humidade do Ar ;14140</item>
+        <item>Doenças infecciosas virais ;15110</item>
+        <item>Doenças infecciosas bacterianas ;15120</item>
+        <item>Doenças infecciosas parasíticas ;15130</item>
+        <item>Doenças infecciosas fúngicas ;15140</item>
+        <item>Infestações de animais ;15210</item>
+        <item>Infestações de algas – Marés vermelhas ;15221</item>
+        <item>Infestações de algas – Ciano bactérias em reservatórios ;15222</item>
+        <item>Outras Infestações ;15230</item>
+        <item>Queda de satélite (radionuclídeos) ;21110</item>
+        <item>Fontes radioativas em processos de produção ;21210</item>
+        <item>Outras fontes de liberação de radionuclídeos para o meio ambiente ;21310</item>
+        <item>Liberação de produtos químicos para a atmosfera causada por explosão ou incêndio ;22110</item>
+        <item>Liberação de produtos químicos nos sistemas de água potável ;22210</item>
+        <item>Derramamento de produtos químicos em ambiente lacustre, fluvial, marinho e aquíferos ;22220</item>
+        <item>Liberação produtos químicos e contaminação como conseqüência de ações militares ;22310</item>
+        <item>Transporte de produtos perigosos rodoviário ;22410</item>
+        <item>Transporte de produtos perigosos ferroviário ;22420</item>
+        <item>Transporte de produtos perigosos aéreo ;22430</item>
+        <item>Transporte de produtos perigosos dutoviário ;22440</item>
+        <item>Transporte de produtos perigosos marítimo ;22450</item>
+        <item>Transporte de produtos perigosos aquaviário ;22460</item>
+        <item>Incêndios em plantas e distritos industriais, parques e depósitos ;23110</item>
+        <item>Incêndios em aglomerados residenciais ;23120</item>
+        <item>Colapso de edificações ;24100</item>
+        <item>Rompimento/colapso de barragens ;24200</item>
+        <item>Transporte de passageiros e cargas não perigosas rodoviário ;25100</item>
+        <item>Transporte de passageiros e cargas não perigosas ferroviário ;25200</item>
+        <item>Transporte de passageiros e cargas não perigosas aéreo ;25300</item>
+        <item>Transporte de passageiros e cargas não perigosas marítimo ;25400</item>
+        <item>Transporte de passageiros e cargas não perigosas aquaviário ;25500</item>
+    </string-array>
+
     <string-array name="titlesTabs">
         <item>IDENTIFICAÇÃO DO DESASTRE</item>
         <item>DANOS HUMANOS</item>

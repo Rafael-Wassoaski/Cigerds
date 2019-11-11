@@ -1,37 +1,32 @@
 package com.ifsc.cigerds.Threads;
 
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 
+import com.ifsc.cigerds.Interfaces.AsyncInterface;
 import com.ifsc.cigerds.MainActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.Buffer;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-import static android.content.Context.MODE_PRIVATE;
+public class ConexaoEnvio extends AsyncTask<Void, Void, JSONObject> {
 
-public class ConexaoEnvio extends AsyncTask<Void, Void, Void> {
-
-
+    public AsyncInterface asyncInterface = null;
     private JSONObject json;
     private String user;
     private String pass;
@@ -40,10 +35,11 @@ public class ConexaoEnvio extends AsyncTask<Void, Void, Void> {
         this.json = json;
         this.user = user;
         this.pass = pass;
+
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected JSONObject doInBackground(Void... voids) {
 
         try {
 
@@ -91,7 +87,16 @@ public class ConexaoEnvio extends AsyncTask<Void, Void, Void> {
 
             }
 
-            Log.d("Exep", responseString);
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("status", responseString.split(":")[1].trim());
+                Log.d("Exep", jsonObject.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return json;
 
 
         } catch (MalformedURLException e) {
@@ -107,6 +112,11 @@ public class ConexaoEnvio extends AsyncTask<Void, Void, Void> {
         }
 
 
-        return null;
+        return json;
     }
+    @Override
+    protected void onPostExecute(JSONObject result) {
+        asyncInterface.processFinish(result);
+    }
+
 }

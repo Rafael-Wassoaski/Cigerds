@@ -19,9 +19,11 @@ public class BancoController {
 
     private SQLiteDatabase dataBase;
     private Banco banco;
+    private Context context;
 
     public  BancoController(Context context){
         banco = new Banco(context);
+        this.context = context;
     }
 
 

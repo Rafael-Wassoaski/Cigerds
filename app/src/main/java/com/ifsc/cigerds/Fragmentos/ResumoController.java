@@ -121,8 +121,6 @@ public class ResumoController extends Fragment implements DadosInterface {
     public String getResumo() {
         String resumo = "";
 
-        fragmentList = Vistoria.getFragments();
-
         for(DadosInterface frgamento : fragmentList){
             resumo += frgamento.getResumo();
         }

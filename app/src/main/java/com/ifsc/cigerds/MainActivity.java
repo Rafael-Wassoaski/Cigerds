@@ -12,7 +12,7 @@ import com.ifsc.cigerds.services.EnvioService;
 public class MainActivity extends Activity {
 
     private Intent intent;
-    final public static String PROVEDOR = "https://testestccii.pythonanywhere.com/ws/";
+    final public static String PROVEDOR = "https://sisgerds.pythonanywhere.com/ws/";
 
 
     @Override

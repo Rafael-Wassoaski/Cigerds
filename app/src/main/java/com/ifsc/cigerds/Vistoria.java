@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -33,6 +34,7 @@ import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
 import com.ifsc.cigerds.Fragmentos.ResumoController;
+import com.ifsc.cigerds.Interfaces.AsyncInterface;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.Threads.ConexaoEnvio;
 import com.ifsc.cigerds.main.SectionsPagerAdapter;
@@ -44,7 +46,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vistoria extends AppCompatActivity {
+public class Vistoria extends AppCompatActivity implements AsyncInterface {
 
     private final String NOME_PREFERENCE = "262114a72D&@5aa!!@FA";
     private SharedPreferences prefs;
@@ -148,10 +150,12 @@ public class Vistoria extends AppCompatActivity {
 
         if(Network.VerificaConexao(getBaseContext())) {
             ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
+            envio.asyncInterface = this;
             envio.execute();
 
         }else {
             bancoController.insereDados(jsonEnviar);
+            Toast.makeText(getBaseContext(), "Vistoria salva no banco de dados!", Toast.LENGTH_LONG).show();
             startService(new Intent(this, EnvioService.class).putExtra("name", "EnvioService"));
         }
 
@@ -216,5 +220,16 @@ public class Vistoria extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void processFinish(JSONObject result) {
+        try {
+            if(result.getString("status").equals("200}")){
+                Toast.makeText(getBaseContext(), "Vistoria enviada!", Toast.LENGTH_LONG).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
                 editor.putString("userId", result.get("id").toString());
                 editor.commit();
                 setResult(RESULT_OK);
-                finish();
+                this.finishActivity();
 
 
 
