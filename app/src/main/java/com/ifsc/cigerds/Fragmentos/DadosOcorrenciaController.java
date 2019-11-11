@@ -1,5 +1,6 @@
 package com.ifsc.cigerds.Fragmentos;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -45,6 +45,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     private EditText cobrad;
     private TextView cobreadeDesc;
     private EditText descricao;
+    private TextView logadoComo;
 
 
     public DadosOcorrenciaController(){}
@@ -54,7 +55,9 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        final String NOME_PREFERENCE = "262114a72D&@5aa!!@FA";
+        SharedPreferences prefs;
+        prefs = this.getActivity().getSharedPreferences(NOME_PREFERENCE, getContext().MODE_PRIVATE);
         final String[] cidades = getResources().getStringArray(R.array.municipioCadastrados);
         ArrayList<SpinnerCheckBox> cidadesCheckBox = new ArrayList<>();
 
@@ -66,6 +69,8 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         }
 
         View view = inflater.inflate(R.layout.dados_ocorrencia_layout, container, false);
+        logadoComo = (TextView)view.findViewById(R.id.logadoComo);
+        logadoComo.setText("logado como: "+  prefs.getString("login", "0").toString());
         cobrad = (EditText)view.findViewById(R.id.cobrad);
         cobreadeDesc = (TextView) view.findViewById(R.id.descCOBRAD);
         dataTextview = (TextView)view.findViewById(R.id.data);

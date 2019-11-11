@@ -123,7 +123,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
 
     public void sendData(JSONObject jsonEnviar, SectionsPagerAdapter sectionsPagerAdapter,  BancoController bancoController){
 
-
+        find_Location(this, jsonEnviar);
         List<DadosInterface> fragmentList = getFragments();
         //getBaseContext().startService(new Intent(getApplicationContext(), EnviarPosCadastro.class));
         Log.d("IDUSER", prefs.getString("userId", "0").toString());
@@ -148,15 +148,21 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
 
         }
 
-        if(Network.VerificaConexao(getBaseContext())) {
-            ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
-            envio.asyncInterface = this;
-            envio.execute();
 
-        }else {
-            bancoController.insereDados(jsonEnviar);
-            Toast.makeText(getBaseContext(), "Vistoria salva no banco de dados!", Toast.LENGTH_LONG).show();
-            startService(new Intent(this, EnvioService.class).putExtra("name", "EnvioService"));
+        if(jsonEnviar.has("latitude") && jsonEnviar.has("longitude")) {
+
+            if (Network.VerificaConexao(getBaseContext())) {
+                ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
+                envio.asyncInterface = this;
+                envio.execute();
+
+            } else {
+                bancoController.insereDados(jsonEnviar);
+                Toast.makeText(getBaseContext(), "Vistoria salva no banco de dados!", Toast.LENGTH_LONG).show();
+                startService(new Intent(this, EnvioService.class).putExtra("name", "EnvioService"));
+            }
+        }else{
+            Toast.makeText(this, "Ative sua localização ou conseda permissão do localizador", Toast.LENGTH_LONG).show();
         }
 
         Log.d("Json",jsonEnviar.toString());
@@ -176,7 +182,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
         FloatingActionButton fab = findViewById(R.id.fab);
         prefs = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("SISGERDS\n (logado como: "+  prefs.getString("login", "0").toString()+")");
+        toolbar.setTitle("SISGERDS");
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorToolBar));
         setSupportActionBar(toolbar);
 
