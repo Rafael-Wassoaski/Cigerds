@@ -49,12 +49,13 @@ public class BancoController {
             e.printStackTrace();
         }
 
-        delete();
+
 
 
     }
 
     public void delete(){
+        dataBase = banco.getReadableDatabase();
         dataBase.execSQL("DELETE FROM vistoria");
     }
     public Cursor checkData(){

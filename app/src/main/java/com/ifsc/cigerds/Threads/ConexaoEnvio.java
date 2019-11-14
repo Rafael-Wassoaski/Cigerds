@@ -24,9 +24,8 @@ import java.security.NoSuchAlgorithmException;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-public class ConexaoEnvio extends AsyncTask<Void, Void, JSONObject> {
+public class ConexaoEnvio extends AsyncTask<Void, Void, Void> {
 
-    public AsyncInterface asyncInterface = null;
     private JSONObject json;
     private String user;
     private String pass;
@@ -39,7 +38,7 @@ public class ConexaoEnvio extends AsyncTask<Void, Void, JSONObject> {
     }
 
     @Override
-    protected JSONObject doInBackground(Void... voids) {
+    protected Void doInBackground(Void... voids) {
 
         try {
 
@@ -90,13 +89,13 @@ public class ConexaoEnvio extends AsyncTask<Void, Void, JSONObject> {
 
             try {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("status", responseString.split(":")[1].trim());
+                jsonObject.put("status", responseString.split(":"));
                 Log.d("Exep", jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            return json;
+
 
 
         } catch (MalformedURLException e) {
@@ -111,12 +110,8 @@ public class ConexaoEnvio extends AsyncTask<Void, Void, JSONObject> {
             e.printStackTrace();
         }
 
+return null;
 
-        return json;
-    }
-    @Override
-    protected void onPostExecute(JSONObject result) {
-        asyncInterface.processFinish(result);
     }
 
 }

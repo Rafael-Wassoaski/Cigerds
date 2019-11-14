@@ -127,7 +127,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
         List<DadosInterface> fragmentList = getFragments();
         //getBaseContext().startService(new Intent(getApplicationContext(), EnviarPosCadastro.class));
         Log.d("IDUSER", prefs.getString("userId", "0").toString());
-
+        bancoController.delete();
         find_Location(getBaseContext(), jsonEnviar);
 
         for(DadosInterface fragmento : fragmentList){
@@ -153,7 +153,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
 
             if (Network.VerificaConexao(getBaseContext())) {
                 ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
-                envio.asyncInterface = this;
+
                 envio.execute();
 
             } else {
@@ -231,7 +231,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
     @Override
     public void processFinish(JSONObject result) {
         try {
-            if(result.getString("status").equals("200}")){
+            if(result.getString("status").equals("200} ")){
                 Toast.makeText(getBaseContext(), "Vistoria enviada!", Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {

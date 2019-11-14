@@ -11,15 +11,15 @@ public class Banco extends SQLiteOpenHelper {
 
     public static class BancoEntry implements BaseColumns{
 
-        private static final int VERSAO = 18;
+        private static final int VERSAO = 20;
         public static final String NOME_BANCO = "vistorias.db";
         private static final String TABELA = "vistoria";
         private static final String ID = "_id";
         private static final String IDCONTROLE = "idControle";
         private static final String AUTOR = "autor";
         private static final String COBRAD = "cobrad";
-        private static final String DATADESASTRE = "datadesastre";
-        private static final String MUNICIPIO = "municipio";
+        private static final String DATADESASTRE = "dataDesastre";
+        private static final String MUNICIPIO = "municipios";
 
 
 
