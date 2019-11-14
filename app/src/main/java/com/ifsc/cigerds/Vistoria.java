@@ -127,7 +127,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
         List<DadosInterface> fragmentList = getFragments();
         //getBaseContext().startService(new Intent(getApplicationContext(), EnviarPosCadastro.class));
         Log.d("IDUSER", prefs.getString("userId", "0").toString());
-        bancoController.delete();
+        //bancoController.delete();
         find_Location(getBaseContext(), jsonEnviar);
 
         for(DadosInterface fragmento : fragmentList){
