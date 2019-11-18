@@ -96,9 +96,11 @@ public class ConexaoLogin extends AsyncTask<Boolean, JSONObject, JSONObject> {
                 }
             }
             else {
-                responseString="";
+                responseString="{status:500}";
 
             }
+
+
 
             resposta = new JSONObject(responseString);
         } catch (Exception e) {

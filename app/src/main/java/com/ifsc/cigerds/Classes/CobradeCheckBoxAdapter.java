@@ -14,21 +14,21 @@ import com.ifsc.cigerds.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckBoxAdapter extends ArrayAdapter<SpinnerCheckBoxCidades> {
+public class CobradeCheckBoxAdapter extends ArrayAdapter<SpinnerCobradeCheckbox> {
     private Context mContext;
-    private ArrayList<SpinnerCheckBoxCidades> listState;
-    private CheckBoxAdapter myAdapter;
+    private ArrayList<SpinnerCobradeCheckbox> listState;
+    private CobradeCheckBoxAdapter myAdapter;
     private boolean isFromView = false;
 
 
-    public List<SpinnerCheckBoxCidades> getList(){
+    public List<SpinnerCobradeCheckbox> getList(){
         return  listState;
     }
 
-    public CheckBoxAdapter(Context context, int resource, List<SpinnerCheckBoxCidades> objects) {
+    public CobradeCheckBoxAdapter(Context context, int resource, List<SpinnerCobradeCheckbox> objects) {
         super(context, resource, objects);
         this.mContext = context;
-        this.listState = (ArrayList<SpinnerCheckBoxCidades>) objects;
+        this.listState = (ArrayList<SpinnerCobradeCheckbox>) objects;
         this.myAdapter = this;
     }
 
@@ -60,7 +60,7 @@ public class CheckBoxAdapter extends ArrayAdapter<SpinnerCheckBoxCidades> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.mTextView.setText(listState.get(position).getCidade());
+        holder.mTextView.setText(listState.get(position).getCobrade());
 
         // To check weather checked event fire from getview() or user input
         isFromView = true;

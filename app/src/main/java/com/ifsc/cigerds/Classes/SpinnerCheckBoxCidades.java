@@ -1,6 +1,6 @@
 package com.ifsc.cigerds.Classes;
 
-public class SpinnerCheckBox {
+public class SpinnerCheckBoxCidades{
 
     private String cidade;
     private boolean check;

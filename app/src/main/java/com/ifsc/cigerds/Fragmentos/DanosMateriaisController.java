@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.ifsc.cigerds.Classes.AdaptadorCheckBox;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
@@ -25,7 +26,7 @@ import java.util.Map;
 
 public class DanosMateriaisController extends Fragment implements DadosInterface {
 
-    private HashMap<CheckBox, EditText> materiais = new HashMap<>();
+    private  List<AdaptadorCheckBox> materiais = new ArrayList<>();
     private EditText danos_materiais_observacoes;
     private List<String> nameTag;
 
@@ -53,30 +54,29 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
 
         danos_materiais_observacoes = (EditText)view.findViewById(R.id.danos_materiais_observacoes );
 
-        materiais.put((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.unidades_habitacionais_atingidas));
-        materiais.put((CheckBox)view.findViewById(R.id.danificadas), (EditText)view.findViewById(R.id.unidades_habitacionais_danificads));
-        materiais.put((CheckBox)view.findViewById(R.id.interditadas), (EditText)view.findViewById(R.id.unidades_habitacionais_interditadas));
-        materiais.put((CheckBox)view.findViewById(R.id.destruidas), (EditText)view.findViewById(R.id.unidades_habitacionais_destruidas));
-        materiais.put((CheckBox)view.findViewById(R.id.instalacaoSaude), (EditText)view.findViewById(R.id.instalacoes_publicas_saude_atingidas));
-        materiais.put((CheckBox)view.findViewById(R.id.instalacoesComunitarias), (EditText)view.findViewById(R.id.instalacoes_comunitarias_atingidas));
-        materiais.put((CheckBox)view.findViewById(R.id.instalacoesEnsino), (EditText)view.findViewById(R.id.instalacoes_publicas_ensino_atingidas));
-        materiais.put((CheckBox)view.findViewById(R.id.obrasPublicas), (EditText)view.findViewById(R.id.obras_atingidas));
-        materiais.put((CheckBox)view.findViewById(R.id.interrupcaoServicos), (EditText)view.findViewById(R.id.interrupcoes_servicos_essenciais));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.unidades_habitacionais_atingidas)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.danificadas), (EditText)view.findViewById(R.id.unidades_habitacionais_danificads)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.interditadas), (EditText)view.findViewById(R.id.unidades_habitacionais_interditadas)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.destruidas), (EditText)view.findViewById(R.id.unidades_habitacionais_destruidas)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.instalacaoSaude), (EditText)view.findViewById(R.id.instalacoes_publicas_saude_atingidas)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.instalacoesComunitarias), (EditText)view.findViewById(R.id.instalacoes_comunitarias_atingidas)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.instalacoesEnsino), (EditText)view.findViewById(R.id.instalacoes_publicas_ensino_atingidas)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.obrasPublicas), (EditText)view.findViewById(R.id.obras_atingidas)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.interrupcaoServicos), (EditText)view.findViewById(R.id.interrupcoes_servicos_essenciais)));
 
 
-        for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
+        for(AdaptadorCheckBox entrada : materiais){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+            final EditText editText = entrada.getEditText();
 
             editText.setVisibility(View.INVISIBLE);
         }
 
 
-        for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
+        for(AdaptadorCheckBox entrada : materiais){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+            CheckBox checkBox = entrada.getCheckBox();
+            final EditText editText = entrada.getEditText();
 
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -106,10 +106,10 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
             json.put("danos_materiais_observacoes", "Sem obeservações");
         }
 
-        for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
-            Log.d("Counter",count1+"");
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+        for(AdaptadorCheckBox entrada : materiais){
+
+            CheckBox checkBox = entrada.getCheckBox();
+            final EditText editText = entrada.getEditText();
 
             if(checkBox.isChecked()){
                 json.put(nameTag.get(count1), editText.getText());
@@ -134,10 +134,10 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
         }
 
 
-        for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
+        for(AdaptadorCheckBox entrada : materiais){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+            CheckBox checkBox = entrada.getCheckBox();
+            final EditText editText = entrada.getEditText();
 
             if(checkBox.isChecked()){
                 resumo+= checkBox.getText().toString()+ ": "+ editText.getText()+"\n";
@@ -157,10 +157,10 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
 
 
 
-        for(Map.Entry<CheckBox, EditText> entrada : materiais.entrySet()){
+        for(AdaptadorCheckBox entrada : materiais){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+            CheckBox checkBox = entrada.getCheckBox();
+            final EditText editText = entrada.getEditText();
 
             if(checkBox.isChecked() && editText.getText().toString().isEmpty()){
                 Toast.makeText(getContext(), "Você não informou uma quantide para a opção marcada ", Toast.LENGTH_LONG).show();

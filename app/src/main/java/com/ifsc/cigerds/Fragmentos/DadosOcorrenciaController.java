@@ -2,9 +2,6 @@ package com.ifsc.cigerds.Fragmentos;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.ifsc.cigerds.Classes.CheckBoxAdapter;
-import com.ifsc.cigerds.Classes.Localizador;
+import com.ifsc.cigerds.Classes.CobradeCheckBoxAdapter;
 import com.ifsc.cigerds.Classes.LocalizadorFused;
-import com.ifsc.cigerds.Classes.SpinnerCheckBox;
+import com.ifsc.cigerds.Classes.SpinnerCheckBoxCidades;
+import com.ifsc.cigerds.Classes.SpinnerCobradeCheckbox;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
@@ -28,16 +25,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DadosOcorrenciaController extends Fragment implements DadosInterface, TextWatcher {
+public class DadosOcorrenciaController extends Fragment implements DadosInterface {
 
     private CheckBoxAdapter municipiosAdapter;
+    private CobradeCheckBoxAdapter cobradeAdapter;
     private Spinner municipioSpinner;
+    private Spinner cobradesSpinner;
     private TextView dataTextview;
     private EditText dataDesastre;
     private EditText endereco;
@@ -45,8 +43,8 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     private EditText cobrad;
     private TextView cobreadeDesc;
     private EditText descricao;
+    private EditText hora;
     private TextView logadoComo;
-
 
     public DadosOcorrenciaController(){}
 
@@ -59,10 +57,26 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         SharedPreferences prefs;
         prefs = this.getActivity().getSharedPreferences(NOME_PREFERENCE, getContext().MODE_PRIVATE);
         final String[] cidades = getResources().getStringArray(R.array.municipioCadastrados);
-        ArrayList<SpinnerCheckBox> cidadesCheckBox = new ArrayList<>();
+        final String[] cobradesProvi = getResources().getStringArray(R.array.cobrade);
+        final String [] cobradesDef = new String[cobradesProvi.length];
+        for(int cont = 0; cont < cobradesProvi.length; cont++){
+            cobradesDef[cont] = cobradesProvi[cont].replaceAll(";", "\n");
+        }
+
+        ArrayList<SpinnerCobradeCheckbox> cobradeCheckBox = new ArrayList<>();
+
+
+        for(int cont = 0; cont < cobradesDef.length; cont++){
+            SpinnerCobradeCheckbox spinnerCheckBox = new SpinnerCobradeCheckbox();
+            spinnerCheckBox.setCheck(false);
+            spinnerCheckBox.setCobrade(cobradesDef[cont]);
+            cobradeCheckBox.add(spinnerCheckBox);
+        }
+
+        ArrayList<SpinnerCheckBoxCidades> cidadesCheckBox = new ArrayList<>();
 
         for(int cont = 0; cont < cidades.length; cont++){
-            SpinnerCheckBox spinnerCheckBox = new SpinnerCheckBox();
+            SpinnerCheckBoxCidades spinnerCheckBox = new SpinnerCheckBoxCidades();
             spinnerCheckBox.setCheck(false);
             spinnerCheckBox.setCidade(cidades[cont]);
             cidadesCheckBox.add(spinnerCheckBox);
@@ -71,19 +85,20 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         View view = inflater.inflate(R.layout.dados_ocorrencia_layout, container, false);
         logadoComo = (TextView)view.findViewById(R.id.logadoComo);
         logadoComo.setText("logado como: "+  prefs.getString("login", "0").toString());
-        cobrad = (EditText)view.findViewById(R.id.cobrad);
         cobreadeDesc = (TextView) view.findViewById(R.id.descCOBRAD);
         dataTextview = (TextView)view.findViewById(R.id.data);
         dataDesastre = (EditText)view.findViewById(R.id.dataDesastre);
         descricao = (EditText)view.findViewById(R.id.descDesastre);
         endereco = (EditText)view.findViewById(R.id.endereco);
-        municipioSpinner = (Spinner)view.findViewById(R.id.municipio);
+        hora = (EditText)view.findViewById(R.id.hora);
+        cobradesSpinner = (Spinner)view.findViewById(R.id.cobrades);
+        cobradeAdapter = new CobradeCheckBoxAdapter(getContext(),0, cobradeCheckBox);
+        cobradesSpinner.setAdapter(cobradeAdapter);
+        municipioSpinner = (Spinner)view.findViewById(R.id.municipios);
         municipiosAdapter = new CheckBoxAdapter(getContext(), 0, cidadesCheckBox);
        // municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         municipioSpinner.setAdapter(municipiosAdapter);
 
-
-        cobrad.addTextChangedListener(this);
 
         Calendar calender = Calendar.getInstance();
         Date data = new Date();
@@ -102,7 +117,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     public void getDados(JSONObject json) throws JSONException {
           CheckBoxAdapter adapter = (CheckBoxAdapter)municipioSpinner.getAdapter();
           String municipios = "";
-           for(SpinnerCheckBox spinnerCheckBox : adapter.getList()){
+           for(SpinnerCheckBoxCidades spinnerCheckBox : adapter.getList()){
 
                if(spinnerCheckBox.isCheck()){
                    municipios+=spinnerCheckBox.getCidade()+"\n ";
@@ -110,12 +125,36 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
            }
 
-           json.put("cobrad", cobrad.getText().toString());
+        CobradeCheckBoxAdapter adapterCidades = (CobradeCheckBoxAdapter)cobradesSpinner.getAdapter();
+        String cobrades = "";
+        for(SpinnerCobradeCheckbox spinnerCheckBox : adapterCidades.getList()){
+
+            if(spinnerCheckBox.isCheck()){
+                cobrades+=spinnerCheckBox.getCobrade()+"\n ";
+            }
+
+        }
+
+
+           String data = dataDesastre.getText().toString();
+           String horaDesastre = hora.getText().toString();
+
+
+        StringBuilder stringBuilder = new StringBuilder(data);
+        stringBuilder.insert(2, "-");
+        stringBuilder.insert(5, "-");
+        data = stringBuilder.toString();
+        stringBuilder = new StringBuilder(horaDesastre);
+        stringBuilder.insert(2,":");
+        horaDesastre = stringBuilder.toString();
+
+           json.put("cobrad", cobrades);
            json.put("municipios", municipios);
+           json.put("descricaoDesastre", cobreadeDesc.getText());
            json.put("data", dataTextview.getText().toString());
            json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
-           json.put("dataDesastre", dataDesastre.getText().toString());
+           json.put("dataDesastre", data+";"+horaDesastre);
            LocalizadorFused fused = new LocalizadorFused(getActivity());
            fused.getLocation();
 
@@ -128,18 +167,33 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
         CheckBoxAdapter adapter = (CheckBoxAdapter)municipioSpinner.getAdapter();
         String municipios = "";
-        for(SpinnerCheckBox spinnerCheckBox : adapter.getList()){
+        for(SpinnerCheckBoxCidades spinnerCheckBox : adapter.getList()){
 
             if(spinnerCheckBox.isCheck()){
                 municipios+=spinnerCheckBox.getCidade()+"\n";
             }
 
         }
+
+
+
+        CobradeCheckBoxAdapter adapterCidades = (CobradeCheckBoxAdapter)cobradesSpinner.getAdapter();
+        String cobrades = "";
+        for(SpinnerCobradeCheckbox spinnerCheckBox : adapterCidades.getList()){
+
+            if(spinnerCheckBox.isCheck()){
+                cobrades+=spinnerCheckBox.getCobrade()+"\n ";
+            }
+
+        }
+
+
         String resumo = "";
         resumo+="DADOS DA OCORRENCIA"+"\n\n";
-        resumo+="Cobrad: "+cobrad.getText().toString()+ " " + cobreadeDesc.getText().toString() + "\n";
+        resumo+="Cobrad: "+cobrades;
+        resumo+="Descrição do desastre"+cobreadeDesc.getText() + "\n";
         resumo+="Municipios: "+ municipios + "\n";
-        resumo+="Data: "+ dataDesastre.getText().toString()+"\n";
+        resumo+="Data: "+ dataDesastre.getText().toString()+" : " + hora.getText().toString()+"\n";
         resumo+="Endereco: "+ endereco.getText().toString()+"\n";
         resumo+="Descricao: "+ descricao.getText().toString()+"\n";
         resumo+="\n\n";
@@ -151,12 +205,35 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
         CheckBoxAdapter adapter = (CheckBoxAdapter)municipioSpinner.getAdapter();
         String municipios = "";
-        for(SpinnerCheckBox spinnerCheckBox : adapter.getList()){
+        for(SpinnerCheckBoxCidades spinnerCheckBox : adapter.getList()){
 
             if(spinnerCheckBox.isCheck()){
                 municipios+=spinnerCheckBox.getCidade()+"\n ";
             }
 
+        }
+
+        CobradeCheckBoxAdapter adapterCidades = (CobradeCheckBoxAdapter)cobradesSpinner.getAdapter();
+        String cobrades = "";
+        for(SpinnerCobradeCheckbox spinnerCheckBox : adapterCidades.getList()){
+
+            if(spinnerCheckBox.isCheck()){
+                cobrades+=spinnerCheckBox.getCobrade()+"\n ";
+            }
+
+        }
+
+
+        if(cobrades.equals("")){
+            Toast.makeText(getContext(), "Você não informou o(s) cobrade(s)", Toast.LENGTH_LONG).show();
+            municipioSpinner.requestFocus();
+            return false;
+        }
+
+        if(hora.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Você não informou a Hora do desastre", Toast.LENGTH_LONG).show();
+            hora.requestFocus();
+            return false;
         }
 
         if(municipios.equals("")){
@@ -177,24 +254,6 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
             return false;
         }
 
-        String [] arrayCOBRADE = getContext().getResources().getStringArray(R.array.cobrade);
-        String [] cobrede = new String[2];
-        int cont;
-        for(cont = 0; cont < arrayCOBRADE.length; cont++){
-
-            cobrede = arrayCOBRADE[cont].split(";");
-
-            if(cobrad.getText().toString().equals(cobrede[1])){
-                break;
-
-            }
-        }
-
-        if(cont >= arrayCOBRADE.length){
-            Toast.makeText(getContext(), "Cobrad invállido", Toast.LENGTH_LONG).show();
-            cobrad.requestFocus();
-            return false;
-        }
 
         if(endereco.getText().toString().isEmpty()){
             Toast.makeText(getContext(), "Você não informou o endereço da vistoria", Toast.LENGTH_LONG).show();
@@ -212,32 +271,4 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     }
 
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        String [] arrayCOBRADE = getContext().getResources().getStringArray(R.array.cobrade);
-        String [] cobrede = new String[2];
-        for(int cont = 0; cont < arrayCOBRADE.length; cont++){
-
-            cobrede = arrayCOBRADE[cont].split(";");
-
-            if(cobrad.getText().toString().equals(cobrede[1])){
-                cobreadeDesc.setText(cobrede[0]);
-                return;
-            }
-
-        }
-
-        cobrad.setError("COBRADE inválido");
-
-    }
 }

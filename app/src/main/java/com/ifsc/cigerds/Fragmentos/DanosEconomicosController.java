@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.ifsc.cigerds.Classes.AdaptadorCheckBox;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.R;
 
@@ -24,7 +25,7 @@ import java.util.Map;
 
 public class DanosEconomicosController extends Fragment implements DadosInterface {
 
-    private HashMap<CheckBox, EditText> economicos = new HashMap<>();
+    private List<AdaptadorCheckBox> economicos = new ArrayList<>();
     private EditText danos_economicos_observacoes;
     private List<String> nameTag;
 
@@ -42,27 +43,27 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
         nameTag.add("danos_pecuaria");
         nameTag.add("danos_comercio");
         nameTag.add("danos_industria");
-        nameTag.add("danos_prestacao_de_servicos ");
+        nameTag.add("danos_prestacao_de_servicos");
 
-        economicos.put((CheckBox)view.findViewById(R.id.danosAgricultura), (EditText)view.findViewById(R.id.danos_agricultura));
-        economicos.put((CheckBox)view.findViewById(R.id.danosPecuária), (EditText)view.findViewById(R.id.danos_pecuaria));
-        economicos.put((CheckBox)view.findViewById(R.id.danosComercio), (EditText)view.findViewById(R.id.danos_comercio));
-        economicos.put((CheckBox)view.findViewById(R.id.danosIndustria), (EditText)view.findViewById(R.id.danos_industria));
-        economicos.put((CheckBox)view.findViewById(R.id.danosServicos), (EditText)view.findViewById(R.id.danos_prestacao_de_servicos ));
+        economicos.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.danosAgricultura), (EditText)view.findViewById(R.id.danos_agricultura)));
+        economicos.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.danosPecuária), (EditText)view.findViewById(R.id.danos_pecuaria)));
+        economicos.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.danosComercio), (EditText)view.findViewById(R.id.danos_comercio)));
+        economicos.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.danosIndustria), (EditText)view.findViewById(R.id.danos_industria)));
+        economicos.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.danosServicos), (EditText)view.findViewById(R.id.danos_prestacao_de_servicos )));
         danos_economicos_observacoes = (EditText)view.findViewById(R.id.danos_ambientais_observacoes);
-        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+        for(AdaptadorCheckBox entrada : economicos){
 
 
-            final EditText editText = entrada.getValue();
+            final EditText editText = entrada.getEditText();
 
             editText.setVisibility(View.INVISIBLE);
         }
 
 
-        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+        for(AdaptadorCheckBox entrada : economicos){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+            CheckBox checkBox = entrada.getCheckBox();
+            final EditText editText = entrada.getEditText();
 
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -91,10 +92,10 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
             json.put("danos_economicos_observacoes", "Sem obeservações");
         }
 
-        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+        for(AdaptadorCheckBox entrada : economicos){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+            CheckBox checkBox = entrada.getCheckBox();
+            final EditText editText = entrada.getEditText();
 
             if(checkBox.isChecked()){
                 json.put(nameTag.get(count), editText.getText());
@@ -118,10 +119,10 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
             resumo+="Observações: Sem obeservações\n";
         }
 
-        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+        for(AdaptadorCheckBox entrada : economicos){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+            CheckBox checkBox = entrada.getCheckBox();
+            final EditText editText = entrada.getEditText();
 
             if(checkBox.isChecked()){
                 resumo+= checkBox.getText().toString()+ ": "+ editText.getText()+"\n";
@@ -138,10 +139,10 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
 
     @Override
     public Boolean verficaDados() {
-        for(Map.Entry<CheckBox, EditText> entrada : economicos.entrySet()){
+        for(AdaptadorCheckBox entrada : economicos){
 
-            CheckBox checkBox = entrada.getKey();
-            final EditText editText = entrada.getValue();
+            CheckBox checkBox = entrada.getCheckBox();
+            final EditText editText = entrada.getEditText();
 
             if(checkBox.isChecked() && editText.getText().toString().isEmpty()){
                 Toast.makeText(getContext(), "Você não informou uma quantide para a opção marcada ", Toast.LENGTH_LONG).show();

@@ -12,7 +12,7 @@
     <string name="title_activity_vistoria">vistoria</string>
 
     <string-array name="cobrade">
-
+        <item>COBRADE</item>
         <item>Tremor de terra ;11110</item>
         <item>Tsunami ;11120</item>
         <item>Emanação vulcânica ;11200</item>
