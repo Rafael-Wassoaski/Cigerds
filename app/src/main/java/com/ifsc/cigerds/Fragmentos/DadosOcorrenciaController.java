@@ -127,10 +127,14 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
         CobradeCheckBoxAdapter adapterCidades = (CobradeCheckBoxAdapter)cobradesSpinner.getAdapter();
         String cobrades = "";
+        String idsCobrades = "";
+        String [] temp;
         for(SpinnerCobradeCheckbox spinnerCheckBox : adapterCidades.getList()){
 
             if(spinnerCheckBox.isCheck()){
-                cobrades+=spinnerCheckBox.getCobrade()+"\n ";
+                temp = spinnerCheckBox.getCobrade().split("\n");
+                cobrades+= temp[0]+" ";
+                idsCobrades += temp[1]+" ";
             }
 
         }
@@ -148,9 +152,9 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         stringBuilder.insert(2,":");
         horaDesastre = stringBuilder.toString();
 
-           json.put("cobrad", cobrades);
+           json.put("cobrad", idsCobrades);
            json.put("municipios", municipios);
-           json.put("descricaoDesastre", cobreadeDesc.getText());
+           json.put("descricaoDesastre", cobrades);
            json.put("data", dataTextview.getText().toString());
            json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
@@ -248,11 +252,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
             dataDesastre.requestFocus();
             return false;
         }
-        if(cobrad.getText().toString().isEmpty()){
-            Toast.makeText(getContext(), "Você não informou o COBRAD", Toast.LENGTH_LONG).show();
-            cobrad.requestFocus();
-            return false;
-        }
+
 
 
         if(endereco.getText().toString().isEmpty()){

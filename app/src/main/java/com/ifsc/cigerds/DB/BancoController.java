@@ -1,11 +1,16 @@
 package com.ifsc.cigerds.DB;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.ifsc.cigerds.Threads.ConexaoEnvio;
 
@@ -25,6 +30,7 @@ public class BancoController {
         banco = new Banco(context);
         this.context = context;
     }
+
 
 
     public void createJSON(String user, String pass){

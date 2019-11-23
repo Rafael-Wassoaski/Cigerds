@@ -28,7 +28,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="10dp"
         android:text="Vias Públicas Totalmente Desobistruídas"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -40,7 +39,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="15dp"
         android:text="Restabelecimento de Serviços Essenciais"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iah_vias_publicas_totalmente_desobistruidas" />
 
@@ -175,7 +173,7 @@
         android:id="@+id/iah_telhas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
         android:ems="10"
@@ -188,7 +186,7 @@
         android:id="@+id/iah_kit_limpeza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
         android:ems="10"
@@ -201,7 +199,7 @@
         android:id="@+id/iah_kit_higiene_pessoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
         android:ems="10"

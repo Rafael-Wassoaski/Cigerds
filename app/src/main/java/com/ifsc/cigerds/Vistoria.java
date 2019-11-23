@@ -54,6 +54,15 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
     private LocationManager locationManager;
     static private SectionsPagerAdapter sectionsPagerAdapter;
 
+    private void checkPermission(){
+        if (ContextCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            //File write logic here
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    101);
+        }
+    }
+
     public void find_Location(Context con, JSONObject json) {
 
         String location_context = Context.LOCATION_SERVICE;
@@ -185,7 +194,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
         toolbar.setTitle("SISGERDS");
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorToolBar));
         setSupportActionBar(toolbar);
-
+        checkPermission();
 
         for(int count = 0; count <= 6; count++) {
             sectionsPagerAdapter.instantiateItem(viewPager, count);

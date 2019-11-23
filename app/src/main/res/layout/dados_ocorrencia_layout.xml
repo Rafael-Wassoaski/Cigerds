@@ -70,8 +70,8 @@
 
     <EditText
         android:id="@+id/dataDesastre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="297dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
@@ -79,7 +79,7 @@
         android:layout_marginBottom="8dp"
         android:duplicateParentState="false"
         android:ems="10"
-        android:hint="Data do desastre"
+        android:hint="Data do desastre (DDMMAAAA)"
         android:inputType="date"
         app:layout_constraintBottom_toTopOf="@+id/hora"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="Hora"
+        android:hint="Hora (HHMM)"
         android:inputType="time"
         app:layout_constraintBottom_toTopOf="@+id/endereco"
         app:layout_constraintEnd_toEndOf="parent"
