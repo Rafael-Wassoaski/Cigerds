@@ -162,7 +162,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
 
             if (Network.VerificaConexao(getBaseContext())) {
                 ConexaoEnvio envio = new ConexaoEnvio(jsonEnviar, prefs.getString("login", "0"), prefs.getString("password", "0"));
-
+                Toast.makeText(getBaseContext(), "Vistoria enviada com sucesso!", Toast.LENGTH_LONG).show();
                 envio.execute();
 
             } else {
