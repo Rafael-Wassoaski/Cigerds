@@ -96,7 +96,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
         View view = inflater.inflate(R.layout.dados_ocorrencia_layout, container, false);
         logadoComo = (TextView)view.findViewById(R.id.logadoComo);
-        logadoComo.setText("logado como: "+  prefs.getString("login", "0").toString());
+        logadoComo.setText("Logado como: "+  prefs.getString("login", "0").toString());
         cobreadeDesc = (TextView) view.findViewById(R.id.descCOBRAD);
         dataTextview = (TextView)view.findViewById(R.id.data);
         dataDesastre = (TextView)view.findViewById(R.id.dataDesastre);
