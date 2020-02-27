@@ -17,10 +17,13 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,6 +36,7 @@ import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
 import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
+import com.ifsc.cigerds.Fragmentos.MapaController;
 import com.ifsc.cigerds.Fragmentos.ResumoController;
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
@@ -50,7 +54,7 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
 
     private final String NOME_PREFERENCE = "262114a72D&@5aa!!@FA";
     private SharedPreferences prefs;
-    private String latitude, longitude;
+    public String latitude, longitude;
     private LocationManager locationManager;
     static private SectionsPagerAdapter sectionsPagerAdapter;
 
@@ -178,6 +182,8 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
 
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -247,4 +253,6 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
             e.printStackTrace();
         }
     }
+
+
 }

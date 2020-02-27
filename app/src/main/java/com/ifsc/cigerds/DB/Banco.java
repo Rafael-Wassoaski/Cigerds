@@ -21,6 +21,7 @@ public class Banco extends SQLiteOpenHelper {
         private static final String DATADESASTRE = "dataDesastre";
         private static final String MUNICIPIO = "municipios";
         private static final String DESCRICAODESASTRE = "descricaoDesastre";
+        private static final String FOTO = "fotoDesastre";
 
 
 
@@ -86,8 +87,7 @@ public class Banco extends SQLiteOpenHelper {
             BancoEntry.CONTAMINACAO_SOLO+" TEXT, "+BancoEntry.CONTAMINACAO_AGUA+" TEXT, "+BancoEntry.CONTAMINACAO_AR+" TEXT, "+BancoEntry.DANOS_AMBIENTAIS_OBSERVACOES+" TEXT, "+
             BancoEntry.DANOS_AGRICULTURA+" TEXT, "+BancoEntry.DANOS_PECUARIA+" TEXT, "+BancoEntry.DANOS_INDUSTRIA+" TEXT, "+BancoEntry.DANOS_COMERCIO+" TEXT, "+BancoEntry.DANOS_PRESTACAO_DE_SERVICOS+" TEXT, "+BancoEntry.DANOS_ECONOMICOS_OBSERVACOES+" TEXT, "+
             BancoEntry.IAH_CESTAS_DE_ALIMENTOS+" TEXT, "+BancoEntry.IAH_AGUA_POTAVEL+" TEXT, "+BancoEntry.IAH_COLCHOES+" TEXT, "+BancoEntry.IAH_KIT_HIGIENE_PESSOAL+" TEXT, "+BancoEntry.IAH_KIT_LIMPEZA+" TEXT, "+BancoEntry.IAH_TELHAS+" TEXT, "+BancoEntry.IAH_LONA_PLASTICA+" TEXT, "+BancoEntry.IAH_OUTROS+" TEXT, "+BancoEntry.IAH_FONECIDOS_OUTROS_OBSERVACOES+" TEXT, "+BancoEntry.IAH_VIAS_PUBLICAS_TOTALMENTE_DESOBISTRUIDAS+" TEXT, "+BancoEntry.IAH_REESTABELECIMENTO_SERVICOS_ESSENCIAIS+" TEXT ,"+
-            BancoEntry.LATITUDE +" TEXT,  "+BancoEntry.LONGITUDE+" TEXT, "+ BancoEntry.AUTOR +" TEXT, "+ BancoEntry.DATADESASTRE +" TEXT, "+ BancoEntry.DESCRICAODESASTRE +" TEXT "+
-                ")";
+            BancoEntry.LATITUDE +" TEXT,  "+BancoEntry.LONGITUDE+" TEXT, "+ BancoEntry.AUTOR +" TEXT, "+ BancoEntry.DATADESASTRE +" TEXT, "+ BancoEntry.DESCRICAODESASTRE +" TEXT, "+ BancoEntry.FOTO + " TEXT" + ")";
 
     private static final String SQL_DELETE_ENTRIES ="DROP TABLE IF EXISTS " + BancoEntry.TABELA;
 

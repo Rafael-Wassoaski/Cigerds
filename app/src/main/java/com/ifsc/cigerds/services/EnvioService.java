@@ -18,6 +18,7 @@ public class EnvioService extends IntentService {
     private final String NOME_PREFERENCE = "262114a72D&@5aa!!@FA";
     private SharedPreferences prefs;
 
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *

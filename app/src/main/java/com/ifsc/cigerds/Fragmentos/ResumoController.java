@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ifsc.cigerds.Classes.BitMapConverter;
 import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.DB.BancoController;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
@@ -42,6 +44,7 @@ public class ResumoController extends Fragment implements DadosInterface {
     private Context context;
     private List<DadosInterface> fragmentList = null;
     private SectionsPagerAdapter sectionsPagerAdapter = null;
+    private ImageView foto;
 
 
     public ResumoController() {
@@ -67,6 +70,16 @@ public class ResumoController extends Fragment implements DadosInterface {
 
     }
 
+    private void setImagem(){
+        if(fragmentList!=null){
+            DadosOcorrenciaController temp = (DadosOcorrenciaController)fragmentList.get(0);
+            if(temp.getFoto()!=null) {
+                foto.setImageBitmap(temp.getFoto());
+                foto.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
     public void setParametros(SectionsPagerAdapter sectionsPagerAdapter, String user, String pass, Context context) {
         this.context = context;
         this.user = user;
@@ -77,6 +90,7 @@ public class ResumoController extends Fragment implements DadosInterface {
     public void setResumo(String resumoString){
         if(resumo!=null){
             resumo.setText(resumoString);
+            setImagem();
         }
     }
 
@@ -88,6 +102,7 @@ public class ResumoController extends Fragment implements DadosInterface {
         View view = inflater.inflate(R.layout.resumo_fragment, container, false);
         resumo = (TextView) view.findViewById(R.id.resumo);
         atualiazar = (Button) view.findViewById(R.id.atualizar);
+        foto = (ImageView) view.findViewById(R.id.foto);
 
         atualiazar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,10 +136,10 @@ public class ResumoController extends Fragment implements DadosInterface {
     public String getResumo() {
         String resumo = "";
 
-        for(DadosInterface frgamento : fragmentList){
-            resumo += frgamento.getResumo();
-        }
+        for(DadosInterface frgamento : fragmentList) {
 
+                resumo+=frgamento.getResumo()+"\n";
+        }
         return resumo;
     }
 

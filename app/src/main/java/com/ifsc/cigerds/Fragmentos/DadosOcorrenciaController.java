@@ -1,32 +1,50 @@
 package com.ifsc.cigerds.Fragmentos;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ifsc.cigerds.Classes.BitMapConverter;
 import com.ifsc.cigerds.Classes.CheckBoxAdapter;
 import com.ifsc.cigerds.Classes.CobradeCheckBoxAdapter;
 import com.ifsc.cigerds.Classes.LocalizadorFused;
+import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.Classes.SpinnerCheckBoxCidades;
 import com.ifsc.cigerds.Classes.SpinnerCobradeCheckbox;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
 import com.ifsc.cigerds.MainActivity;
+import com.ifsc.cigerds.MapaPopup;
 import com.ifsc.cigerds.R;
+import com.ifsc.cigerds.Vistoria;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,17 +66,39 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     private TextView dataDesastre;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TimePickerDialog.OnTimeSetListener timeSetListener;
-    private EditText endereco;
     private ArrayAdapter<CharSequence> coderecArray;
+    private ImageButton botaoCamera;
     private EditText cobrad;
+    private EditText endereco;
     private TextView cobreadeDesc;
     private EditText descricao;
     private TextView logadoComo;
     private String data = null;
     private TextView hora;
+    private ImageView foto;
+    private Bitmap fotoResult = null;
+
+
+    public void setEndereco(String endereco){
+        this.endereco.setText(endereco);
+    }
+
+
+
     private String horaDesastre = null;
+    private FloatingActionButton localizar;
 
     public DadosOcorrenciaController(){}
+
+    public void startCamera(){
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, 202);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+
+    }
 
 
     @Override
@@ -94,15 +134,16 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
             cidadesCheckBox.add(spinnerCheckBox);
         }
 
-        View view = inflater.inflate(R.layout.dados_ocorrencia_layout, container, false);
+        View view = inflater.inflate(R.layout.dados_ocorrencia_fragment, container, false);
+        localizar = (FloatingActionButton) view.findViewById(R.id.localizar);
         logadoComo = (TextView)view.findViewById(R.id.logadoComo);
         logadoComo.setText("Logado como: "+  prefs.getString("login", "0").toString());
         cobreadeDesc = (TextView) view.findViewById(R.id.descCOBRAD);
         dataTextview = (TextView)view.findViewById(R.id.data);
         dataDesastre = (TextView)view.findViewById(R.id.dataDesastre);
         descricao = (EditText)view.findViewById(R.id.descDesastre);
-        endereco = (EditText)view.findViewById(R.id.endereco);
         hora = (TextView)view.findViewById(R.id.hora);
+        endereco = (EditText)view.findViewById(R.id.endereco);
         cobradesSpinner = (Spinner)view.findViewById(R.id.cobrades);
         cobradeAdapter = new CobradeCheckBoxAdapter(getContext(),0, cobradeCheckBox);
         cobradesSpinner.setAdapter(cobradeAdapter);
@@ -110,6 +151,31 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         municipiosAdapter = new CheckBoxAdapter(getContext(), 0, cidadesCheckBox);
        // municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         municipioSpinner.setAdapter(municipiosAdapter);
+        foto = (ImageView) view.findViewById(R.id.foto);
+        botaoCamera = (ImageButton) view.findViewById(R.id.botaoCamera);
+
+        botaoCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 02);
+                }else{
+                    startCamera();
+                }
+            }
+        });
+
+
+        localizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Network.VerificaConexao(getContext())) {
+                    startActivityForResult(new Intent(getContext(), MapaPopup.class), 102);
+                }else{
+                    Toast.makeText(getContext(), "Sem conexão. Impossível buscar endereço!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
        final Calendar calender = Calendar.getInstance();
 
@@ -197,14 +263,15 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
            json.put("municipios", municipios);
            json.put("descricaoDesastre", cobrades);
            json.put("data", dataTextview.getText().toString());
-           json.put("endereco", endereco.getText().toString());
            json.put("descricao", descricao.getText().toString());
+           json.put("endereco" , endereco.getText());
            json.put("dataDesastre", data+";"+horaDesastre);
+           json.put("foto", BitMapConverter.BitMapToString(fotoResult));
            LocalizadorFused fused = new LocalizadorFused(getActivity());
            fused.getLocation();
 
 
-
+            Log.d("Foto", BitMapConverter.BitMapToString(fotoResult).length()+"");
     }
 
     @Override
@@ -237,11 +304,11 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         resumo+="Descrição do desastre"+cobreadeDesc.getText() + "\n";
         resumo+="Municipios: "+ municipios + "\n";
         resumo+="Data: "+ data+" : " + horaDesastre +"\n";
-        resumo+="Endereco: "+ endereco.getText().toString()+"\n";
         resumo+="Descricao: "+ descricao.getText().toString()+"\n";
         resumo+="\n\n";
         return resumo;
     }
+
 
     @Override
     public Boolean verficaDados() {
@@ -273,6 +340,12 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
             return false;
         }
 
+        if(endereco.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Você não informou o endereço da vistoria", Toast.LENGTH_LONG).show();
+            endereco.requestFocus();
+            return false;
+        }
+
         if(horaDesastre.equals(null)){
             Toast.makeText(getContext(), "Você não informou a Hora do desastre", Toast.LENGTH_LONG).show();
             hora.requestFocus();
@@ -292,14 +365,6 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
             return false;
         }
 
-
-
-        if(endereco.getText().toString().isEmpty()){
-            Toast.makeText(getContext(), "Você não informou o endereço da vistoria", Toast.LENGTH_LONG).show();
-            endereco.requestFocus();
-            return false;
-        }
-
         if(descricao.getText().toString().isEmpty()){
             Toast.makeText(getContext(), "Você não informou a descrição da vistoria", Toast.LENGTH_LONG).show();
             descricao.requestFocus();
@@ -309,5 +374,27 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
         return true;
     }
 
+    public Bitmap getFoto(){
+            return  fotoResult;
+    }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestCode) {
+            case 102:
+                endereco.setText(data.getStringExtra("Endereco"));
+                break;
+            case 202:
+                fotoResult = (Bitmap)data.getExtras().get("data");
+                foto.setImageBitmap(fotoResult);
+                foto.setVisibility(View.VISIBLE);
+                botaoCamera.setVisibility(View.INVISIBLE);
+                break;
+
+
+        }
+    }
 }

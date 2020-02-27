@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getBaseContext(), "Por favor aguarde!", Toast.LENGTH_LONG).show();
+                    loginButton.setClickable(false);
                     ConexaoLogin conexao = new ConexaoLogin(emailEditText.getText().toString(), passEditText.getText().toString());
                     conexao.resultBoolean = LoginActivity.this;
                     conexao.execute();
@@ -114,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
                 Toast.makeText(this, "Servidor offline, tente novamente mais tarde", Toast.LENGTH_LONG).show();
             }else{
                 Toast.makeText(this, "Senha ou Email incorretos, tente novamente", Toast.LENGTH_LONG).show();
+                loginButton.setClickable(true);
             }
         } catch (JSONException e) {
             e.printStackTrace();

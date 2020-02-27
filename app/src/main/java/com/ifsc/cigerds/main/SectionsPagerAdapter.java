@@ -15,6 +15,7 @@ import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
 import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
+import com.ifsc.cigerds.Fragmentos.MapaController;
 import com.ifsc.cigerds.Fragmentos.ResumoController;
 
 
