@@ -6,111 +6,22 @@
     android:layout_height="match_parent">
 
 
-
     <CheckBox
         android:id="@+id/atingidos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="44dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="70dp"
-        android:text="U.H. Atingidas"
+        android:layout_marginTop="55dp"
+        android:text="Interdição ou destruição de unidades habitacionais:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/danificadas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="55dp"
-        android:text="U.H. Danificadas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/atingidos" />
-
-    <CheckBox
-        android:id="@+id/interditadas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="55dp"
-        android:text="U.H. Interditadas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/danificadas" />
-
-    <CheckBox
-        android:id="@+id/destruidas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="55dp"
-        android:text="U.H. Destruídas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/interditadas" />
-
-    <CheckBox
-        android:id="@+id/instalacaoSaude"
-        android:layout_width="230dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="45dp"
-        android:text="Instalações Públicas de Saúde Atingidas/ Danificadas/ Destruídas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destruidas" />
-
-    <CheckBox
-        android:id="@+id/instalacoesEnsino"
-        android:layout_width="229dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="50dp"
-        android:text="Instalações Públicas de Ensino Atingidas/ Danificadas/ Destruídas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instalacaoSaude" />
-
-    <CheckBox
-        android:id="@+id/instalacoesComunitarias"
-        android:layout_width="230dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="35dp"
-        android:text="Instalações Comunitárias Atingidas/ Danificadas/ Destruídas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instalacoesEnsino" />
-
-    <CheckBox
-        android:id="@+id/obrasPublicas"
-        android:layout_width="234dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="40dp"
-        android:text="Obras de Infraestrutura Pública Atingidas/ Danificada/ Destruídas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instalacoesComunitarias" />
-
-    <CheckBox
-        android:id="@+id/interrupcaoServicos"
-        android:layout_width="162dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="50dp"
-        android:text="Interrupção de Serviços Essenciais"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/obrasPublicas" />
 
     <EditText
         android:id="@+id/unidades_habitacionais_atingidas"
         android:layout_width="132dp"
         android:layout_height="47dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
@@ -119,125 +30,97 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/unidades_habitacionais_danificads"
-        android:layout_width="130dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="numberSigned"
+
+    <CheckBox
+        android:id="@+id/servicos_essenciais"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Interrupção dos serviços essenciais devido a danificação ou destruição de instalações públicas prestadores dos serviços (energia, água, ensino, saúde, etc...) "
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unidades_habitacionais_atingidas" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atingidos" />
 
     <EditText
-        android:id="@+id/unidades_habitacionais_interditadas"
-        android:layout_width="129dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="numberSigned"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unidades_habitacionais_danificads" />
-
-    <EditText
-        android:id="@+id/unidades_habitacionais_destruidas"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="numberSigned"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unidades_habitacionais_interditadas" />
-
-    <EditText
-        android:id="@+id/instalacoes_publicas_saude_atingidas"
-        android:layout_width="126dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unidades_habitacionais_destruidas" />
-
-    <EditText
-        android:id="@+id/instalacoes_publicas_ensino_atingidas"
-        android:layout_width="125dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instalacoes_publicas_saude_atingidas" />
-
-    <EditText
-        android:id="@+id/instalacoes_comunitarias_atingidas"
-        android:layout_width="121dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instalacoes_publicas_ensino_atingidas" />
-
-    <EditText
-        android:id="@+id/obras_atingidas"
-        android:layout_width="118dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instalacoes_comunitarias_atingidas" />
-
-
-
-    <EditText
-        android:id="@+id/interrupcoes_servicos_essenciais"
-        android:layout_width="118dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/obras_atingidas" />
-
-    <EditText
-        android:id="@+id/danos_materiais_observacoes"
+        android:id="@+id/danos_materiais_servicos_essenciais"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
-        android:hint="Observações"
+        android:gravity="start|top"
+        android:hint="Quais"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/interrupcoes_servicos_essenciais" />
+        app:layout_constraintTop_toBottomOf="@+id/servicos_essenciais" />
+
+    <CheckBox
+        android:id="@+id/obras_destruidas"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Danificação ou destruição de obras de infraestrutura pública (vias afetadas, pontes, drenagem, etc...)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/danos_materiais_servicos_essenciais" />
+
+    <EditText
+        android:id="@+id/danos_materiais_obras_destruidas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Quais"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/obras_destruidas" />
+
+    <CheckBox
+        android:id="@+id/danos_economicos"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Danos e Prejuízos Econômicos Privados (agricultura, pecuária, indústria, comércio e serviços)."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/danos_materiais_obras_destruidas" />
+
+    <EditText
+        android:id="@+id/danos_materiais_privados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Quais"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/danos_economicos" />
 </androidx.constraintlayout.widget.ConstraintLayout>

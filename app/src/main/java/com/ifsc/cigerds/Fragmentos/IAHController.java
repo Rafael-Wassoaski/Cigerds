@@ -45,33 +45,13 @@ public class IAHController extends Fragment implements DadosInterface {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.iah_fragment, container, false);
         nameTag = new ArrayList<>();
-        nameTag.add("iah_cestas_de_alimentos");
-        nameTag.add("iah_agua_potavel");
-        nameTag.add("iah_colchoes");
-        nameTag.add("iah_kit_higiene_pessoal");
-        nameTag.add("iah_kit_limpeza");
-        nameTag.add("iah_telhas");
-        nameTag.add("iah_lona_plastica");
-        nameTag.add("iah_outros");
-        nameTag.add("iah_fornecidos_outros_observacoes");
+        nameTag.add("iah");
+        nameTag.add("desobistrucaoVias");
+        nameTag.add("reestabelecimentoServicos");
 
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.cestas), (EditText)view.findViewById(R.id.iah_cestas_de_alimentos)));
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.aguaPotavel), (EditText)view.findViewById(R.id.iah_agua_potavel)));
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.colchoes), (EditText)view.findViewById(R.id.iah_colchoes)));
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.higiene), (EditText)view.findViewById(R.id.iah_kit_higiene_pessoal)));
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.limpeza), (EditText)view.findViewById(R.id.iah_kit_limpeza)));
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.telhas), (EditText)view.findViewById(R.id.iah_telhas)));
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.lona), (EditText)view.findViewById(R.id.iah_lona_plastica)));
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.outros), (EditText)view.findViewById(R.id.iah_outros)));
-        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.outros), (EditText)view.findViewById(R.id.iah_fornecidos_outros_observacoes)));
-        viasDesobistruidas = (CheckBox)view.findViewById(R.id.iah_vias_publicas_totalmente_desobistruidas);
-        servicosEssenciais = (CheckBox)view.findViewById(R.id.iah_reestabelecimento_servicos_essenciais);
-
-        outrosDados = (EditText)view.findViewById(R.id.iah_fornecidos_outros_observacoes);
-        outrosDados.setVisibility(View.INVISIBLE);
-
-
-
+        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.iah_fornecidos), (EditText)view.findViewById(R.id.iah_iah_fornecidos)));
+        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.desobstrucao), (EditText)view.findViewById(R.id.iah_vias_desobistruidas)));
+        iah.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.servicos_essenciais), (EditText)view.findViewById(R.id.iah_reestabelecimento_servicos)));
 
         for(AdaptadorCheckBox entrada : iah){
 
@@ -109,25 +89,6 @@ public class IAHController extends Fragment implements DadosInterface {
             });
         }
 
-        iah.get(7).getCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(buttonView.isChecked()){
-                    iah.get(7).getEditText().setVisibility(View.VISIBLE);
-                    iah.get(8).getEditText().setVisibility(View.VISIBLE);
-
-                }else{
-                    if(buttonView.isChecked()){
-                        iah.get(7).getEditText().setVisibility(View.INVISIBLE);
-                        iah.get(8).getEditText().setVisibility(View.INVISIBLE);
-                    }
-
-                }
-            }
-        });
-
-
 
         return view;
     }
@@ -136,11 +97,8 @@ public class IAHController extends Fragment implements DadosInterface {
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-        json.put("iah_vias_publicas_totalmente_desobistruidas", viasDesobistruidas.isChecked());
-        json.put("iah_reestabelecimento_servicos_essenciais", servicosEssenciais.isChecked());
 
         Integer count = 0;
-        json.put("iah_fornecidos_outros_observacoes", "Sem Observações");
         for(AdaptadorCheckBox entrada : iah){
 
             CheckBox checkBox = entrada.getCheckBox();
@@ -150,9 +108,6 @@ public class IAHController extends Fragment implements DadosInterface {
 
             if(checkBox.isChecked()){
                 json.put(nameTag.get(count), editText.getText().toString());
-                if(checkBox.getText().toString().equals("Outros")&& !outrosDados.getText().toString().isEmpty()){
-                    json.put("iah_fornecidos_outros_observacoes", outrosDados.getText());
-                }
 
             }else{
                 json.put(nameTag.get(count), 0);
@@ -166,19 +121,6 @@ public class IAHController extends Fragment implements DadosInterface {
     public String getResumo() {
 
         String resumo = "IAH\n\n";
-
-
-        if(viasDesobistruidas.isChecked()){
-            resumo+="Vias publicas totalmente desobistridas: Sim\n";
-        }else{
-            resumo+="Vias publicas totalmente desobistridas: Não\n";
-        }
-
-        if(servicosEssenciais.isChecked()){
-            resumo+="Reestabelecimento de serviços essenciais: Sim\n";
-        }else{
-            resumo+="Reestabelecimento de serviços essenciais: Não\n";
-        }
 
         for(AdaptadorCheckBox entrada : iah){
 
@@ -199,25 +141,14 @@ public class IAHController extends Fragment implements DadosInterface {
     @Override
     public Boolean verficaDados() {
 
-
-
-
         for(AdaptadorCheckBox entrada : iah){
-
-
 
             CheckBox checkBox = entrada.getCheckBox();
             final EditText editText = entrada.getEditText();
 
-            if(checkBox.getText().toString().equals("Outros") && checkBox.isChecked() && outrosDados.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Você não informou a descrição dos Outros Itens ", Toast.LENGTH_LONG).show();
-
-                outrosDados.requestFocus();
-                return false;
-            }
 
             if(checkBox.isChecked() && editText.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Você não informou uma quantide para a opção marcada ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Você não informou uma opção marcada ", Toast.LENGTH_LONG).show();
                 editText.requestFocus();
                 return  false;
             }

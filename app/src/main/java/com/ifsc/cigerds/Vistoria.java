@@ -1,7 +1,6 @@
 package com.ifsc.cigerds;
 
 import android.Manifest;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,26 +15,22 @@ import android.view.View;
 import android.widget.Toast;
 
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.ifsc.cigerds.Classes.Network;
 import com.ifsc.cigerds.DB.BancoController;
+import com.ifsc.cigerds.Fragmentos.ConclusaoController;
 import com.ifsc.cigerds.Fragmentos.DadosOcorrenciaController;
 import com.ifsc.cigerds.Fragmentos.DanosAmbientaisController;
-import com.ifsc.cigerds.Fragmentos.DanosEconomicosController;
 import com.ifsc.cigerds.Fragmentos.DanosHumanosController;
 import com.ifsc.cigerds.Fragmentos.DanosMateriaisController;
 import com.ifsc.cigerds.Fragmentos.IAHController;
-import com.ifsc.cigerds.Fragmentos.MapaController;
 import com.ifsc.cigerds.Fragmentos.ResumoController;
 import com.ifsc.cigerds.Interfaces.AsyncInterface;
 import com.ifsc.cigerds.Interfaces.DadosInterface;
@@ -122,8 +116,8 @@ public class Vistoria extends AppCompatActivity implements AsyncInterface {
         fragmentList.add((DanosHumanosController) sectionsPagerAdapter.getRegisteredFragment(1));
         fragmentList.add((DanosMateriaisController) sectionsPagerAdapter.getRegisteredFragment(2));
         fragmentList.add((DanosAmbientaisController) sectionsPagerAdapter.getRegisteredFragment(3));
-        fragmentList.add((DanosEconomicosController) sectionsPagerAdapter.getRegisteredFragment(4));
-        fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(5));
+        fragmentList.add((IAHController) sectionsPagerAdapter.getRegisteredFragment(4));
+        fragmentList.add((ConclusaoController) sectionsPagerAdapter.getRegisteredFragment(5));
         //fragmentList.add((ResumoController) sectionsPagerAdapter.getRegisteredFragment(6));
 
         return fragmentList;

@@ -19,17 +19,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class DanosEconomicosController extends Fragment implements DadosInterface {
+public class ConclusaoController extends Fragment implements DadosInterface {
 
     private List<AdaptadorCheckBox> economicos = new ArrayList<>();
     private EditText danos_economicos_observacoes;
     private List<String> nameTag;
 
-    public DanosEconomicosController(){}
+    public ConclusaoController(){}
 
 
     @Override
@@ -37,7 +35,7 @@ public class DanosEconomicosController extends Fragment implements DadosInterfac
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view =inflater.inflate(R.layout.danos_economicos_fragment, container, false);
+        View view =inflater.inflate(R.layout.conclusao_fragment, container, false);
         nameTag = new ArrayList<>();
         nameTag.add("danos_agricultura");
         nameTag.add("danos_pecuaria");

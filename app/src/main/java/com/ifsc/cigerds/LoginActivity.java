@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncInterface {
 
             }else if(Integer.parseInt(result.get("status").toString()) == 500){
                 Toast.makeText(this, "Servidor offline, tente novamente mais tarde", Toast.LENGTH_LONG).show();
+                loginButton.setClickable(true);
             }else{
                 Toast.makeText(this, "Senha ou Email incorretos, tente novamente", Toast.LENGTH_LONG).show();
                 loginButton.setClickable(true);

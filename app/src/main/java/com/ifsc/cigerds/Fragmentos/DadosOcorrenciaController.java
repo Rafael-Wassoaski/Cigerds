@@ -77,6 +77,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
     private TextView hora;
     private ImageView foto;
     private Bitmap fotoResult = null;
+    private EditText numeroRelatorio;
 
 
     public void setEndereco(String endereco){
@@ -136,6 +137,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
 
         View view = inflater.inflate(R.layout.dados_ocorrencia_fragment, container, false);
         localizar = (FloatingActionButton) view.findViewById(R.id.localizar);
+        numeroRelatorio = (EditText) view.findViewById(R.id.numeroRelatorio);
         logadoComo = (TextView)view.findViewById(R.id.logadoComo);
         logadoComo.setText("Logado como: "+  prefs.getString("login", "0").toString());
         cobreadeDesc = (TextView) view.findViewById(R.id.descCOBRAD);
@@ -258,7 +260,7 @@ public class DadosOcorrenciaController extends Fragment implements DadosInterfac
             }
 
         }
-
+           json.put("numero", numeroRelatorio.getText().toString());
            json.put("cobrad", idsCobrades);
            json.put("municipios", municipios);
            json.put("descricaoDesastre", cobrades);

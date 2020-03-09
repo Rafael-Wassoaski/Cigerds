@@ -6,110 +6,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
-
     <CheckBox
-        android:id="@+id/contaminacaoAr"
-        android:layout_width="192dp"
-        android:layout_height="34dp"
+        android:id="@+id/contaminacao"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="30dp"
-        android:text="Contaminação do Ar"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Poluição ou contaminação da água, do ar e do solo, diminuição ou exaurimento hídrico e incêndios em APAs ou APPs."
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ContaminacaoSolo"
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/danos_ambientais_observacoes"
+        android:id="@+id/contaminacao_agua_ar_terra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:hint="Observações"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contaminacaoAr" />
-
-    <CheckBox
-        android:id="@+id/ContaminacaoSolo"
-        android:layout_width="192dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="30dp"
-        android:text="Contaminação do Solo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contaminacaoAgua"
-        tools:ignore="MissingConstraints" />
-
-    <CheckBox
-        android:id="@+id/contaminacaoAgua"
-        android:layout_width="192dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Contaminação da Água"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/contaminacao_agua"
-        android:layout_width="163dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:visibility="invisible"
-        android:hint="Quantidade"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/contaminacaoAgua"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/contaminacao_solo"
-        android:layout_width="163dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:visibility="invisible"
-        android:hint="Quantidade"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ContaminacaoSolo"
-        app:layout_constraintTop_toBottomOf="@+id/contaminacao_agua" />
-
-    <EditText
-        android:id="@+id/contaminacao_ar"
-        android:layout_width="163dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
-        android:visibility="invisible"
-        android:hint="Quantidade"
-        android:inputType="number"
+        android:gravity="start|top"
+        android:hint="Quais"
+        android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/contaminacaoAr"
-        app:layout_constraintTop_toBottomOf="@+id/contaminacao_solo" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contaminacao" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,7 +27,6 @@ import java.util.Map;
 public class DanosMateriaisController extends Fragment implements DadosInterface {
 
     private  List<AdaptadorCheckBox> materiais = new ArrayList<>();
-    private EditText danos_materiais_observacoes;
     private List<String> nameTag;
 
     public DanosMateriaisController(){}
@@ -40,29 +39,17 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
         View view = inflater.inflate(R.layout.danos_materiais_fragment, container, false);
         nameTag = new ArrayList<>();
 
-        nameTag.add("unidades_habitacionais_atingidas");
-        nameTag.add("unidades_habitacionais_danificads");
-        nameTag.add("unidades_habitacionais_interditadas");
-        nameTag.add("unidades_habitacionais_destruidas");
+        nameTag.add("habitacoesAtingidas");
+        nameTag.add("interrupcaoDeServi");
+        nameTag.add("infraPublica");
+        nameTag.add("economiaPrivada");
 
-        nameTag.add("instalacoes_publicas_saude_atingidas");
-        nameTag.add("instalacoes_comunitarias_atingidas");
-        nameTag.add("instalacoes_publicas_ensino_atingidas");
-        nameTag.add("obras_atingidas");
-        nameTag.add("interrupcoes_servicos_essenciais");
-
-
-        danos_materiais_observacoes = (EditText)view.findViewById(R.id.danos_materiais_observacoes );
 
         materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.unidades_habitacionais_atingidas)));
-        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.danificadas), (EditText)view.findViewById(R.id.unidades_habitacionais_danificads)));
-        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.interditadas), (EditText)view.findViewById(R.id.unidades_habitacionais_interditadas)));
-        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.destruidas), (EditText)view.findViewById(R.id.unidades_habitacionais_destruidas)));
-        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.instalacaoSaude), (EditText)view.findViewById(R.id.instalacoes_publicas_saude_atingidas)));
-        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.instalacoesComunitarias), (EditText)view.findViewById(R.id.instalacoes_comunitarias_atingidas)));
-        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.instalacoesEnsino), (EditText)view.findViewById(R.id.instalacoes_publicas_ensino_atingidas)));
-        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.obrasPublicas), (EditText)view.findViewById(R.id.obras_atingidas)));
-        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.interrupcaoServicos), (EditText)view.findViewById(R.id.interrupcoes_servicos_essenciais)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.servicos_essenciais), (EditText)view.findViewById(R.id.danos_materiais_servicos_essenciais)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.obras_destruidas), (EditText)view.findViewById(R.id.danos_materiais_obras_destruidas)));
+        materiais.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.danos_economicos), (EditText)view.findViewById(R.id.danos_materiais_privados)));
+
 
 
         for(AdaptadorCheckBox entrada : materiais){
@@ -100,11 +87,6 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
     public void getDados(JSONObject json) throws JSONException {
 
         Integer count1 = 0;
-        if(!danos_materiais_observacoes.getText().toString().isEmpty()){
-            json.put("danos_materiais_observacoes", danos_materiais_observacoes.getText().toString());
-        }else{
-            json.put("danos_materiais_observacoes", "Sem obeservações");
-        }
 
         for(AdaptadorCheckBox entrada : materiais){
 
@@ -125,13 +107,6 @@ public class DanosMateriaisController extends Fragment implements DadosInterface
     public String getResumo() {
 
         String resumo = "DANOS MATERIAIS\n\n";
-
-
-        if(!danos_materiais_observacoes.getText().toString().isEmpty()){
-            resumo+="Observações: "+danos_materiais_observacoes.getText().toString()+"\n";
-        }else{
-            resumo+="Observações: Sem obeservações\n";
-        }
 
 
         for(AdaptadorCheckBox entrada : materiais){

@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Fragmentos.DanosEconomicosController">
+    tools:context=".Fragmentos.ConclusaoController">
 
     <!-- TODO: Update blank fragment layout -->
-    <include layout="@layout/danos_economicos_layout"></include>
+    <include layout="@layout/conclusao_layout"></include>
 
 </ScrollView>

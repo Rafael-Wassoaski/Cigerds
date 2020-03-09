@@ -19,19 +19,12 @@ import org.json.JSONObject;
 
 public class DanosAmbientaisController extends Fragment  implements DadosInterface {
 
-    private CheckBox contamincaoAgua;
-    private CheckBox contamincaoSolo;
-    private CheckBox contamincaoAr;
-    private EditText AguaQuant;
-    private EditText SoloQuant;
-    private EditText ArQuant;
-    private EditText danos_ambientais_observacoes;
-
+    private CheckBox contamincaoAguaArSolo;
+    private EditText AguaArSoloQuant;
 
     public DanosAmbientaisController() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -40,44 +33,18 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.danos_ambientais_fragment, container, false);
-        contamincaoAgua = (CheckBox) view.findViewById(R.id.contaminacaoAgua);
-        contamincaoSolo = (CheckBox) view.findViewById(R.id.ContaminacaoSolo);
-        contamincaoAr = (CheckBox) view.findViewById(R.id.contaminacaoAr);
-        AguaQuant = (EditText)view.findViewById(R.id.contaminacao_agua);
-        ArQuant = (EditText)view.findViewById(R.id.contaminacao_ar);
-        SoloQuant = (EditText)view.findViewById(R.id.contaminacao_solo);
-        danos_ambientais_observacoes = (EditText)view.findViewById(R.id.danos_ambientais_observacoes);
+        contamincaoAguaArSolo = (CheckBox) view.findViewById(R.id.contaminacao);
+        AguaArSoloQuant = (EditText)view.findViewById(R.id.contaminacao_agua_ar_terra);
 
-        contamincaoAr.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+        contamincaoAguaArSolo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(compoundButton.isChecked()){
-                    ArQuant.setVisibility(View.VISIBLE);
+                    AguaArSoloQuant.setVisibility(View.VISIBLE);
                 }else{
-                    ArQuant.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        contamincaoSolo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    SoloQuant.setVisibility(View.VISIBLE);
-                }else{
-
-                    SoloQuant.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        contamincaoAgua.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    AguaQuant.setVisibility(View.VISIBLE);
-                }else{
-                    AguaQuant.setVisibility(View.INVISIBLE);
+                    AguaArSoloQuant.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -88,30 +55,12 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
     @Override
     public void getDados(JSONObject json) throws JSONException {
 
-            if(!danos_ambientais_observacoes.getText().toString().isEmpty()){
-                json.put("danos_ambientais_observacoes", danos_ambientais_observacoes.getText().toString());
+
+            if(contamincaoAguaArSolo.isChecked()) {
+
+                json.put("ambiente", AguaArSoloQuant.getText().toString());
             }else{
-                json.put("danos_ambientais_observacoes", "Sem obeservações");
-            }
-
-            if(contamincaoAgua.isChecked()) {
-                json.put("contaminacao_agua", AguaQuant.getText());
-            }else{
-                json.put("contaminacao_agua", 0);
-            }
-
-            if(contamincaoSolo.isChecked()) {
-
-                json.put("contaminacao_solo", SoloQuant.getText());
-            }else{
-                json.put("contaminacao_solo", 0);
-            }
-
-            if(contamincaoAr.isChecked()) {
-
-                json.put("contaminacao_ar", ArQuant.getText());
-            }else{
-                json.put("contaminacao_ar", 0);
+                json.put("ambiente", "Não afetada");
 
             }
 
@@ -126,28 +75,9 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
 
         resumo+= "DANOS AMBIENTAIS\n\n";
 
-        if(!danos_ambientais_observacoes.getText().toString().isEmpty()){
-            resumo+="Observações: "+ danos_ambientais_observacoes.getText().toString()+"\n";
-        }else{
-            resumo+="Observações: Sem obeservações\n";
-        }
+        if(contamincaoAguaArSolo.isChecked()) {
 
-        if(contamincaoAgua.isChecked()) {
-            resumo+="Contaminação da Água: "+AguaQuant.getText()+"\n";
-        }else{
-            resumo+="Contaminação da Água: 0\n";
-        }
-
-        if(contamincaoSolo.isChecked()) {
-
-            resumo+="Contaminação do Solo: "+ SoloQuant.getText()+"\n";
-        }else{
-            resumo+="Contaminação do Solo: 0\n";
-        }
-
-        if(contamincaoAr.isChecked()) {
-
-            resumo+="Contaminação do Ar: "+ ArQuant.getText()+"\n";
+            resumo+="Contaminação do Ar: "+ AguaArSoloQuant.getText()+"\n";
         }else{
             resumo+="Contaminação do Ar: 0\n";
 
@@ -160,33 +90,13 @@ public class DanosAmbientaisController extends Fragment  implements DadosInterfa
     @Override
     public Boolean verficaDados(){
 
-        if(contamincaoSolo.isChecked()){
-            if(SoloQuant.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Você não informou a quantide de pessoas atingidas", Toast.LENGTH_LONG);
-
-                SoloQuant.requestFocus();
-                return false;
-            }
-        }
-
-        if(contamincaoAr.isChecked()){
-            if(ArQuant.getText().toString().isEmpty()){
+        if(contamincaoAguaArSolo.isChecked()){
+            if(AguaArSoloQuant.getText().toString().isEmpty()){
                 Toast.makeText(getContext(), "Você não informou a quantide de pessoas atingidas", Toast.LENGTH_LONG).show();
-
-                ArQuant.requestFocus();
+                AguaArSoloQuant.requestFocus();
                 return false;
             }
         }
-
-
-        if(contamincaoAgua.isChecked()){
-            if(AguaQuant.getText().toString().isEmpty()){
-                Toast.makeText(getContext(), "Você não informou a quantide de pessoas atingidas", Toast.LENGTH_LONG).show();
-                AguaQuant.requestFocus();
-                return false;
-            }
-        }
-
 
         return true;
 

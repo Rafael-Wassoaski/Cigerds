@@ -20,17 +20,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DanosHumanosController extends Fragment implements DadosInterface {
 
     private List<AdaptadorCheckBox> lista;
     private List<String> nameTags;
     private EditText danos_humanos_observacoes;
+    private EditText danos_humanos_quantidade_afetados;
+    private EditText danos_humanos_total_habitantes;
 
     public DanosHumanosController(){}
+
+    private void calcularAfetados(List<AdaptadorCheckBox> lista){
+
+        Integer totalAfetados = 0;
+
+        for(AdaptadorCheckBox adaptadorCheckBox : lista){
+            if(adaptadorCheckBox.getCheckBox().isChecked()){
+                String valor = adaptadorCheckBox.getEditText().getText().toString();
+                if(valor.equals("")){
+                    totalAfetados+= 0;
+                }else{
+                    totalAfetados += Integer.valueOf(valor);
+                }
+
+            }
+        }
+        danos_humanos_quantidade_afetados.setText(totalAfetados.toString());
+    }
 
 
     @Override
@@ -40,32 +58,31 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
         lista = new ArrayList<>();
         nameTags = new ArrayList<>();
         View view = inflater.inflate(R.layout.danos_humanos_fragment, container, false);
-        nameTags.add("danos_humanos_desalojados");
-        nameTags.add("danos_humanos_desabrigados");
-        nameTags.add("danos_humanos_desaparecidos");
-        nameTags.add("danos_humanos_feridos");
-        nameTags.add("danos_humanos_enfermos");
-        nameTags.add("danos_humanos_mortos");
-        nameTags.add("danos_humanos_isolados");
-        nameTags.add("danos_humanos_atingidos");
-        nameTags.add("danos_humanos_afetados");
+        nameTags.add("quantidadeDesalojados");
+        nameTags.add("quantiadeObitos");
+        nameTags.add("quantiadePopuIsolada");
 
-        danos_humanos_observacoes = view.findViewById(R.id.danos_humanos_observacoes);
+
+        danos_humanos_quantidade_afetados = view.findViewById(R.id.danos_humanos_quantidade_afetados);
+        danos_humanos_total_habitantes = view.findViewById(R.id.danos_humnanos_total_habitantes);
+
         lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.desalojados),  (EditText)view.findViewById(R.id.danos_humanos_desalojados)));
-        lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.desabrigados), (EditText)view.findViewById(R.id.danos_humanos_desabrigados)));
-        lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.desaparecidos),  (EditText)view.findViewById(R.id.danos_humanos_desaparecidos)));
-        lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.feridos), (EditText)view.findViewById(R.id.danos_humanos_feridos)));
-        lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.enfermos), (EditText)view.findViewById(R.id.danos_humanos_enfermos)));
-        lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.mortos), (EditText)view.findViewById(R.id.danos_humanos_mortos)));
+        lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.obitos), (EditText)view.findViewById(R.id.danos_humanos_obitios)));
         lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.isolados), (EditText)view.findViewById(R.id.danos_humanos_isolados)));
-        lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.atingidos), (EditText)view.findViewById(R.id.danos_humanos_atingidos)));
-        lista.add(new AdaptadorCheckBox((CheckBox)view.findViewById(R.id.afetados), (EditText)view.findViewById(R.id.danos_humanos_afetados)));
 
         for(AdaptadorCheckBox entrada : lista){
 
             final EditText editText = entrada.getEditText();
 
             editText.setVisibility(View.INVISIBLE);
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+                        calcularAfetados(lista);
+                    }
+                }
+            });
         }
 
 
@@ -118,6 +135,12 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
                 }
                 count++;
             }
+        Float populacaoTotal = Float.valueOf(danos_humanos_total_habitantes.getText().toString());
+        Float quantidadeAfetados = Float.valueOf((danos_humanos_quantidade_afetados.getText().toString()));
+        Float porcentagemAfetados = (quantidadeAfetados * populacaoTotal) / 100;
+
+        json.put("populacaoAfetada", danos_humanos_quantidade_afetados.getText().toString());
+        json.put("pocentagemPopulacaoAfetada", porcentagemAfetados);
 
 
         }
@@ -125,12 +148,6 @@ public class DanosHumanosController extends Fragment implements DadosInterface {
     @Override
     public String getResumo() {
         String resumo="DANOS HUMANOS\n\n";
-
-        if(!danos_humanos_observacoes.getText().toString().isEmpty()){
-            resumo+="Observações: "+danos_humanos_observacoes.getText().toString()+"\n";
-        }else{
-            resumo+="Observações: Sem obeservações\n";
-        }
 
 
         for(AdaptadorCheckBox entrada : lista){
